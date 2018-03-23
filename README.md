@@ -1,8 +1,6 @@
-![Status active](https://img.shields.io/badge/Status-active%20development-2eb3c1.svg)
-![Django 1.11.3](https://img.shields.io/badge/Django-1.11.3-green.svg)
-![Python 3.6](https://img.shields.io/badge/Python-3.6-blue.svg)
+#Gymkhana Portal ![Status active](https://img.shields.io/badge/Status-active%20development-2eb3c1.svg) ![Django 1.11.3](https://img.shields.io/badge/Django-1.11.3-green.svg) ![Python 3.6](https://img.shields.io/badge/Python-3.6-blue.svg)  
 [![Build Status](https://travis-ci.org/devlup-labs/gymkhana_portal.svg?branch=master)](https://travis-ci.org/devlup-labs/gymkhana_portal)
-# Dynamic web portal and forum for Students' Gymkhana of IIT Jodhpur
+## Web portal and forum for Students' Gymkhana of IIT Jodhpur
 ### Purpose
 Simplify the workflow of updating the gymkhana website without much knowledge on how to code. And also provide certain utility features.
 
