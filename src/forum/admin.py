@@ -10,6 +10,7 @@ class TopicAdmin(admin.ModelAdmin):
     class Meta:
         model = Topic
 
+
 admin.site.register(Topic, TopicAdmin)
 
 
@@ -20,5 +21,6 @@ class AnswerAdmin(admin.ModelAdmin):
 
     class Meta:
         model = Answer
+
 
 admin.site.register(Answer, AnswerAdmin)

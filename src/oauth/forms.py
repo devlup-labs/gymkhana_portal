@@ -17,7 +17,6 @@ class UserProfileUpdateForm(forms.ModelForm):
 
 
 class SocialLinkForm(forms.ModelForm):
-
     class Meta:
         model = SocialLink
         fields = ['social_media', 'link']

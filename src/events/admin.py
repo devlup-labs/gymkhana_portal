@@ -10,4 +10,5 @@ class EventAdmin(admin.ModelAdmin):
     class Meta:
         model = Event
 
+
 admin.site.register(Event, EventAdmin)
