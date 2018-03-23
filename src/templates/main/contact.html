@@ -1,0 +1,172 @@
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+
+{% block main %}
+    <div class="container mt-4">
+        <section id="contact" class="section mb-5" style="margin-top: 8rem;">
+
+            <!--Section heading-->
+            <h1 class="section-heading wow fadeIn" data-wow-delay="0.2s"
+                style="visibility: visible; animation-delay: 0.2s; animation-name: fadeIn;">Contact us</h1>
+            <!--Section sescription-->
+            <p class="section-description grey-text mb-5 wow fadeIn" data-wow-delay="0.2s"
+               style="visibility: visible; animation-delay: 0.2s; animation-name: fadeIn;">Lorem ipsum dolor sit amet,
+                consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi, veritatis
+                totam voluptas nostrum quisquam eum porro a pariatur accusamus veniam.</p>
+
+            <div class="row">
+
+                <!--First column-->
+                <div class="col-lg-5 col-md-12 wow fadeIn" data-wow-delay="0.4s"
+                     style="visibility: visible; animation-delay: 0.4s; animation-name: fadeIn;">
+
+                    <!--Form-->
+                    <form method="post">
+
+                        <div class="card mb-1">
+                            <div class="card-block">
+
+                                <div class="text-center">
+                                    <h3 class="mt-1 mb-1 text-primary">Write to us</h3>
+                                    <p class="text-muted grey-text mb-2">Got a query? Feel free to contact us</p>
+                                    <hr>
+                                </div>
+
+                                <div class="pt-1">
+                                    {% csrf_token %}
+                                    <!--Body-->
+                                    {% if form.non_field_errors %}
+                                        {% for error in form.non_field_errors %}
+                                            <div class="red-text">
+                                                {{ error }}
+                                            </div>
+                                        {% endfor %}
+                                        <br>
+                                    {% endif %}
+                                    <div class="md-form">
+                                        <i class="fa fa-user prefix"></i>
+                                        {{ form.name }}
+                                        <label for="{{ form.name.id_for_label }}">Your Name</label>
+                                    </div>
+                                    <div class="md-form">
+                                        <i class="fa fa-envelope prefix"></i>
+                                        {{ form.email }}
+                                        <label for="{{ form.email.id_for_label }}">Your Email</label>
+                                    </div>
+                                    <div class="md-form">
+                                        <i class="fa fa-phone prefix"></i>
+                                        {{ form.phone }}
+                                        <label for="{{ form.phone.id_for_label }}">Your Phone Number</label>
+                                    </div>
+                                    <div class="md-form">
+                                        <i class="fa fa-tag prefix"></i>
+                                        {{ form.subject }}
+                                        <label for="{{ form.subject.id_for_label }}">Subject</label>
+                                    </div>
+
+                                    <!--Textarea with icon prefix-->
+                                    <div class="md-form">
+                                        <i class="fa fa-pencil prefix"></i>
+                                        <textarea name="{{ form.message.name }}" id="{{ form.message.id_for_label }}"
+                                                  class="md-textarea" length="2048"></textarea>
+                                        <label for="{{ form.message.id_for_label }}">Your message</label>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button class="btn btn-default waves-effect waves-light" type="submit">Send
+                                            Information <i class="fa fa-send right"></i></button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                    <!--/Form-->
+
+                </div>
+                <!--/First column-->
+
+                <!--Second column-->
+                <div class="col-lg-7 col-md-12 wow fadeIn" data-wow-delay="0.4s"
+                     style="visibility: visible; animation-delay: 0.4s; animation-name: fadeIn;">
+
+                    <div id="map-container" class="z-depth-1-half map-container" data-adapt-container-width="true"
+                 style="height: 400px"></div>
+                    <br>
+                    <!--Buttons-->
+                    <div class="row text-center mt-1">
+                        <div class="col-md-4">
+                            <a class="btn-floating btn-large btn-fb waves-effect waves-light"><i
+                                    class="fa fa-map-marker"></i></a>
+                            <p></p>
+                            <div class="mb-1">NH 65, Karwad, Jodhpur</div>
+                            <p></p>
+                            <p>Rajasthan</p>
+                        </div>
+
+                        <div class="col-md-4">
+                            <a class="btn-floating btn-large btn-fb waves-effect waves-light"><i
+                                    class="fa fa-phone"></i></a>
+                            <p></p>
+                            <div class="mb-1"><a href="tel:+910123456789">+91-0123456789</a></div>
+                            <p></p>
+                            <p>Mon - Fri, 8:00-22:00</p>
+                        </div>
+
+                        <div class="col-md-4">
+                            <a class="btn-floating btn-large btn-fb waves-effect waves-light"><i
+                                    class="fa fa-envelope"></i></a>
+                            <p></p>
+                            <div class="mb-1">Email us at</div>
+                            <p></p>
+                            <p><a href="mailto:abcd@iitj.ac.in">abcd@iitj.ac.in</a></p>
+                        </div>
+                    </div>
+
+                </div>
+                <!--/Second column-->
+
+            </div>
+
+        </section>
+    </div>
+    <!--/Section: Contact v.1-->
+{% endblock %}
+
+{% block customscripts %}
+    <script src="http://maps.google.com/maps/api/js"></script>
+    <script>
+        function showmap() {
+
+            var var_location = new google.maps.LatLng(26.475280, 73.114761);
+
+            var var_mapoptions = {
+                center: var_location,
+                zoom: 15,
+                mapTypeId: 'satellite'
+            };
+
+            var var_marker = new google.maps.Marker({
+                position: var_location,
+                map: var_map,
+                title: "IIT Jodhpur"
+            });
+
+            var var_map = new google.maps.Map(document.getElementById("map-container"),
+                var_mapoptions);
+
+            var_marker.setMap(var_map);
+        }
+
+        google.maps.event.addDomListener(window, 'load', showmap);
+    </script>
+    <script>
+        //Animation init
+        new WOW().init();
+        // Material Select Initialization
+        $(document).ready(function () {
+            $('.mdb-select').material_select();
+        });
+
+    </script>
+{% endblock %}

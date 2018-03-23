@@ -1,0 +1,83 @@
+{% extends 'forum/base.html' %}
+{% block title %}Update Social Link{% endblock %}
+{% block navtitle %}Update Social Link{% endblock %}
+{% block customstyles %}
+    <style>
+        html,
+        body,
+        main,
+        .view {
+            height: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <div class="view flex-center">
+        <div class="container">
+            <div class="row flex-center">
+                <div class="col-md-8">
+                    <div class="card p-5">
+                        {% if form.non_field_errors %}
+                            {% for error in form.non_field_errors %}
+                                <div class="red-text">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                            <br>
+                        {% endif %}
+                        <form method="post">
+                            {% if form.social_media.errors %}
+                                {% for error in form.social_media.errors %}
+                                    <p class="red-text mb-1"><strong>{{ error|escape }}</strong></p>
+                                {% endfor %}
+                            {% endif %}
+                            {% csrf_token %}
+                            <div class="md-form form-sm">
+                                <i class="fa fa-link text-primary prefix"></i>
+                                <div class="ml-5">
+                                    <select class="mdb-select" name="{{ form.social_media.name }}"
+                                            id="{{ form.social_media.id_for_label }}" required>
+                                        {% for value, label in form.social_media.field.choices %}
+                                            {% if value == sociallink.social_media %}
+                                                <option value="{{ value }}" selected>{{ label }}</option>
+                                            {% endif %}{% endfor %}
+                                    </select>
+                                    <label class="ml-5"
+                                           for="{{ form.social_media.id_for_label }}">{{ form.social_media.label }}</label>
+                                </div>
+                            </div>
+                            {% if form.link.errors %}
+                                {% for error in form.link.errors %}
+                                    <p class="red-text mb-1"><strong>{{ error|escape }}</strong></p>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="md-form">
+                                <i class="prefix"></i>
+                                <label for="{{ form.link.id_for_label }}">Link</label>
+                                <input type="text" class="form-control" name="{{ form.link.name }}"
+                                       value="{{ form.link.value }}" maxlength="200" required
+                                       id="{{ form.link.id_for_label }}"/>
+                            </div>
+                            <button class="btn btn-primary float-right" type="submit">Update</button>
+                        </form>
+                        <form action="{% url 'oauth:link-delete' request.user.username sociallink.social_media %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-danger float-right" type="submit" onclick="return confirm('Are you sure to delete?');">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block customscripts %}
+    <script>
+        $(document).ready(function () {
+            $('.mdb-select').material_select();
+        });
+    </script>
+{% endblock %}
+
+{% block footer %}{% endblock %}

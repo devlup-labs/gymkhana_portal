@@ -1,0 +1,40 @@
+{% load humanize %}
+<!--Event Modals-->
+{% for event in event_list %}
+    <div class="modal fade" id="event-{{ forloop.counter }}" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog cascading-modal" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header primary-color white-text">
+                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="title">{{ event.club.name }} Event</h4>
+                </div>
+                <!--Body-->
+                <div class="modal-body mb-0">
+                    <h3 class="h3-responsive text-center mb-2">{{ event.name }}</h3>
+                    <div class="container-fuild">
+                        <div class="row text-center">
+                            <div class="col-4"><i
+                                    class="fa fa-calendar-o event-modal"></i>{{ event.date|naturalday }}</div>
+                            <div class="col-4"><i class="fa fa-clock-o event-modal"></i>{{ event.date|time }}</div>
+                            <div class="col-4"><i class="fa fa-map-marker event-modal"></i>{{ event.location }}
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-justify">{{ event.description|linebreaks }}</p>
+                    <div class="text-right mt-1-half">
+                        <button class="btn btn-sm btn-primary mb-1" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+{% endfor %}
+<!--End Modals-->

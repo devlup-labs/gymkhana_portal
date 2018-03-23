@@ -1,0 +1,32 @@
+{% if not activity_list %}
+    <h4 class="h4-responsive text-center">No activities to display</h4>
+{% else %}
+    <!--Accordion wrapper-->
+    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+        {% for activity in activity_list %}
+            <div class="card">
+                <div class="card-header" role="tab" id="heading{{ forloop.counter }}">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                       href="#collapse{{ forloop.counter }}"
+                       aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                        <h5 class="mb-0">
+                            {{ activity.name }} <i class="fa fa-angle-down rotate-icon"></i>
+                        </h5>
+                    </a>
+                </div>
+                <div id="collapse{{ forloop.counter }}" class="collapse" role="tabpanel"
+                     aria-labelledby="heading{{ forloop.counter }}">
+                    <div id="description" class="card-block">
+                        {{ activity.description|safe }}
+                    </div>
+                    {% if activity.custom_html %}
+                        <div>
+                            {{ activity.custom_html|safe }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <!--/.Accordion wrapper-->
+{% endif %}

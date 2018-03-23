@@ -1,0 +1,62 @@
+{% extends 'forum/base.html' %}
+{% load staticfiles %}
+{% block title %}Konnekt{% endblock %}
+{% block navtitle %}<strong>Konnekt - Search Skills</strong>{% endblock %}
+{% block customstyles %}
+    <style>
+        html,
+        body,
+        main,
+        .view {
+            height: 100%;
+        }
+
+        .konnekt-background {
+            margin-left: 240px;
+            height: 100%;
+            background: url('{% static 'assets/others/konnekt.svg' %}') no-repeat center;
+            background-size: cover;
+        }
+
+        @media (max-width: 540px) {
+            .konnekt-background {
+                background: url('{% static 'assets/others/konnekt-sm.svg' %}') no-repeat center;
+                background-size: cover;
+            }
+        }
+
+        @media (max-width: 1440px) {
+            .konnekt-background {
+                margin-left: 0;
+            }
+        }
+
+        main {
+            padding-left: 0 !important;
+        }
+
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="konnekt-background">
+        <main>
+            <div class="container">
+                <div class="row flex-center">
+                    <div class="card-block col-md-10">
+                        <form action="{% url 'konnekt:search' %}" method="GET">
+                            <div class="md-form input-group">
+                                <input type="search" name="q" class="form-control"
+                                       placeholder="Search for skill or name...">
+                                <span class="input-group-btn"><button class="btn btn-primary btn-lg"
+                                                                      type="submit">Go!</button></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}

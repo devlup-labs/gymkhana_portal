@@ -1,0 +1,37 @@
+{% load staticfiles %}
+<div class="container mt-1">
+    <div class="row flex-center">
+        <div class="col-sm-10">
+            <!--Card Primary-->
+            <div class="card primary-color text-center z-depth-2 mt-2 mb-2">
+                <div class="card-block">
+                    <h3 class="h3-responsive white-text mb-0">{{ clubtitle|default:'Clubs' }}</h3>
+                </div>
+            </div>
+            <!--/.Card Primary-->
+        </div>
+        {% for club in club_list %}
+            <div class="col-lg-4 col-md-6 wow fadeIn" data-wow-delay="0.5s" style="visibility: visible;">
+                <!--columns-->
+                <div>
+                    <!--Collection card-->
+                    <div class="card collection-card z-depth-1-half mt-1 mb-1">
+                        <!--Card image-->
+                        <div class="view hm-zoom">
+                            <img src="{% if club.cover %}{{ club.cover.crop.540x360 }}{% else %}{% static 'assets/others/club-default.jpg' %}{% endif %}"
+                                 class="img-responsive" alt="">
+                            <div class="stripe light">
+                                <a href="{{ club.get_absolute_url }}">
+                                    <p>{{ club.name }} <i class="fa fa-chevron-right"></i></p>
+                                </a>
+                            </div>
+                        </div>
+                        <!--/.Card image-->
+                    </div>
+                    <!--/.Collection card-->
+                </div>
+                <!--/column-->
+            </div>
+        {% endfor %}
+    </div>
+</div>

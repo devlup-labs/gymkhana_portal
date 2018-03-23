@@ -1,0 +1,21 @@
+{% load staticfiles %}
+<div class="col-lg-4 col-md-6 mb-r">
+    <div class="col-md-6 float-left">
+        <div class="avatar">
+            <a href="{{ userprofile.get_absolute_url }}">
+                <img src="{% if userprofile.avatar %}{{ userprofile.avatar.crop.200x200 }}{% else %}{% static 'assets/others/missing.png' %}{% endif %}">
+            </a>
+        </div>
+    </div>
+    <div class="col-md-6 float-right">
+        <h4><a class="black-text"
+               href="{{ userprofile.get_absolute_url }}">{{ userprofile.user.get_full_name }}</a></h4>
+        <p>{{ userprofile.about|linebreaks }}</p>
+        <a class="icons-sm email-ic" href="mailto:{{ userprofile.user.email }}"><i
+                class="fa fa-envelope-o"></i> </a>
+        {% for link in userprofile.user.sociallink_set.all|slice:":5" %}
+            <a class="icons-sm {{ link.get_sm_ic }}" target="_blank" href="{{ link.link }}"><i
+                    class="{{ link.get_fai }}"></i></a>
+        {% endfor %}
+    </div>
+</div>

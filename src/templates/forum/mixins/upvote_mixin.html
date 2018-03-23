@@ -1,0 +1,14 @@
+<li class="item-reply">
+    <a class="upvote-btn"
+       data-url="{{ object.get_api_upvote_toggle_url }}?format=json"
+       data-upvotes="{{ object.upvotes.count }}"
+       data-toggle="tooltip" data-placement="left"
+       title="{% if request.user.userprofile in object.upvotes.all %}Remove Upvote{% else %}Upvote{% endif %}">
+        <button class="Button" type="button">
+            <span class="Button-label"><i
+                    class="fa fa-thumbs-up"></i>
+                <span class="upvoteCount">{{ object.upvotes.count }}</span>
+            </span>
+        </button>
+    </a>
+</li>

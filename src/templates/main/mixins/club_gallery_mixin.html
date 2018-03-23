@@ -1,0 +1,11 @@
+<div class="col-md-12">
+    <div class="mdb-lightbox">{% for photo in gallery.public %}
+        <figure class="col-lg-3 col-md-4">
+            <a href="{{ photo.get_lightbox_url }}"
+               data-size="{{ size|default:'1275x850' }}">
+                <img src="{{ photo.get_lightbox_url }}"
+                     class="img-fluid">
+            </a>
+        </figure>{% endfor %}
+    </div>
+</div>

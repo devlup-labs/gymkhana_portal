@@ -1,0 +1,48 @@
+{% load staticfiles humanize %}
+{% for answer in answer_list %}
+    <div class="PostStream-item">
+        <article class="Post undefined CommentPost">
+            <div>
+                <div class="Post-header">
+                    <ul>
+                        <li class="item-user">
+                            <div class="PostUser"><h3><a
+                                    href="{{ answer.author.get_absolute_url }}"><img
+                                    class="Avatar PostUser-avatar"
+                                    src="{% if answer.author.avatar %}{{ answer.author.avatar.crop.200x200 }}{% else %}{% static 'assets/others/missing.png' %}{% endif %}">
+                                <span class="username"><a
+                                        href="{{ answer.author.get_absolute_url }}"> {{ answer.author.user.get_full_name }}</a></span></a>
+                            </h3>
+                                <ul class="PostUser-badges badges"></ul>
+                            </div>
+                        </li>
+                        <li class="item-meta">
+                            <div class="Dropdown PostMeta">{{ answer.created_at|naturaltime }}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="description"
+                     class="Post-body">{{ answer.content|safe }}</div>
+                <aside class="Post-actions">
+                    <ul>
+                        {% include 'forum/mixins/upvote_mixin.html' with object=answer %}
+                        {% if answer.author == request.user.userprofile %}
+                            <li class="item-reply">
+                                <form action="{{ answer.get_delete_url }}" method="post"
+                                        onsubmit="return confirm('Are you sure you want to delete this answer?')">
+                                    {% csrf_token %}
+                                    <button class="Button Button--link" type="submit" data-toggle="tooltip"
+                                            data-placement="left" title="Delete">
+                                        <span class="Button-label"><i class="fa fa-trash-o"></i></span>
+                                    </button>
+                                </form>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </aside>
+            </div>
+        </article>
+        <div class="Post-quoteButtonContainer"></div>
+    </div>
+{% endfor %}

@@ -1,0 +1,37 @@
+{% load humanize %}
+<div class="d-flex justify-content-center mb-2 wow fadeIn" data-wow-delay="0.2s" style="visibility: visible;">
+    <div><i class="fa fa-lightbulb-o fa-2x mr-2"></i></div>
+    <div><h3 class="h3-responsive">Upcoming Event{{ event_list|pluralize }}</h3></div>
+</div>
+{% if not event_list %}
+    <h4 class="h4-responsive text-center">No events to display</h4>
+{% else %}
+    <div class="list-group wow fadeIn" data-wow-delay="0.3s" style="visibility: visible;">
+        <table class="table mb-0" id="events">
+            <thead>
+            <tr class="primary-color">
+                <th class="text-center"><i class="fa fa-external-link"></i></th>
+                <th>Name</th>
+                <th class="text-center"><i class="fa fa-calendar-o"></i></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for event in event_list %}
+                <tr class="list-group-item-action">
+                    <td class="text-center"><a data-toggle="modal"
+                                               data-target="#event-{{ forloop.counter }}"><i
+                            class="fa fa-chevron-right"></i></a></td>
+                    <td><a data-toggle="modal"
+                           data-target="#event-{{ forloop.counter }}">{{ event.name|truncatechars:26 }}</a>
+                    </td>
+                    <td class="text-center">
+                        <a data-toggle="modal" data-target="#event-{{ forloop.counter }}">
+                            <small>{{ event.date|naturalday }}</small>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}

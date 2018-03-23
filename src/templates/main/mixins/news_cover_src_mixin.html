@@ -1,0 +1,1 @@
+{% load staticfiles %}{% if not news.cover %}{% static 'assets/others/news_cover_default.png' %}{% else %}{{ news.cover.crop.860x573 }}{% endif %}

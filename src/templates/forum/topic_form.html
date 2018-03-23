@@ -1,0 +1,77 @@
+{% extends 'forum/base.html' %}
+{% load staticfiles %}
+{% block title %}Add New Topic | {{ block.super }}{% endblock %}
+{% block mdbcss %}
+    <link rel="stylesheet" href="{% static 'css/mdbadmin.min.css' %}">{% endblock %}
+{% block main %}
+    <div class="row">
+        <!--Form without header-->
+        <div class="card">
+            <div class="card-block">
+
+                <!--Header-->
+                <div>
+                    <h3><i class="fa fa-pencil"></i> {% block formtitle %}Post New Topic:{% endblock %}</h3>
+                    <hr class="mt-2 mb-2">
+                </div>
+
+                <!--Body-->
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <p class="red-text">{{ field.errors }}</p>
+                    {% endfor %}
+                    <label for="id_category">Category</label>
+                    <select class="mdb-select" name="category" id="id_category" required>
+                        {% for value, label in form.category.field.choices %}
+                            <option value="{{ value }}" {% if topic.category == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="md-form">
+                        {{ form.title }}
+                        <label for="{{ form.title.name }}">{{ form.title.label }}</label>
+                    </div>
+                    <div class="md-form">
+                        <div class="chips chips-placeholder"></div>
+                        <input type="hidden" name="tags" id="id_tags"/>
+                    </div>
+                    <div class="md-form">
+                        {{ form.content }}
+                    </div>
+                    <div>
+                        {% block updatebutton %}
+                            <button class="btn btn-deep-orange" type="submit" value="submit"
+                                    onsubmit="return confirm('Are you sure you want to post this?');">Post Topic
+                            </button>
+                        {% endblock %}
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--/Form without header-->
+    </div>
+{% endblock %}
+
+{% block customscripts %}
+    {{ form.media }}
+    <script>
+        $(document).ready(function () {
+            $('.mdb-select').material_select();
+        });
+
+        $('.chips-placeholder').material_chip({
+            placeholder: 'Enter a tag',
+            secondaryPlaceholder: '+Tag',
+        });
+
+        $("form").submit(function (e) {
+            e.preventDefault();
+            var $input = $('.chips-placeholder').material_chip('data');
+            var $tags = $input.map(function (elem) {
+                return elem.tag;
+            }).join(",");
+            $('#id_tags').val($tags);
+            this.submit();
+        });
+    </script>
+{% endblock %}

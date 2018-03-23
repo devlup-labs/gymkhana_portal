@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+{% block title %}Activate account for {{ user.username }}{% endblock %}
+{% block main %}
+    <div style="height: 100vh">
+        <div class="flex-center flex-column text-center">
+            <h1 class="animated fadeIn mb-2">Hi {{ user.username }},</h1>
+            <h5 class="animated fadeIn mb-1">Please click on the link below to confirm your registration:</h5>
+            <h5 class="animated fadeIn mb-1 blue-text"><a href="{{ user.userprofile.get_activation_url }}"
+                                                          class="btn btn-lg btn-secondary" role="button">Activate</a>
+            </h5>
+        </div>
+    </div>
+{% endblock %}
+{% block footer %}{% endblock %}
