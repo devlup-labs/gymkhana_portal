@@ -1,0 +1,46 @@
+{% extends 'forum/base.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% load hitcount_tags %}
+{% block title %}Topics answered by you | {{ block.super }}{% endblock %}
+{% block mdbcss %}
+    <link rel="stylesheet" href="{% static 'css/mdbadmin.min.css' %}">{% endblock %}
+{% block customstyles %}
+    <link rel="stylesheet" href="{% static 'css/forumindex.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forum.css' %}">
+    <style>
+        .item-excerpt img {
+            max-height: 10rem;
+            margin: 0 auto;
+        }
+    </style>
+{% endblock %}
+{% block navtitle %}Topics answered by you{% endblock %}
+
+{% block main %}
+    <div class="fixed-action-btn-fix"><a class="btn-floating btn-large red waves-effect waves-light"
+                                         data-placement="left" data-toggle="tooltip" href="{% url 'forum:add_topic' %}"
+                                         role="button" title="" data-original-title="Create New Topic"><i
+            class="fa fa-plus"></i></a></div>
+    <div class="App-content rellax header mb-3">
+        <div id="content">
+            <div class="IndexPage">
+                <!--main body-->
+                <div class="container pt-1">
+                    <!--filter-->
+                    <div class="IndexPage-results">
+                        <!--Discussion list-->
+                        <div class="DiscussionList">
+                            <ul class="DiscussionList-discussions">
+                                {% include 'forum/mixins/topic_list_mixin.html' with topic_list=topic_list %}
+                            </ul>
+                            <div>
+                                {% include 'paginator.html' with is_paginated=is_paginated range=range page_obj=page_obj paginator=paginator %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

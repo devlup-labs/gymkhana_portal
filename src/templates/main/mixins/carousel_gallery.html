@@ -1,0 +1,33 @@
+<!--Carousel Wrapper-->
+<div id="carousel-gallery" class="carousel slide" data-ride="carousel">
+    <!--Indicators-->
+    <ol class="carousel-indicators">
+        {% for item in gallery.public|slice:":6" %}
+            <li data-target="#carousel-gallery" data-slide-to="{{ forloop.counter0 }}"{% if forloop.counter == 1 %}
+                class="active"{% endif %}></li>
+        {% endfor %}
+    </ol>
+    <!--/.Indicators-->
+    <!--Slides-->
+    <div class="carousel-inner" role="listbox">
+        {% for photo in gallery.public|slice:":6" %}
+            <div class="col-12 carousel-item{% if forloop.counter == 1 %} active{% endif %}">
+                <div class="waves-effect waves-light"><img src="{{ photo.get_carousel_gallery_url }}"
+                                                           class="img-fluid"></div>
+            </div>
+        {% endfor %}
+    </div>
+    <!--/.Slides-->
+
+    <!--Controls-->
+    <a class="carousel-control-prev" href="#carousel-gallery" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carousel-gallery" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+    <!--/.Controls-->
+</div>
+<!--/.Carousel Wrapper-->

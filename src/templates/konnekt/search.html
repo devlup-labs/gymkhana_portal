@@ -1,0 +1,58 @@
+{% extends 'forum/base.html' %}
+{% load staticfiles %}
+{% block title %}{{ request.GET.q }} - Konnekt{% endblock %}
+{% block navtitle %}Konnekt - results for {{ request.GET.q }}{% endblock %}
+{% block customstyles %}
+    <style>
+        .media .media-left {
+            padding: 10px;
+        }
+        .media .media-left img.konnekt {
+            width: 6.5rem;
+        }
+    </style>
+{% endblock %}
+{% block main %}
+    <div class="container">
+        <form method="GET" action="">
+            <div class="md-form input-group">
+                <input type="search" role="search" name="q" class="form-control" value="{{ request.GET.q }}" id="id_q"
+                       placeholder="Search skill or name...">
+                <span class="input-group-btn"><button class="btn btn-primary btn-lg" type="submit"><i
+                        class="fa fa-search"></i></button></span>
+            </div>
+        </form>
+        <hr/>
+        <div class="col-md-12" style="min-height: 65vh;">
+            {% if not userprofile_list %}
+                <div class="flex-center" style="height: 40vh;">
+                    <h4 class="h4-responsive">No results matching your search!</h4>
+                </div>
+            {% endif %}
+            {% if userprofile_list %}
+                <h3 class="h3-responsive mt-2 mb-2 text-center">{{ userprofile_list.count }}
+                    person{{ userprofile_list.count|pluralize }} found!</h3>
+            {% endif %}
+            <div class="container-fluid">
+                {% for user in userprofile_list %}
+                    <div class="row flex-center mb-2">
+                        <div class="col-lg-2 col-sm-4 col-md-3 media mb-1 flex-center">
+                            <a class="media-left waves-light" href="{{ user.get_absolute_url }}">
+                                <img class="rounded-circle konnekt" src="{% if user.avatar %}{{ user.avatar.crop.100x100 }}{% else %}{% static 'assets/others/missing.png' %}{% endif %}"
+                                     alt="Generic placeholder image">
+                            </a>
+                        </div>
+                        <div class="col-lg-10 col-sm-8 col-md-9 media-body text-center mt-1">
+                            <h4 class="media-heading mb-1">{{ user.user.get_full_name }}</h4>
+                            <h4 class="d-flex flex-wrap flex-center">
+                                {% for skill in user.skills_as_list %}
+                                    <span class="chip"><a
+                                            href="{% url 'konnekt:search' %}?q={{ skill|urlencode }}">{{ skill }}</a></span>{% endfor %}
+                            </h4>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+{% block title %}Page not found!{% endblock %}
+
+{% block navbar %}
+<nav class="navbar fixed-top navbar-toggleable-md navbar-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="{% url 'main:index' %}">
+                        <img src="{% static 'assets/favicon.png' %}" alt="logo" style="height: 2.2rem;width: auto;">
+                    </a>
+                </div>
+            </nav>
+{% endblock %}
+
+{% block main %}
+    <div class="container mt-5 mb-3">
+        <div class="d-flex justify-content-center text-center">
+            <div class="flex-column"><i class="fa fa-compass" style="font-size: 20rem; color: rgba(41,58,72,.8)"></i>
+                <h1 class="h1-responsive">Page Not Found</h1>
+                <h4 class="h4-responsive">The link you followed may be broken, or the page may have been removed.</h4>
+                <div><a href="{% url 'main:index' %}" role="button" class="btn btn-large btn-primary"><i
+                        class="fa fa-home left"></i> Home</a>
+                    <a href="{% url 'forum:index' %}" role="button" class="btn btn-large btn-primary"><i
+                            class="fa fa-newspaper-o left"></i> Forum</a></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block customscripts %}
+<script>
+new WOW().init();
+</script>
+{% endblock %}

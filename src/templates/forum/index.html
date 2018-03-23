@@ -1,0 +1,55 @@
+{% extends 'forum/base.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% load hitcount_tags %}
+{% block mdbcss %}
+    <link rel="stylesheet" href="{% static 'css/mdbadmin.min.css' %}">{% endblock %}
+{% block customstyles %}
+    <link rel="stylesheet" href="{% static 'css/forumindex.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forum.css' %}">
+    <style>
+        .item-excerpt img {
+            max-height: 10rem;
+            margin: 0 auto;
+        }
+    </style>
+{% endblock %}
+{% block navtitle %}Students' Gymkhana Forum{% endblock %}
+
+{% block main %}
+    <div class="fixed-action-btn-fix"><a class="btn-floating btn-large red waves-effect waves-light"
+                                         data-placement="left" data-toggle="tooltip" href="{% url 'forum:add_topic' %}"
+                                         role="button" title="" data-original-title="Create New Topic"><i
+            class="fa fa-plus"></i></a></div>
+    <div class="container">
+        <form method="GET" action="">
+            <div class="md-form input-group">
+                <input type="search" role="search" name="q" class="form-control" value="{{ request.GET.q }}" id="id_q"
+                       placeholder="Search forum...">
+                <span class="input-group-btn"><button class="btn btn-primary btn-lg" type="submit"><i
+                        class="fa fa-search"></i></button></span>
+            </div>
+        </form>
+    </div>
+    <div class="App-content rellax header mb-3" style="min-height: 65vh;">
+        <div id="content">
+            <div class="IndexPage">
+                <!--main body-->
+                <div class="container pt-1">
+                    <!--filter-->
+                    <div class="IndexPage-results">
+                        <!--Discussion list-->
+                        <div class="DiscussionList">
+                            <ul class="DiscussionList-discussions">
+                                {% include 'forum/mixins/topic_list_mixin.html' with topic_list=topic_list %}
+                            </ul>
+                            <div>
+                                {% include 'paginator.html' with is_paginated=is_paginated range=range page_obj=page_obj paginator=paginator %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

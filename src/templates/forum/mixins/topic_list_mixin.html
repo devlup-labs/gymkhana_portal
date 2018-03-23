@@ -1,0 +1,67 @@
+{% load staticfiles humanize %}
+{% if not topic_list %}
+    <div class="flex-center" style="height: 50vh">
+        <h2 class="h2-responsive animated fadeIn">No topics found</h2>
+    </div>
+{% else %}
+{% for topic in topic_list %}
+    <li>
+        <div class="DiscussionListItem"><a
+                class="Slidable-underneath Slidable-underneath--left Slidable-underneath--elastic disabled"><i
+                class="icon fa fa-fw fa-check "></i></a>
+            <div class="DiscussionListItem-content Slidable-content"><a
+                    href="{{ topic.author.get_absolute_url }}"
+                    class="DiscussionListItem-author"
+                    title=""
+                    data-original-title="">
+                <img class="Avatar"
+                     src="{% if topic.author.avatar %}{{ topic.author.avatar.crop.50x50 }}{% else %}{% static 'assets/others/missing.png' %}{% endif %}"></a>
+                <a href="{{ topic.get_absolute_url }}"
+                   class="DiscussionListItem-main">
+                    <div class="h4-responsive">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <b>
+                                    {{ topic.title }}
+                                </b>
+                            </div>
+                            <div class="col-md-2 pull-right">
+                                <span style="font-size: small">
+                                    <span class="mr-2" data-toggle="tooltip" data-placement="left"
+                                          title="Upvote{{ topic.upvotes.count|pluralize }}">
+                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ topic.upvotes.count }}
+                                    </span>
+                                    <span class="mr-2" data-toggle="tooltip" data-placement="left"
+                                          title="Answer{{ topic.answer_set.count|pluralize }}">
+                                        <i class="fa fa-comment-o" aria-hidden="true"></i> {{ topic.answer_set.count }}
+                                    </span>
+                                    <span data-toggle="tooltip" data-placement="left"
+                                          title="View{{ topic.hit_count.hits|pluralize }}"><i class="fa fa-eye"></i>
+                                        {{ topic.hit_count.hits }}</span>
+                                </span>
+                            </div>
+                        </div>
+                        <span style="font-size: small"><b>{{ topic.author.user.get_full_name }}</b>, {{ topic.author.user.userprofile.get_prog_display }}, {{ topic.author.user.userprofile.get_branch_display }}, {{ topic.author.user.userprofile.get_year_display }}
+                        </span>
+                    </div>
+                    <ul class="DiscussionListItem-info">
+                        {% if topic.answer_set.first %}
+                            <li class="item-terminalPost"><span><i
+                                    class="icon fa fa-fw fa-reply "></i> <span
+                                    class="username">{{ topic.answer_set.first.author.user.get_full_name }}</span> replied {{ topic.answer_set.first.created_at|naturaltime }}</span>
+                            </li>
+                            <li class="item-excerpt">
+                                <span>{{ topic.answer_set.first.content|safe|truncatechars_html:150 }}</span>
+                            </li>
+                        {% else %}
+                            <li class="item-terminalPost"><span
+                                    class="username">No answers yet. Be the first to answer!!!</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </a>
+            </div>
+        </div>
+    </li>
+{% endfor %}
+{% endif %}

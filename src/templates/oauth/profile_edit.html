@@ -1,0 +1,244 @@
+{% extends 'forum/base.html' %}
+{% load staticfiles %}
+{% block title %}Edit Profile: {{ userprofile.user.get_full_name }}{% endblock %}
+{% block customstyles %}
+    <style>
+        .card-wrapper {
+            height: 20rem;
+        }
+
+        .chips.chips-placeholder {
+            margin-bottom: 0 !important;
+        }
+
+        img {
+            width: inherit; /* This rule is very important, please do not ignore this! */
+        }
+
+        .card-up {
+            background: url('{% include 'oauth/mixins/user_cover_src_mixin.html' with userprofile=userprofile %}') center;
+            background-size: cover;
+        }
+    </style>
+{% endblock %}
+{% block navtitle %}Update Profile: {{ userprofile.user.get_full_name }}{% endblock %}
+{% block main %}
+    <div class="mb-5">
+        <div class="container-fluid">
+            <div class="row text-center flex-center">
+                <!--First column-->
+                <div class="col-md-8">
+                    <!--Rotating card-->
+                    <div class="card-wrapper">
+                        <div id="card-1">
+                            <div class="face front" style="height: 20rem;">
+                                <!-- Image-->
+                                <div class="card-up">
+                                </div>
+                                <!--Avatar-->
+                                <div class="avatar"><img
+                                        src="{% if userprofile.avatar %}{{ userprofile.avatar.crop.150x150 }}{% else %}{% static 'assets/others/missing.png' %}{% endif %}"
+                                        class="rounded-circle img-responsive">
+                                </div>
+                                <!--Content-->
+                                <div class="card-block">
+                                    <h4>{{ userprofile.user.get_full_name }}</h4>
+                                    <span> ({{ userprofile.roll }})</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/.Rotating card-->
+                </div>
+                <!--/First column-->
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <!--Naked Form-->
+                    <div class="card-block">
+                        <!--Header-->
+                        <div class="text-center">
+                            <h3><i class="fa fa-pencil"></i> Update Details:</h3>
+                            <hr class="mt-2 mb-2">
+                        </div>
+                        {% if form.non_field_errors %}
+                            {% for error in form.non_field_errors %}
+                                <div class="red-text">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                            <br>
+                        {% endif %}
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <!--Body-->
+                            {% if form.phone.errors %}
+                                {% for error in form.phone.errors %}
+                                    <p class="red-text mb-1"><strong>{{ error|escape }}</strong></p>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="md-form form-sm">
+                                <i class="fa fa-phone prefix"></i>
+                                {{ form.phone }}
+                                <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+                            </div>
+                            {% if form.avatar.errors %}
+                                {% for error in form.avatar.errors %}
+                                    <p class="red-text mb-1"><strong>{{ error|escape }}</strong></p>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="md-form mb-3">
+                                <div class="file-field">
+                                    <div class="btn btn-primary btn-sm">
+                                        <span>Choose file</span>
+                                        {{ form.avatar.0 }}
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        {% if form.avatar.value %}
+                                            <input class="file-path validate" type="text"
+                                                   placeholder="{{ form.avatar.value }}">
+                                        {% else %}
+                                            <input class="file-path validate" type="text"
+                                                   placeholder="Upload a profile picture">
+                                        {% endif %}
+                                    </div>
+                                    <span>{{ form.avatar.label }}</span>
+                                    {% if userprofile.avatar %}
+                                        <input type="checkbox" name="avatar-clear" id="avatar-clear_id"/>
+                                        <label for="avatar-clear_id" style="float: right">Delete</label><br/>
+                                    {% endif %}
+                                </div>
+                                <span class="red-text" id="avatar_error"></span>
+                            </div>
+                            {% if form.cover.errors %}
+                                {% for error in form.cover.errors %}
+                                    <p class="red-text mb-1"><strong>{{ error|escape }}</strong></p>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="md-form mb-3">
+                                <div class="file-field">
+                                    <div class="btn btn-primary btn-sm">
+                                        <span>Choose file</span>
+                                        {{ form.cover.0 }}
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        {% if form.cover.value %}
+                                            <input class="file-path validate" type="text"
+                                                   placeholder="{{ form.cover.value }}">
+                                        {% else %}
+                                            <input class="file-path validate" type="text"
+                                                   placeholder="Upload a cover photo">
+                                        {% endif %}
+                                    </div>
+                                    <span>{{ form.cover.label }}</span>
+                                    {% if userprofile.cover %}
+                                        <input type="checkbox" name="cover-clear" id="cover-clear_id"/>
+                                        <label for="cover-clear_id" style="float: right">Delete</label><br/>
+                                    {% endif %}
+                                </div>
+                                <span class="red-text" id="cover_error"></span>
+                            </div>
+                            {% if form.hometown.errors %}
+                                {% for error in form.hometown.errors %}
+                                    <p class="red-text mb-1"><strong>{{ error|escape }}</strong></p>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="md-form form-sm">
+                                <i class="fa fa-map-marker text-primary prefix"></i>
+                                {{ form.hometown }}
+                                <label for="{{ form.hometown.id_for_label }}">{{ form.hometown.label }}</label>
+                            </div>
+                            {% if form.year.errors %}
+                                {% for error in form.year.errors %}
+                                    <p class="red-text mb-1"><strong>{{ error|escape }}</strong></p>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="md-form form-sm">
+                                <i class="fa fa-calendar-o text-primary prefix"></i>
+                                <div class="ml-5">
+                                    {{ form.year }}
+                                    <label class="ml-5" for="{{ form.year.id_for_label }}">{{ form.year.label }}</label>
+                                </div>
+                            </div>
+                            {% if form.skills.errors %}
+                                {% for error in form.skills.errors %}
+                                    <p class="red-text mb-1"><strong>{{ error|escape }}</strong></p>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="md-form">
+                                <div class="chips chips-placeholder"></div>
+                                <p>
+                                    <small>Press enter key after typing each skill.</small>
+                                </p>
+                                <input type="hidden" name="{{ form.skills.name }}" id="{{ form.skills.id_for_label }}"/>
+                            </div>
+                            {% if form.about.errors %}
+                                {% for error in form.about.errors %}
+                                    <p class="red-text mb-1"><strong>{{ error|escape }}</strong></p>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="md-form">
+                                <textarea type="text" name="{{ form.about.name }}" id="{{ form.about.id_for_label }}"
+                                          class="md-textarea"
+                                          length="160">{{ form.about.value }}</textarea>
+                                {{ form.about.label_tag }}
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary" onsubmit="">Save</button>
+                                <a role="button" class="btn btn-success"
+                                   href="{{ userprofile.get_absolute_url }}">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                    <!--Naked Form-->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block customscripts %}
+    <script>
+        $(document).ready(function () {
+            $('.mdb-select').material_select();
+        });
+
+        $('.chips-placeholder').material_chip({
+            placeholder: 'Enter another skill',
+            secondaryPlaceholder: '+Skills',
+            data: [
+                {% for skill in userprofile.skills_as_list %}
+                    {tag: '{{ skill }}'},{% endfor %}],
+        });
+
+        $("form").submit(function (e) {
+            e.preventDefault();
+            $("#avatar_error").html("");
+            $("#cover_error").html("");
+            var error = false;
+            if ($('#{{ form.avatar.id_for_label }}')[0].files[0]) {
+                var avatar_size = $('#{{ form.avatar.id_for_label }}')[0].files[0].size;
+                if (avatar_size > 1048576) {
+                    $("#avatar_error").html("File size is greater than 1MB");
+                    error = true;
+                }
+            }
+            if ($('#{{ form.cover.id_for_label }}')[0].files[0]) {
+                var cover_size = $('#{{ form.cover.id_for_label }}')[0].files[0].size;
+                if (cover_size > 2097152) {
+                    $("#cover_error").html("File size is greater than 2MB");
+                    error = true;
+                }
+            }
+            if (error) return;
+            var $input = $('.chips-placeholder').material_chip('data');
+            var $skills = $input.map(function (elem) {
+                return elem.tag;
+            }).join(",");
+            $('#{{ form.skills.id_for_label }}').val($skills);
+            this.submit();
+        });
+    </script>
+{% endblock %}
+
+{% block footer %}{% endblock %}

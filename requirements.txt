@@ -1,0 +1,11 @@
+django == 1.11.3
+django-ckeditor == 5.3.0
+django-hitcount == 1.2.2
+django-versatileImageField == 1.7.1
+Pillow == 4.2.1
+djangorestframework == 3.6.3
+django-photologue == 3.7
+django-sortedm2m == 1.4.0
+django-cleanup == 1.0.1
+django-htmlmin == 0.10.0
+psycopg2

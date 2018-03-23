@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+
+{% block main %}
+    <div class="container mt-4">
+        <h2 class="title text-center" style="margin-top: 8rem;">Responses</h2>
+        <!--Accordion wrapper-->
+        <div class="accordion mt-4 mb-4" id="accordion" role="tablist" aria-multiselectable="true">
+            {% for contact in contact_list %}
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingTwo">
+                        <a class="collapsed" style="color: midnightblue" data-toggle="collapse" data-parent="#accordion"
+                           href="#contact-{{ contact.id }}" aria-expanded="false"
+                           aria-controls="contact-{{ contact.id }}">
+                            <h4 class="mb-0 text-primary"><b>
+                                {{ contact.subject }}</b>
+                                <i class="fa fa-angle-down rotate-icon"></i>
+                            </h4>
+                        </a>
+                    </div>
+                    <div id="contact-{{ contact.id }}" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="card-block container">
+                            <h4 class="h4-responsive">
+                                <i class="fa fa-user" aria-hidden="true"></i> <b>{{ contact.name }}</b>
+                                <span class="pull-right"><small>{{ contact.time }}</small></span><br></h4>
+                            <i class="fa fa-phone" aria-hidden="true"></i> <a
+                                href="tel:+91{{ contact.phone }}"> {{ contact.phone }}</a><br>
+                            <i class="fa fa-envelope" aria-hidden="true"></i><a
+                                href="mailto:{{ contact.email }}"> {{ contact.email }}</a>
+                            <span class="pull-right">{% comment %}
+                    <form class="right" method="POST" action="{% url 'main:contact_delete' contact.id %}">
+                        {% csrf_token %}
+                        <button class="btn-floating btn-small red darken-2" type="submit" value=""><b>X</b></button>
+                </form>{% endcomment %}
+                </span><br><br>
+                            <strong> Message : </strong><br>{{ contact.message }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!--/.Accordion wrapper-->
+    {% include 'paginator.html' with page_obj=page_obj is_paginated=is_paginated paginator=paginator range=range %}
+    </div>
+{% endblock %}

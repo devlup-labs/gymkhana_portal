@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<div class="col-lg-3 col-md-4 mt-1 wow fadeIn" data-wow-delay="0.5s" style="visibility: visible;">
+    <div class="text-center">
+        <div class="avatar">
+            <a href="{{ userprofile.get_absolute_url }}">
+                <img src="{% if userprofile.avatar %}{{ userprofile.avatar.crop.200x200 }}{% else %}{% static 'assets/others/missing.png' %}{% endif %}"
+                                                                                      class="rounded-circle"></a>
+        </div>
+        <h4><a class="black-text" href="{{ userprofile.get_absolute_url }}">{{ userprofile.user.get_full_name }}</a></h4>
+        <h5><i class="icons-sm-i fa fa-whatsapp green-text"></i><a
+                href="https://api.whatsapp.com/send?phone=91{{ userprofile.phone }}">+91-{{ userprofile.phone }}</a>
+        </h5>
+        <h5>{{ designation|default:'' }}</h5>
+        <p>{{ userprofile.about|linebreaks }}</p>
+        <a class="icons-sm email-ic" href="mailto:{{ userprofile.user.email }}"><i
+                class="fa fa-envelope-o"></i> </a>
+        {% for link in userprofile.user.sociallink_set.all|slice:":4" %}
+            <a class="icons-sm {{ link.get_sm_ic }}" target="_blank" href="{{ link.link }}"><i
+                    class="{{ link.get_fai }}"></i></a>
+        {% endfor %}
+    </div>
+</div>
