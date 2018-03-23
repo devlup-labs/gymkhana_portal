@@ -3,7 +3,7 @@ python:
   - "3.6"
 before_install:
   - export DJANGO_SETTINGS_MODULE=gymkhana.settings.prod
-  - export DJANGO_SECRET_KEY=q$o5mx19x9(9_^rzqf@o@s^t%t!ghix7($f9ymy49_^ryzq9x9
+  - export DJANGO_SECRET_KEY='q$o5mx19x9(9_^rzqf@o@s^t%t!ghix7($f9ymy49_^ryzq9x9'
 install:
   - pip3 install -r requirements.txt
   - pip3 install coveralls
