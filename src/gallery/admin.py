@@ -17,5 +17,6 @@ class GalleryAdminForm(forms.ModelForm):
 class GalleryAdmin(GalleryAdminDefault):
     form = GalleryAdminForm
 
+
 admin.site.unregister(Gallery)
 admin.site.register(Gallery, GalleryAdmin)

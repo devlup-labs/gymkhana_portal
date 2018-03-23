@@ -28,6 +28,7 @@ class ClubAdmin(admin.ModelAdmin):
 class ActivityAdmin(admin.ModelAdmin):
     list_display = ('name', 'club')
 
+
 # iterable list
 main_models = [
     SocialLink,
