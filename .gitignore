@@ -25,5 +25,5 @@ migrations
 /migrations
 migrations/*
 /migrations/*
-node_modules/*
+ui/node_modules/*
 bundles/local/*
