@@ -4,7 +4,7 @@ from django.db.models.signals import pre_save
 from .utils import unique_slug_generator
 from oauth.models import UserProfile
 from ckeditor_uploader.fields import RichTextUploadingField
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from hitcount.models import HitCountMixin
 
 

@@ -2,7 +2,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView, D
 from django.views.generic.detail import SingleObjectMixin
 from .models import Topic, Answer
 from .forms import TopicForm, AnswerForm
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.shortcuts import render, Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
