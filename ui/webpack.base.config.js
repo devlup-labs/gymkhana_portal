@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const port = process.env.PORT || 3000;
 
 module.exports = {
@@ -49,6 +50,10 @@ module.exports = {
     },
 
     plugins: [
+        new HtmlWebpackPlugin({
+            template: 'public/index.html',
+            favicon: 'public/favicon.ico'
+        }),
         new webpack.HotModuleReplacementPlugin(),
     ], // add all common plugins here
 
