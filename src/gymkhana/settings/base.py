@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sites',
     'rest_framework',
+    'webpack_loader',
     'versatileimagefield',
     'photologue',
     'sortedm2m',
