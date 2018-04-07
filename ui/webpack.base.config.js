@@ -1,32 +1,78 @@
-var path = require("path")
-var webpack = require('webpack')
+const path = require("path");
+const webpack = require('webpack');
+const port = process.env.PORT || 3000;
 
 module.exports = {
-    context: __dirname,
-
+    mode: 'development',
     entry: {
         // Add as many entry points as you have container-react-components here
-        App: './src/App',
+        App: './src/App.jsx',
         vendors: ['react']
     },
 
     output: {
         path: path.resolve('../src/static/bundles/local/'),
-        filename: "[name]-[hash].js"
+        filename: "[name]-[hash].js",
+        publicPath: '/'
     },
+
+    devtool: 'inline-source-map',
 
     externals: [], // add all vendor libs
 
-    plugins: [
-        new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js'),
-    ], // add all common plugins here
-
     module: {
-        loaders: [] // add all common loaders here
+        rules: [
+            {
+                test: /\.(js)$/,
+                exclude: /node_modules/,
+                use: ['babel-loader']
+            },
+            {
+                test: /\.(jsx)$/,
+                exclude: /node_modules/,
+                use: ['babel-loader']
+            },
+            // {
+            //     test: /\.css$/,
+            //     use: [
+            //         {
+            //             loader: 'style-loader'
+            //         },
+            //         {
+            //             loader: 'css-loader',
+            //             options: {
+            //                 modules: true,
+            //                 camelCase: true,
+            //                 sourceMap: true
+            //             }
+            //         }
+            //     ]
+            // }
+        ]
     },
 
-    resolve: {
-        modulesDirectories: ['node_modules', 'bower_components'],
-        extensions: ['', '.js', '.jsx']
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                vendors: {
+                    chunks: 'initial',
+                    test: 'vendors',
+                    name: 'vendors',
+                    enforce: true
+                }
+            }
+        }
+    },
+
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+    ], // add all common plugins here
+
+    devServer: {
+        host: 'localhost',
+        port: port,
+        historyApiFallback: true,
+        open: true,
+        hot: true
     }
-}
+};

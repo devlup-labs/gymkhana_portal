@@ -2,7 +2,7 @@ import React from "react"
 
 import Headline from "../components/Headline"
 
-export default class App1Container extends React.Component {
+export default class AppContainer extends React.Component {
     render() {
         return (
             <div className="container">
