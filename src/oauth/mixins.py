@@ -6,6 +6,6 @@ from django.views.generic.detail import SingleObjectMixin
 class SocialLinkOwnerMixin(LoginRequiredMixin, SingleObjectMixin):
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated() and request.user.id is not self.get_object().user.id:
+        if request.user.is_authenticated and request.user.id is not self.get_object().user.id:
             raise PermissionDenied
         return super(SocialLinkOwnerMixin, self).dispatch(request, *args, **kwargs)

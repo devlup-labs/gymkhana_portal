@@ -9,7 +9,7 @@ class UserAuthorMixin(LoginRequiredMixin, SingleObjectMixin):
     403 error
     """
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated() and request.user.id is not self.get_object().author.user.id:
+        if request.user.is_authenticated and request.user.id is not self.get_object().author.user.id:
             raise PermissionDenied
 
         return super(UserAuthorMixin, self).dispatch(request, *args, **kwargs)
