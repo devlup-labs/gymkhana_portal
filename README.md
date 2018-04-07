@@ -1,4 +1,4 @@
-# Gymkhana Portal ![Status active](https://img.shields.io/badge/Status-active%20development-2eb3c1.svg) ![Django 1.11.3](https://img.shields.io/badge/Django-1.11.3-green.svg) ![Python 3.6](https://img.shields.io/badge/Python-3.6-blue.svg)  
+# Gymkhana Portal ![Status active](https://img.shields.io/badge/Status-active%20development-2eb3c1.svg) ![Django 2.0.4](https://img.shields.io/badge/Django-2.0.4-green.svg) ![Python 3.6](https://img.shields.io/badge/Python-3.6-blue.svg)
 [![Build Status](https://travis-ci.org/devlup-labs/gymkhana_portal.svg?branch=master)](https://travis-ci.org/devlup-labs/gymkhana_portal)
 ## Web portal and forum for Students' Gymkhana of IIT Jodhpur
 ### Purpose
@@ -11,7 +11,7 @@ This project includes:
 ### Installation:
 Requirements:
 - Python 3 runtime
-- Django 1.11.3
+- Django 2.0.4
 - Other dependencies in `requirements.txt`
 
 Procedure:

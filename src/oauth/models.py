@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.db.models.signals import pre_save
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_text
