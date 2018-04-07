@@ -60,7 +60,7 @@ class UserProfileManager(models.Manager):
 
 
 def set_new_user_inactive(sender, instance, **kwargs):
-    if instance._state.adding is True:
+    if instance._state.adding is True and instance.is_superuser is False:
         instance.is_active = False
 
 
