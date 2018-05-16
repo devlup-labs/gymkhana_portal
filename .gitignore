@@ -25,8 +25,3 @@ migrations
 /migrations
 migrations/*
 /migrations/*
-ui/node_modules/*
-bundles/local/*
-ui/package-lock.json
-ui/yarn.lock
-ui/webpack-stats-local.json
