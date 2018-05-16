@@ -1,0 +1,31 @@
+
+table#events th i {
+    padding: 3%;
+}
+
+table#events td a {
+    margin: 0;
+}
+
+table#news th i {
+    padding: 3%;
+}
+
+table#news td a {
+    margin: 0;
+}
+
+.event-modal {
+    padding: 5%;
+}
+
+.news-modal {
+    padding: 5%;
+}
+
+.card-overlay {
+    height: 15rem;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}

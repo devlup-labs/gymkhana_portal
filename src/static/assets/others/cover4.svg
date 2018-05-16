@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 2560 1440" style="enable-background:new 0 0 2560 1440;" xml:space="preserve">
+<style type="text/css">
+	.st0{clip-path:url(#SVGID_2_);}
+	.st1{fill:#FABD05;}
+	.st2{fill:#34A853;}
+	.st3{fill:#4385F5;}
+	.st4{fill:#EB4235;}
+</style>
+<g>
+	<defs>
+		<rect id="SVGID_1_" width="2560" height="1440"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+	</clipPath>
+	<g class="st0">
+		<circle class="st1" cx="1716" cy="230" r="74"/>
+		
+			<rect x="750.4" y="799.4" transform="matrix(0.4264 0.9045 -0.9045 0.4264 1869.8544 -1144.3384)" class="st2" width="2173.5" height="205.4"/>
+		
+			<rect x="1276.8" y="326.5" transform="matrix(0.4264 0.9045 -0.9045 0.4264 1949.4491 -1761.5071)" class="st3" width="2173.5" height="659.6"/>
+		<path class="st4" d="M-292.5-2438.5c-1122.2,0-2032,909.8-2032,2032s909.8,2032,2032,2032s2032-909.8,2032-2032
+			S829.7-2438.5-292.5-2438.5z M-293,478c-438.5,0-794-355.5-794-794s355.5-794,794-794s794,355.5,794,794S145.5,478-293,478z"/>
+	</g>
+</g>
+</svg>

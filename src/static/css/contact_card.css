@@ -1,0 +1,48 @@
+
+.card-wrapper {
+    height: 340px;
+}
+
+.card-wrapper .card-up {
+    height: 40%;
+}
+
+.section.team-section .avatar {
+    margin-bottom: 0;
+}
+
+.card-wrapper .fa-repeat, .card-wrapper .fa-undo {
+    margin-top: 0;
+}
+
+.section.team-section h4, .section.team-section h5 {
+    margin-bottom: 0;
+}
+
+.card-wrapper .face h5 {
+    margin-top: 0;
+}
+
+.section hr {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+}
+
+.section .back a {
+    margin-top: auto;
+    margin-bottom: .5rem;
+}
+
+.section .back .about {
+    height: 170px;
+    overflow: hidden;
+}
+
+.section .back ul.inline-ul{
+    overflow: hidden;
+    height: 2.2rem;
+}
+
+.section .front p {
+    margin-bottom: 2.2rem;
+}

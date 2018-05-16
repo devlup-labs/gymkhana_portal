@@ -1,0 +1,133 @@
+.streak-edge-header {
+    border-top: 0.65rem solid #33b5e5;
+    margin-top: -7rem;
+    width: 65%;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 3%;
+}
+
+.white-skin .streak-edge-header {
+    border-top: 0.65rem solid #4285F4;
+}
+
+.black-skin .streak-edge-header {
+    border-top: 0.65rem solid #2AD1A3;
+}
+
+.cyan-skin .streak-edge-header {
+    border-top: 0.65rem solid #4fada7;
+}
+
+.deep-purple-skin .streak-edge-header {
+    border-top: 0.65rem solid #d0637c;
+}
+
+.mdb-skin .streak-edge-header {
+    border-top: 0.65rem solid #33b5e5;
+}
+
+.navy-blue-skin .streak-edge-header {
+    border-top: 0.65rem solid #309e9e;
+}
+
+.pink-skin .streak-edge-header {
+    border-top: 0.65rem solid #bd5d70;
+}
+
+.indigo-skin .streak-edge-header {
+    border-top: 0.65rem solid #7f82c5;
+}
+
+.light-blue-skin .streak-edge-header {
+    border-top: 0.65rem solid #3d799c;
+}
+
+.grey-skin .streak-edge-header {
+    border-top: 0.65rem solid #ad495c;
+}
+
+.white-skin .blockquote {
+    border-left: 0.25rem solid #4285F4;
+}
+
+.black-skin .blockquote {
+    border-left: 0.25rem solid #2AD1A3;
+}
+
+.cyan-skin .blockquote {
+    border-left: 0.25rem solid #4fada7;
+}
+
+.deep-purple-skin .blockquote {
+    border-left: 0.25rem solid #d0637c;
+}
+
+.mdb-skin .blockquote {
+    border-left: 0.25rem solid #33b5e5;
+}
+
+.navy-blue-skin .blockquote {
+    border-left: 0.25rem solid #309e9e;
+}
+
+.pink-skin .blockquote {
+    border-left: 0.25rem solid #bd5d70;
+}
+
+.indigo-skin .blockquote {
+    border-left: 0.25rem solid #7f82c5;
+}
+
+.light-blue-skin .blockquote {
+    border-left: 0.25rem solid #3d799c;
+}
+
+.grey-skin .blockquote {
+    border-left: 0.25rem solid #ad495c;
+}
+
+@media (min-width: 1350px) {
+    .streak-edge-header {
+        padding: 3%;
+    }
+}
+
+@media (min-width: 1350px) {
+    .streak-edge-header {
+        padding: 3%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1350px) {
+    .streak-edge-header {
+        margin-top: -8rem;
+        width: 75%;
+        padding: 4%;
+    }
+}
+
+@media (max-width: 992px) and (min-width: 768px) {
+    .streak-edge-header {
+        margin-top: -9rem;
+        width: 80%;
+        padding: 5%;
+    }
+}
+
+@media (min-width: 543px) and (max-width: 768px) {
+    .streak-edge-header {
+        width: 85%;
+        padding: 3%;
+    }
+}
+
+@media (max-width: 543px) {
+    .streak-edge-header {
+        border-top: none !important;
+        margin-top: 0;
+        width: 100%;
+        padding: 5%;
+        box-shadow: none !important;
+    }
+}
