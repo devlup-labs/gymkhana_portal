@@ -10,7 +10,7 @@ This project includes:
 - An app called `Konnekt` to find/search people with a certain required skill set.
 ### Installation:
 Requirements:
-- Python 3 runtime
+- Python 3.6 runtime
 - Django 2.0.4
 - Other dependencies in `requirements.txt`
 
