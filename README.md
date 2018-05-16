@@ -15,9 +15,37 @@ Requirements:
 - Other dependencies in `requirements.txt`
 
 Procedure:
-- Install [python](https://www.python.org/downloads/) in your environment
+- Install [python](https://www.python.org/downloads/) in your environment(pre-installed on Ubuntu).
+- Navigate to the cloned repository.
+    ```
+    cd <project_directory_name>     # gymkhana_portal
+    ```
+- Create a new virtual environment and activate it.
+    ```
+    sudo apt-get install -y python3-venv
+    python3 -m venv gymkhana_venv
+    source gymkhana_venv/bin/activate
+    ```
 - Use pip to install other dependencies from `requirements.txt`
+    ```
+    pip install -r requirements.txt
+    ```
 - Change to `src` directory
-- Make database migrations with `python manage.py makemigrations` followed by `python manage.py migrate`
-- Create a superuser with `python manage.py createsuperuser`
-- Run development server on localhost with `python manage.py runserver`
+    ```
+    cd src
+    ```
+- Make database migrations
+    ```
+    python manage.py makemigrations --settings=gymkhana.settings.dev
+    python manage.py migrate --settings=gymkhana.settings.dev
+    ```
+- Create a superuser
+    ```
+    python manage.py createsuperuser --settings=gymkhana.settings.dev
+    ```
+- Download the `static.zip` from `#gymkhana` on [Slack](https://iitjdg.slack.com/) and extract the contents under `src/static`  
+    _Note: This project uses proprietary UI assets, which cannot be shared on GitHub. However you may use free version of [mdbootstrap](https://mdbootstrap.com) as an alternative. Some things may not look as intended._
+- Run development server on localhost
+    ```
+    python manage.py runserver --settings=gymkhana.settings.dev
+    ```
