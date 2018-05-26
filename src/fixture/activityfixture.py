@@ -1,6 +1,5 @@
 import factory
-import random
-from main.models import Club
+from fixture.clubfixture import ClubFactory
 
 
 class ActivityFactory(factory.django.DjangoModelFactory):
@@ -8,9 +7,6 @@ class ActivityFactory(factory.django.DjangoModelFactory):
         model = 'main.Activity'
 
     name = factory.Faker('sentence', nb_words=2)
-    club = Club.objects.all()[random.randint(0, 3)]
+    club = factory.SubFactory(ClubFactory)
     description = factory.Faker('sentence', nb_words=30)
     custom_html = factory.Faker('sentence', nb_words=20)
-
-
-ActivityFactory()

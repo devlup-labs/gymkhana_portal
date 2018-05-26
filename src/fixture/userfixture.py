@@ -12,7 +12,7 @@ class UserFactory(factory.django.DjangoModelFactory):
         model = 'auth.User'
         django_get_or_create = ('username', 'is_active')
 
-    username = random.randint(100000000000000, 999999999999999)
+    username = factory.Sequence(lambda n: 'user%d' % n)
     first_name = factory.Faker('first_name')
     last_name = factory.Faker('last_name')
     is_staff = True
@@ -28,18 +28,15 @@ class UserProfileFactory(factory.django.DjangoModelFactory):
 
     email_confirmed = True
     prog = random.choice(['BT', 'MT', 'MSc', 'PhD'])
-    roll = random.randint(100000000000000, 999999999999999)
-    user = UserFactory()
+    roll = factory.Sequence(lambda n: 'B16CS%d' % n)
+    user = factory.SubFactory(UserFactory)
     dob = factory.Faker('date')
     gender = random.choice(['M', 'F'])
     year = random.choice(['1', '2', '3', '4', '5'])
-    phone = random.randint(80000000, 99999999)
+    phone = random.randint(6000000000, 9999999999)
     # avatar = VersatileImageField(upload_to='avatar', blank=True, null=True)
     # cover = VersatileImageField(upload_to='cover', blank=True, null=True)
     hometown = factory.Faker('city')
     branch = random.choice(['CSE', 'EE', 'ME'])
     skills = random.choice(SKILL) + ',' + random.choice(SKILL) + ',' + random.choice(SKILL)
     about = factory.Faker('sentence', nb_words=5)
-
-
-UserProfileFactory()
