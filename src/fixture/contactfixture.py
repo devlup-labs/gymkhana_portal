@@ -11,5 +11,3 @@ class ContactFactory(factory.django.DjangoModelFactory):
     phone = random.randint(80000000, 99999999)
     subject = factory.Faker('sentence', nb_words=4)
     message = factory.Faker('sentence', nb_words=30)
-
-ContactFactory()
