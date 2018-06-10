@@ -12,3 +12,7 @@ class SenateMembershipFactory(factory.django.DjangoModelFactory):
     userprofile = factory.SubFactory(UserProfileFactory)
     role = random.choice(['SECY', 'SER'])
     year = random.choice(['1', '2', '3', '4'])
+
+
+class MemberWithSenateFactory(UserProfileFactory):
+    members = factory.RelatedFactory(SenateMembershipFactory, 'userprofile')

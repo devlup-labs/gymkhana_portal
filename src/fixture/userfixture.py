@@ -6,6 +6,10 @@ SKILL = ['machinist', 'pipefitter', 'welder', 'tool and die maker', 'boilermaker
          'carpenter', 'glazier', 'rigger', 'patternmaker', 'sheetmetal worker',
          'tile setter', 'pipelayer', 'model maker', 'brickmason', 'steel worker']
 
+COLOUR = ["yellow", "black", "purple", "red", "orange", "green", '#084594', '#2171b5', '#4292c6', '#6baed6', '#9ecae1',
+          '#c6dbef', '#deebf7', '#f7fbff'
+          ]
+
 
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -34,8 +38,8 @@ class UserProfileFactory(factory.django.DjangoModelFactory):
     gender = random.choice(['M', 'F'])
     year = random.choice(['1', '2', '3', '4', '5'])
     phone = random.randint(6000000000, 9999999999)
-    # avatar = VersatileImageField(upload_to='avatar', blank=True, null=True)
-    # cover = VersatileImageField(upload_to='cover', blank=True, null=True)
+    avatar = factory.django.ImageField(color=random.choice(COLOUR))
+    cover = factory.django.ImageField(color=random.choice(COLOUR))
     hometown = factory.Faker('city')
     branch = random.choice(['CSE', 'EE', 'ME'])
     skills = random.choice(SKILL) + ',' + random.choice(SKILL) + ',' + random.choice(SKILL)

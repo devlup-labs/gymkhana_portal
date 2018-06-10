@@ -10,4 +10,12 @@ class AnswerFactory(factory.django.DjangoModelFactory):
     topic = factory.SubFactory(TopicFactory)
     author = factory.SubFactory(UserProfileFactory)
     content = factory.Faker('sentence', nb_words=100)
-    # upvotes = models.ManyToManyField(UserProfile, blank=True, related_name='answer_upvotes')
+
+    @factory.post_generation
+    def users(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            for user in extracted:
+                self.upvotes.add(user)
