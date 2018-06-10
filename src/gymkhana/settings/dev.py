@@ -20,6 +20,8 @@ DATABASES = {
     }
 }
 
+INSTALLED_APPS += ['fixture']
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions.
     'DEFAULT_PERMISSION_CLASSES': (

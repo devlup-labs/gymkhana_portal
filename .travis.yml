@@ -6,7 +6,7 @@ before_install:
   - export DJANGO_SECRET_KEY='q$o5mx19x9(9_^rzqf@o@s^t%t!ghix7($f9ymy49_^ryzq9x9'
   - psql -c "CREATE DATABASE gymkhanadb;" -U postgres
 install:
-  - pip3 install -r requirements.txt
+  - pip3 install -r requirements/dev.txt
   - pip3 install coveralls
 script:
   - cd src

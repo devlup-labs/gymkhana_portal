@@ -43,8 +43,7 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'gallery.apps.GalleryConfig',
     'news.apps.NewsConfig',
-    'konnekt.apps.KonnektConfig',
-    'fixture'
+    'konnekt.apps.KonnektConfig'
 ]
 
 MIDDLEWARE = [
