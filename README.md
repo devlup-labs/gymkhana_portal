@@ -49,9 +49,8 @@ Procedure:
     ```
     python manage.py runserver --settings=gymkhana.settings.dev
     ```
-#### DummyData for Testing [OPTIONAL]:
-  This will populate the database with random values for testing.
-  
-   
-    python manage.py createfixture
-  
+#### DummyData for Testing [OPTIONAL]:  
+This will populate the database with random values for testing.
+```
+python manage.py createfixture --settings=gymkhana.settings.dev
+```
