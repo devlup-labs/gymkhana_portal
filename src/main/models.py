@@ -1,11 +1,18 @@
 import datetime
+
+from django.contrib.auth.models import User
 from django.db import models
 from django.core.validators import RegexValidator
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from oauth.models import UserProfile
 from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
 from versatileimagefield.fields import VersatileImageField
 from photologue.models import Gallery
+
+from oauth.models import KonnektQueryset
+from oauth.tokens import account_activation_token
 
 YEAR_CHOICES = []
 for r in range(2008, (datetime.datetime.now().year + 2)):
@@ -23,11 +30,126 @@ SKIN_CHOICES = (
     ('light-blue-skin', 'Light Blue'),
     ('grey-skin', 'Grey'),
 )
+class FacultyProfileManager():
+    uidb64 = None
+
+    def get_konnekt_queryset(self):
+        return KonnektQueryset(self.model, using=self._db)
+
+    def search(self, query):
+        return self.get_konnekt_queryset().search(query)
 
 
-class FacultyAdvisor(models.Model):
-    name = models.CharField(max_length=128)
-    avatar = VersatileImageField(upload_to='avatar')
+class Faculty(models.Model):
+    # Validators
+    valid_year = RegexValidator(r'^[0-9]{4}$', message='Not a valid year!')
+    contact = RegexValidator(r'^[0-9]{10}$', message='Not a valid number!')
+
+    # Choices
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('T', 'Transgender')
+    )
+    PROG_CHOICES = (
+        ('BT', 'B.Tech'),
+        ('MT', 'M.Tech'),
+        ('MSc', 'M.Sc'),
+        ('PhD', 'PhD')
+    )
+    DEPT_CHOICES = (
+        ('CSE', 'Computer Science and Engineering'),
+        ('EE', 'Electrical Engineering'),
+        ('ME', 'Mechanical Engineering'),
+        ('CH', 'Chemistry'),
+        ('MA', 'Mathematics'),
+        ('PHY', 'Physics'),
+        ('HSS', 'Humanities and Social Sciences'),
+        ('BBE', 'Biosciences and Bioengineering'),
+        ('BISS', 'BISS'),
+        ('SS', 'SS')
+    )
+    # Database Model
+    first_name  = models.CharField(max_length=128,blank = False)
+    last_name  = models.CharField(max_length=128,blank = False)
+    email_address = models.EmailField(max_length=128, blank=False)
+    staff_status = models.BooleanField(default=False)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
+    dob = models.DateField()
+    prog = models.CharField(max_length=5, choices=PROG_CHOICES, verbose_name='programme', default='BT')
+    phone = models.CharField(max_length=10, validators=[contact])
+    avatar = VersatileImageField(upload_to='avatar', blank=True, null=True)
+    cover = VersatileImageField(upload_to='cover', blank=True, null=True)
+    hometown = models.CharField(max_length=128, blank=True, null=True)
+    department = models.CharField(max_length=5, choices=DEPT_CHOICES)
+    about = models.TextField(max_length=160, verbose_name='about you', blank=True, null=True)
+
+    def __str__(self):
+        return (self.first_name +' '+self.last_name)
+    def get_full_name(self):
+        return (self.first_name +' '+self.last_name)
+
+    class Meta:
+        ordering = ["first_name"]
+        verbose_name_plural = "Faculties"
+
+    object = FacultyProfileManager()
+    # def get_absolute_url(self):
+    #     return reverse('main:detail', kwargs={'name': self.name})
+
+class FacultySocialLink(models.Model):
+    SM_CHOICES = (
+        ('FB', 'Facebook'),
+        ('TW', 'Twitter'),
+        ('LI', 'LinkedIn'),
+        ('GP', 'Google Plus'),
+        ('IG', 'Instagram'),
+        ('GH', 'GitHub'),
+        ('YT', 'YouTube'),
+    )
+    FA_CHOICES = (
+        ('fa fa-facebook', 'FB'),
+        ('fa fa-twitter', 'TW'),
+        ('fa fa-linkedin', 'LI'),
+        ('fa fa-google-plus', 'GP'),
+        ('fa fa-instagram', 'IG'),
+        ('fa fa-github', 'GH'),
+        ('fa fa-youtube', 'YT'),
+    )
+    IC_CHOICES = (
+        ('fb-ic', 'FB'),
+        ('tw-ic', 'TW'),
+        ('li-ic', 'LI'),
+        ('gplus-ic', 'GP'),
+        ('ins-ic', 'IG'),
+        ('git-ic', 'GH'),
+        ('yt-ic', 'YT'),
+    )
+    user = models.ForeignKey(Faculty, on_delete=models.CASCADE)
+    social_media = models.CharField(max_length=2, choices=SM_CHOICES)
+    link = models.URLField()
+
+    class Meta:
+        ordering = ['social_media']
+
+    # def get_absolute_url(self):
+    #     return self.user.userprofile.get_absolute_url()
+
+    def __str__(self):
+        return self.user.__str__() + ' - ' + self.get_social_media_display()
+
+    def get_fai(self):
+        for key, value in self.FA_CHOICES:
+            if value == self.social_media:
+                return key
+        return 'fa fa-link'
+
+    def get_sm_ic(self):
+        for key, value in self.IC_CHOICES:
+            if value == self.social_media:
+                return key
+        return ''
+
 
 
 class Society(models.Model):
@@ -46,7 +168,9 @@ class Society(models.Model):
                                         on_delete=models.SET_NULL)
     mentor = models.ForeignKey(UserProfile, related_name='smentor', limit_choices_to={'user__is_staff': True},
                                null=True, blank=True, on_delete=models.SET_NULL, default=None)
-    faculty_advisor = models.ForeignKey(FacultyAdvisor, blank=True, null=True, default=None, on_delete=models.SET_NULL)
+
+    faculty_advisor = models.ForeignKey(Faculty, blank=True,limit_choices_to={'staff_status':True}, null=True, default=None, on_delete=models.SET_NULL)
+
     gallery = models.ForeignKey(Gallery, blank=True, null=True, on_delete=models.SET_NULL,
                                 help_text="Select a carousel gallery to link to this society.")
     custom_html = models.TextField(blank=True, null=True, default=None,
@@ -161,7 +285,7 @@ class Senate(models.Model):
     skin = models.CharField(max_length=32, choices=SKIN_CHOICES, blank=True, default='mdb-skin',
                             help_text="Choose a skin while displaying senate page.")
     members = models.ManyToManyField(UserProfile, through='SenateMembership', through_fields=('senate', 'userprofile'))
-    coordinator_student = models.ForeignKey(FacultyAdvisor, blank=True, null=True, default=None,
+    coordinator_student = models.ForeignKey(Faculty, blank=True, null=True, default=None,
                                             on_delete=models.SET_NULL)
     custom_html = models.TextField(blank=True, null=True, default=None,
                                    help_text="Add custom HTML to view on society page.")
