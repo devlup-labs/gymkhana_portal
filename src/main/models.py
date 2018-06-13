@@ -1,18 +1,13 @@
 import datetime
 
-from django.contrib.auth.models import User
 from django.db import models
 from django.core.validators import RegexValidator
-from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from oauth.models import UserProfile
 from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
 from versatileimagefield.fields import VersatileImageField
 from photologue.models import Gallery
-
 from oauth.models import KonnektQueryset
-from oauth.tokens import account_activation_token
 
 YEAR_CHOICES = []
 for r in range(2008, (datetime.datetime.now().year + 2)):
