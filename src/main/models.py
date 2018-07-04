@@ -29,6 +29,13 @@ class FacultyAdvisor(models.Model):
     name = models.CharField(max_length=128)
     avatar = VersatileImageField(upload_to='avatar')
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Faculties"
+        verbose_name  = "faculty"
+
 
 class Society(models.Model):
     # Validators
