@@ -127,7 +127,7 @@
                 </div>
                 {% if society.faculty_advisor %}
                     <div class="col-lg-4 col-md-6 pt-md-2 mb-r">
-                    {% include 'main/mixins/user_card_mixin.html'  with uerprofile=society.faculty_advisor designation='Faculty Advisor'%}
+                    {% include 'main/mixins/user_card_mixin.html'  with userprofile=society.faculty_advisor designation='Faculty Advisor'%}
                     </div>
                 {% endif %}
                 {% if society.mentor %}
