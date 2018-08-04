@@ -36,21 +36,21 @@ Procedure:
     ```
 - Make database migrations
     ```
-    python manage.py makemigrations --settings=gymkhana.settings.dev
-    python manage.py migrate --settings=gymkhana.settings.dev
+    python manage.py makemigrations 
+    python manage.py migrate 
     ```
 - Create a superuser
     ```
-    python manage.py createsuperuser --settings=gymkhana.settings.dev
+    python manage.py createsuperuser 
     ```
 - Download the `static.zip` from `#gymkhana` on [Slack](https://iitjdg.slack.com/) and extract the contents under `src/static`  
     _Note: This project uses proprietary UI assets, which cannot be shared on GitHub. However you may use free version of [mdbootstrap](https://mdbootstrap.com) as an alternative. Some things may not look as intended._
 - Run development server on localhost
     ```
-    python manage.py runserver --settings=gymkhana.settings.dev
+    python manage.py runserver 
     ```
 #### DummyData for Testing [OPTIONAL]:  
 This will populate the database with random values for testing.
 ```
-python manage.py createfixture --settings=gymkhana.settings.dev
+python manage.py createfixture 
 ```

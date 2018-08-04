@@ -11,3 +11,4 @@ django-htmlmin == 0.10.0
 django-webpack-loader
 flake8
 psycopg2
+django-decouple==2.1
