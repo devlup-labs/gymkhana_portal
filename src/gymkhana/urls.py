@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.urls import path
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
@@ -37,6 +38,7 @@ urlpatterns = [
     url(r'^forum/', include('forum.urls')),
     url(r'^forum/api/', include('forum.api.urls')),
     url(r'^konnekt/', include('konnekt.urls')),
+    path('', include('social_django.urls', namespace='social')),
     url(r'^', include('main.urls')),
 ]
 

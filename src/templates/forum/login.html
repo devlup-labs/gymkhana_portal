@@ -85,6 +85,11 @@
                                             <button class="btn btn-primary" type="submit">Login</button>
                                         </div>
                                     </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        Or sign in with <br>
+                                        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn red" type="submit"><i class="fa fa-google-plus"></i></a>
+                                    </div>
                                 </div>
                             </div>
                             <!--/Form with header-->
@@ -100,7 +105,7 @@
         $("form").submit(function (e) {
             e.preventDefault();
             var username = $("input#username").val();
-            if (username.search("@iitj.ac.in")){
+            if (username.search("@iitj.ac.in")) {
                 username = username.split("@")[0].toLowerCase();
                 $("input#username").val(username);
             }
