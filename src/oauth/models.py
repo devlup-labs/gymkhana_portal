@@ -120,6 +120,9 @@ class UserProfile(models.Model):
                               null=True, default=None)
     about = models.TextField(max_length=160, verbose_name='about you', blank=True, null=True)
 
+    class Meta:
+        ordering = ["roll"]
+
     def get_absolute_url(self):
         return reverse('oauth:detail', kwargs={'roll': self.roll})
 
