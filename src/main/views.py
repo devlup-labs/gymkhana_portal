@@ -6,9 +6,14 @@ from .mixins import NavigationMixin
 from photologue.models import Gallery
 from events.models import Event
 from news.models import News
+from .utils import MaintenanceMixin
 
 
-class HomeView(NavigationMixin, TemplateView):
+class MaintenanceAndNavigationMixin(MaintenanceMixin, NavigationMixin):
+    pass
+
+
+class HomeView(MaintenanceAndNavigationMixin, TemplateView):
     template_name = 'main/index.html'
 
     def get_context_data(self, **kwargs):
@@ -26,7 +31,7 @@ class HomeView(NavigationMixin, TemplateView):
         return context
 
 
-class SocietyView(NavigationMixin, DetailView):
+class SocietyView(MaintenanceAndNavigationMixin, DetailView):
     template_name = 'main/society.html'
     model = Society
 
@@ -45,7 +50,7 @@ class SocietyView(NavigationMixin, DetailView):
         return context
 
 
-class SenateView(NavigationMixin, DetailView):
+class SenateView(MaintenanceAndNavigationMixin, DetailView):
     template_name = 'main/senate.html'
     model = Senate
 
@@ -54,7 +59,7 @@ class SenateView(NavigationMixin, DetailView):
         return context
 
 
-class ClubView(NavigationMixin, DetailView):
+class ClubView(MaintenanceAndNavigationMixin, DetailView):
     template_name = 'main/club.html'
     model = Club
 
@@ -71,12 +76,12 @@ class ClubView(NavigationMixin, DetailView):
         return context
 
 
-class ContactView(NavigationMixin, CreateView):
+class ContactView(MaintenanceAndNavigationMixin, CreateView):
     template_name = 'main/contact.html'
     form_class = ContactForm
 
 
-class ContactListView(ListView):
+class ContactListView(MaintenanceAndNavigationMixin, ListView):
     template_name = 'main/contact_list.html'
     model = Contact
     paginate_by = 2

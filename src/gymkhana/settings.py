@@ -28,6 +28,8 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 HTML_MINIFY = not DEBUG
 
+MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
+
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 # Application definition
