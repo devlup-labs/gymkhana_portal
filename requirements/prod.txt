@@ -8,6 +8,7 @@ django-photologue == 3.8.1
 django-sortedm2m == 1.5.0
 django-cleanup == 1.0.1
 django-htmlmin == 0.10.0
+social-auth-app-django==2.1.0
 django-webpack-loader
 flake8
 psycopg2
