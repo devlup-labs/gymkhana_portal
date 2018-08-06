@@ -27,7 +27,7 @@
         }
     </style>
 {% endblock %}
-{% block navtitle %}About: {{ userprofile.user.get_full_name }}{% endblock %}
+{% block navtitle %}About: {{ userprofile.user.first_name }}{% endblock %}
 {% block content %}
     <div class="profile-container">
         {% if request.user.id == userprofile.user.id %}
