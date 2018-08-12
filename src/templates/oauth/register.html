@@ -23,46 +23,7 @@
 {% block navbar %}
 {% endblock %}
 {% block main %}
-    <div class="view hm-black-strong" style="height: 100vh; display: none">
-        <div class="mask flex-center">
-            <!--Form without header-->
-            {% if request.method == 'POST' %}
-                <input type="hidden" id="request" value="1"/>
-            {% else %}
-                <input type="hidden" id="request" value="0"/>
-            {% endif %}
-            <div id="reg_container" class="card">
-                <div class="card-block mt-2 pb-0">
-                    <div>
-                        <small>Use your @iitj.ac.in email address.</small>
-                    </div>
-                    <div id="error" class="red-text pb-2"></div>
-                    <form id="verify-form" style="display: none">
-                        <!--Body-->
-                        <div class="md-form">
-                            <i class="fa fa-envelope prefix"></i>
-                            <input type="text" name="email" class="form-control" required id="id_email"/>
-                            <label for="id_email">Email</label>
-                        </div>
-                        <div class="text-center">
-                            <div class="md-form mb-0">
-                                <button class="btn btn-primary" type="submit">Continue</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <!--Footer-->
-                <div class="modal-footer">
-                    <div class="options text-right">
-                        <p>Already a member? <a href="{% url 'login' %}">Login</a></p>
-                        <p>Forgot <a href="#">Password?</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/Form without header-->
-    <div class="reg-form mb-sm-5" style="display: none">
+
         <!-- Purple Header -->
         <div class="edge-header deep-purple"></div>
 
@@ -74,99 +35,13 @@
                     {{ form.non_field_errors }}
                     <form id="reg-form" style="display: none" action="" method="post">
                         {% csrf_token %}
-                        {% if form.username.errors %}
-                            {% for error in form.username.errors %}
-                                <p class="red-text mb-1">
-                                    <small>{{ error|escape }}</small>
-                                </p>
-                            {% endfor %}
-                        {% endif %}
-                        <div class="md-form">
-                            {{ form.username }}
-                            <label for="{{ form.username.id_for_label }}">{{ form.username.label }} *</label>
-                        </div>
-                        <div class="d-flex">
-                            <div class="md-form f-icon">
-                                <i class="fa fa-user prefix"></i>
-                            </div>
-                            <div class="row w-100">
-                                <div class="col-md-6">
-                                    {% if form.first_name.errors %}
-                                        {% for error in form.first_name.errors %}
-                                            <p class="red-text mb-1">
-                                                <small>{{ error|escape }}</small>
-                                            </p>
-                                        {% endfor %}
-                                    {% endif %}
-                                    <div class="md-form">
-                                        {{ form.first_name }}
-                                        <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}
-                                            *</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    {% if form.last_name.errors %}
-                                        {% for error in form.last_name.errors %}
-                                            <p class="red-text mb-1">
-                                                <small>{{ error|escape }}</small>
-                                            </p>
-                                        {% endfor %}
-                                    {% endif %}
-                                    <div class="md-form">
-                                        {{ form.last_name }}
-                                        <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}
-                                            *</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% if form.email.errors %}
-                            {% for error in form.email.errors %}
-                                <p class="red-text mb-1">
-                                    <small>{{ error|escape }}</small>
-                                </p>
-                            {% endfor %}
-                        {% endif %}
-                        <div class="md-form">
-                            <i class="fa fa-envelope-o prefix"></i>
-                            {{ form.email }}
-                            <label for="{{ form.email.id_for_label }}">{{ form.email.label }} *</label>
-                        </div>
                         <div class="d-flex">
                             <div class="md-form f-icon">
                                 <i class="fa fa-key prefix"></i>
                             </div>
                             <div class="row w-100">
-                                <div class="col-md-6">
-                                    {% if form.password1.errors %}
-                                        {% for error in form.password1.errors %}
-                                            <p class="red-text mb-1">
-                                                <small>{{ error|escape }}</small>
-                                            </p>
-                                        {% endfor %}
-                                    {% endif %}
-                                    <div class="md-form">
-                                        {{ form.password1 }}
-                                        <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    {% if form.password2.errors %}
-                                        {% for error in form.password2.errors %}
-                                            <p class="red-text mb-1">
-                                                <small>{{ error|escape }}</small>
-                                            </p>
-                                        {% endfor %}
-                                    {% endif %}
-                                    <div class="md-form">
-                                        {{ form.password2 }}
-                                        <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
-                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 mb-sm-4 password-help">
-                            <small>{{ form.password1.help_text|safe }}</small>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
@@ -251,18 +126,18 @@
                                     <label for="{{ form.year.id_for_label }}">{{ form.year.label }}</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                {% if form.roll.errors %}
-                                    {% for error in form.roll.errors %}
-                                        <p class="red-text mb-1">
-                                            <small>{{ error|escape }}</small>
-                                        </p>
-                                    {% endfor %}
-                                {% endif %}
-                                <div class="md-form">
-                                    {{ form.roll }}
-                                    <label for="{{ form.roll.id_for_label }}">{{ form.roll.label }} *</label>
-                                </div>
+{#                            <div class="col-md-6">#}
+{#                                {% if form.roll.errors %}#}
+{#                                    {% for error in form.roll.errors %}#}
+{#                                        <p class="red-text mb-1">#}
+{#                                            <small>{{ error|escape }}</small>#}
+{#                                        </p>#}
+{#                                    {% endfor %}#}
+{#                                {% endif %}#}
+{#                                <div class="md-form">#}
+{#                                    {{ form.roll }}#}
+{#                                    <label for="{{ form.roll.id_for_label }}">{{ form.roll.label }} *</label>#}
+{#                                </div>#}
                             </div>
                         </div>
                         <div>
