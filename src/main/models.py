@@ -28,13 +28,14 @@ SKIN_CHOICES = (
 class FacultyAdvisor(models.Model):
     name = models.CharField(max_length=128)
     avatar = VersatileImageField(upload_to='avatar')
+    email = models.EmailField()
 
     def __str__(self):
         return self.name
 
     class Meta:
         verbose_name_plural = "Faculties"
-        verbose_name  = "faculty"
+        verbose_name = "Faculty"
 
 
 class Society(models.Model):

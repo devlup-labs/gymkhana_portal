@@ -29,7 +29,7 @@ class ActivityAdmin(admin.ModelAdmin):
     list_display = ('name', 'club')
 
 
-class FacultyadvisorAdmin(admin.ModelAdmin):
+class FacultyAdvisorAdmin(admin.ModelAdmin):
     list_display = ['name', ]
 
 
@@ -45,4 +45,4 @@ admin.site.register(Club, ClubAdmin)
 admin.site.register(Senate, SenateAdmin)
 admin.site.register(Activity, ActivityAdmin)
 admin.site.register(main_models)
-admin.site.register(FacultyAdvisor, FacultyadvisorAdmin )
+admin.site.register(FacultyAdvisor, FacultyAdvisorAdmin)
