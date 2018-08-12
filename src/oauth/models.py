@@ -96,7 +96,7 @@ class UserProfile(models.Model):
     )
     # Database Model
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email_confirmed = models.BooleanField(default=False)
+    email_confirmed = models.BooleanField(default=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
     roll = models.CharField(max_length=15, unique=True)
     dob = models.DateField()
