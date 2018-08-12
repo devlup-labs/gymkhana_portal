@@ -1,6 +1,5 @@
 from django.db import models
 from django.db.models import Q
-from django.db.models.signals import pre_save
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -57,14 +56,6 @@ class UserProfileManager(models.Manager):
         else:
             user = None
         return user
-
-
-def set_new_user_inactive(sender, instance, **kwargs):
-    if instance._state.adding is True and instance.is_superuser is False:
-        instance.is_active = False
-
-
-pre_save.connect(set_new_user_inactive, sender=User)
 
 
 class UserProfile(models.Model):
