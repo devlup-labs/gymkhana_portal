@@ -3,10 +3,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth import logout
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, HttpResponseRedirect, reverse
 from .mixins import SocialLinkOwnerMixin
 from .models import UserProfile, SocialLink
-from .forms import UserProfileUpdateForm, SocialLinkForm, SignUpForm
+from .forms import UserProfileUpdateForm, SocialLinkForm, UserProfileForm
 from django.urls import reverse_lazy
 
 
@@ -77,26 +77,22 @@ class SocialLinkDeleteView(SocialLinkOwnerMixin, DeleteView):
         return get_object_or_404(SocialLink, user__username=user, social_media=social_media)
 
 
-class RegisterView(CreateView):
+class RegisterView(LoginRequiredMixin, CreateView):
     template_name = 'oauth/register.html'
     success_url = reverse_lazy('oauth:register-success')
-    form_class = SignUpForm
+    form_class = UserProfileForm
 
     def form_valid(self, form):
-        user = self.request.user
-        print(form.fields)
-        RegisterView.create_profile(user, **form.cleaned_data)
-        messages.success(self.request, user.get_full_name(), extra_tags='username')
-        return super(RegisterView, self).form_valid(form)
+        form.instance.user = self.request.user
+        response_redirect = super(RegisterView, self).form_valid(form)
+        messages.success(self.request, self.object.user.get_full_name(), extra_tags='username')
+        return response_redirect
 
-    @staticmethod
-    def create_profile(user=None, **kwargs):
-        # Creates a new UserProfile object after successful creation of User object
-        userprofile = UserProfile.objects.create(user=user, gender=kwargs['gender'], roll=user.last_name[1:9],
-                                                 dob=kwargs['dob'], prog=kwargs['prog'], year=kwargs['year'],
-                                                 phone=kwargs['phone'], branch=kwargs['branch'])
-
-        userprofile.save()
+    def dispatch(self, request, *args, **kwargs):
+        if hasattr(self.request.user, 'userprofile'):
+            return HttpResponseRedirect(reverse('oauth:detail', kwargs={'roll': self.request.user.userprofile.roll}))
+        else:
+            return super().dispatch(request, args, kwargs)
 
 
 class RegisterSuccessView(TemplateView):
