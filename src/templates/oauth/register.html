@@ -23,7 +23,8 @@
 {% block navbar %}
 {% endblock %}
 {% block main %}
-
+    <!--/Form without header-->
+    <div class="reg-form mb-sm-5">
         <!-- Purple Header -->
         <div class="edge-header deep-purple"></div>
 
@@ -33,16 +34,8 @@
                 <div class="col-md-9 mx-auto card-block white z-depth-1 p-lg-5 p-md-4 p-sm-4">
                     <!--Register Form-->
                     {{ form.non_field_errors }}
-                    <form id="reg-form" style="display: none" action="" method="post">
+                    <form id="reg-form" action="" method="post">
                         {% csrf_token %}
-                        <div class="d-flex">
-                            <div class="md-form f-icon">
-                                <i class="fa fa-key prefix"></i>
-                            </div>
-                            <div class="row w-100">
-                                </div>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-4">
                                 {% if form.phone.errors %}
@@ -126,18 +119,18 @@
                                     <label for="{{ form.year.id_for_label }}">{{ form.year.label }}</label>
                                 </div>
                             </div>
-{#                            <div class="col-md-6">#}
-{#                                {% if form.roll.errors %}#}
-{#                                    {% for error in form.roll.errors %}#}
-{#                                        <p class="red-text mb-1">#}
-{#                                            <small>{{ error|escape }}</small>#}
-{#                                        </p>#}
-{#                                    {% endfor %}#}
-{#                                {% endif %}#}
-{#                                <div class="md-form">#}
-{#                                    {{ form.roll }}#}
-{#                                    <label for="{{ form.roll.id_for_label }}">{{ form.roll.label }} *</label>#}
-{#                                </div>#}
+                            <div class="col-md-6">
+                                {% if form.roll.errors %}
+                                    {% for error in form.roll.errors %}
+                                        <p class="red-text mb-1">
+                                            <small>{{ error|escape }}</small>
+                                        </p>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="md-form">
+                                    {{ form.roll }}
+                                    <label for="{{ form.roll.id_for_label }}">{{ form.roll.label }} *</label>
+                                </div>
                             </div>
                         </div>
                         <div>
