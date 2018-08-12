@@ -8,6 +8,8 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_text
 from .tokens import account_activation_token
 from versatileimagefield.fields import VersatileImageField
+from django.db.models.signals import pre_save
+import re
 
 
 class KonnektQueryset(models.query.QuerySet):
@@ -187,3 +189,12 @@ class SocialLink(models.Model):
             if value == self.social_media:
                 return key
         return ''
+
+
+def topic_pre_save_receiver(sender, instance, *args, **kwargs):
+    name = instance.first_name.split(' ')
+    instance.first_name = name[0].title()
+    instance.last_name = ' '.join([x.title() for x in name[1:len(name)]])
+
+
+pre_save.connect(topic_pre_save_receiver, sender=User)
