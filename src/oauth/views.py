@@ -1,6 +1,5 @@
-from django.views.generic import DetailView, UpdateView, CreateView, DeleteView, RedirectView, TemplateView
+from django.views.generic import DetailView, UpdateView, CreateView, DeleteView, RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth import logout
 from django.shortcuts import get_object_or_404, redirect, render, HttpResponseRedirect, reverse
@@ -79,13 +78,12 @@ class SocialLinkDeleteView(SocialLinkOwnerMixin, DeleteView):
 
 class RegisterView(LoginRequiredMixin, CreateView):
     template_name = 'oauth/register.html'
-    success_url = reverse_lazy('oauth:register-success')
+    success_url = reverse_lazy('forum:index')
     form_class = UserProfileForm
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         response_redirect = super(RegisterView, self).form_valid(form)
-        messages.success(self.request, self.object.user.get_full_name(), extra_tags='username')
         return response_redirect
 
     def dispatch(self, request, *args, **kwargs):
@@ -93,10 +91,6 @@ class RegisterView(LoginRequiredMixin, CreateView):
             return HttpResponseRedirect(reverse('oauth:detail', kwargs={'roll': self.request.user.userprofile.roll}))
         else:
             return super().dispatch(request, args, kwargs)
-
-
-class RegisterSuccessView(TemplateView):
-    template_name = 'oauth/register_success.html'
 
 
 class AccountActivationView(RedirectView):
