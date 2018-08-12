@@ -30,9 +30,9 @@ class SocialLinkForm(forms.ModelForm):
         self.fields['social_media'].choices = sorted(set(self.fields['social_media'].choices) ^ set(taken_choices))
 
 
-class SignUpForm(forms.ModelForm):
+class UserProfileForm(forms.ModelForm):
     gender = forms.ChoiceField(choices=UserProfile.GENDER_CHOICES, widget=forms.Select(attrs={'class': 'mdb-select'}))
-    # roll = forms.CharField(max_length=15, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    roll = forms.CharField(max_length=15, widget=forms.TextInput(attrs={'class': 'form-control'}))
     dob = forms.DateField(label='Date of birth',
                           widget=forms.TextInput(
                               attrs={'class': 'form-control datepicker', 'placeholder': 'Pick a date'}))
@@ -44,7 +44,7 @@ class SignUpForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['gender', 'dob', 'prog', 'year', 'phone', 'branch', ]
+        fields = ['gender', 'roll', 'dob', 'prog', 'year', 'phone', 'branch']
 
     def clean_dob(self):
         dob_date = self.cleaned_data['dob']
