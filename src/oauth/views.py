@@ -78,30 +78,25 @@ class SocialLinkDeleteView(SocialLinkOwnerMixin, DeleteView):
 
 
 class RegisterView(CreateView):
-    model = UserProfile
     template_name = 'oauth/register.html'
     success_url = reverse_lazy('oauth:register-success')
     form_class = SignUpForm
 
     def form_valid(self, form):
-        user = form.save()
+        user = self.request.user
+        print(form.fields)
         RegisterView.create_profile(user, **form.cleaned_data)
         messages.success(self.request, user.get_full_name(), extra_tags='username')
-        messages.success(self.request, user.userprofile.get_activation_url, extra_tags='activation-link')
         return super(RegisterView, self).form_valid(form)
 
     @staticmethod
     def create_profile(user=None, **kwargs):
         # Creates a new UserProfile object after successful creation of User object
-        userprofile = UserProfile.objects.create(user=user, gender=kwargs['gender'], roll=kwargs['roll'],
+        userprofile = UserProfile.objects.create(user=user, gender=kwargs['gender'], roll=user.last_name[1:9],
                                                  dob=kwargs['dob'], prog=kwargs['prog'], year=kwargs['year'],
                                                  phone=kwargs['phone'], branch=kwargs['branch'])
-        userprofile.save()
 
-        # def dispatch(self, request, *args, **kwargs):
-        #     if self.request.user.is_authenticated:
-        #         logout(self.request)
-        #     return super(RegisterView, self).dispatch(request, *args, *kwargs)
+        userprofile.save()
 
 
 class RegisterSuccessView(TemplateView):
