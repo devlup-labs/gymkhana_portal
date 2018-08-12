@@ -9,7 +9,6 @@ from django.utils.encoding import force_text
 from .tokens import account_activation_token
 from versatileimagefield.fields import VersatileImageField
 from django.db.models.signals import pre_save
-import re
 
 
 class KonnektQueryset(models.query.QuerySet):
