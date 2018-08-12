@@ -1,8 +1,5 @@
 from datetime import date, timedelta
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.contrib.auth import password_validation
 from .models import UserProfile, SocialLink
 
 
@@ -33,26 +30,9 @@ class SocialLinkForm(forms.ModelForm):
         self.fields['social_media'].choices = sorted(set(self.fields['social_media'].choices) ^ set(taken_choices))
 
 
-class SignUpForm(UserCreationForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=True)
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=True)
-    email = forms.EmailField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'email', 'maxlength': '254'}))
-    password1 = forms.CharField(
-        label='Password',
-        strip=False,
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-        help_text=password_validation.password_validators_help_text_html(),
-    )
-    password2 = forms.CharField(
-        label='Password confirmation',
-        strip=False,
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-        help_text='Enter the same password as before, for verification.',
-    )
+class SignUpForm(forms.ModelForm):
     gender = forms.ChoiceField(choices=UserProfile.GENDER_CHOICES, widget=forms.Select(attrs={'class': 'mdb-select'}))
-    roll = forms.CharField(max_length=15, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    # roll = forms.CharField(max_length=15, widget=forms.TextInput(attrs={'class': 'form-control'}))
     dob = forms.DateField(label='Date of birth',
                           widget=forms.TextInput(
                               attrs={'class': 'form-control datepicker', 'placeholder': 'Pick a date'}))
@@ -63,32 +43,8 @@ class SignUpForm(UserCreationForm):
     branch = forms.ChoiceField(choices=UserProfile.BRANCH_CHOICES, widget=forms.Select(attrs={'class': 'mdb-select'}))
 
     class Meta:
-        model = User
-        fields = ['username', 'first_name', 'last_name', 'password1', 'password2', 'email']
-
-    def clean_email(self):
-        if not self.data['email'].endswith('@iitj.ac.in'):
-            raise forms.ValidationError('Not a valid email address')
-        elif User.objects.filter(email__iexact=self.data['email']).exists():
-            raise forms.ValidationError('Email address is already registered')
-        else:
-            return self.data['email'].lower()
-
-    def clean_username(self):
-        username_submit = self.data['username']
-        e_username = self.data['email'].split('@')[0]
-        if username_submit != e_username:
-            raise forms.ValidationError("Username doesn't comply with provided email")
-        else:
-            return self.data['username'].lower()
-
-    def clean_roll(self):
-        if len(self.data['roll']) < 7:
-            raise forms.ValidationError('Not a valid enrollment number')
-        if UserProfile.objects.filter(roll__iexact=self.data['roll'].upper()).exists():
-            raise forms.ValidationError('This enrollment number is already in use')
-        else:
-            return self.data['roll'].upper()
+        model = UserProfile
+        fields = ['gender', 'dob', 'prog', 'year', 'phone', 'branch', ]
 
     def clean_dob(self):
         dob_date = self.cleaned_data['dob']
