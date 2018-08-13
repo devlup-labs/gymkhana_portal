@@ -191,9 +191,10 @@ class SocialLink(models.Model):
 
 
 def topic_pre_save_receiver(sender, instance, *args, **kwargs):
-    name = instance.first_name.split(' ')
-    instance.first_name = name[0].title()
-    instance.last_name = ' '.join([x.title() for x in name[1:len(name)]])
+    if instance._state.adding is True:
+        name = instance.first_name.split(' ')
+        instance.first_name = name[0].title()
+        instance.last_name = ' '.join([x.title() for x in name[1:len(name)]])
 
 
 pre_save.connect(topic_pre_save_receiver, sender=User)
