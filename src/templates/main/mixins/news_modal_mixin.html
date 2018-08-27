@@ -35,7 +35,7 @@
                             <div class="col-6"><i class="fa fa-calendar-o news-modal"></i>{{ news.date|naturalday }}
                             </div>
                             <div class="col-6"><i class="fa fa-user news-modal"></i><a class="blue-grey-text"
-                                                                                       href="{% url 'oauth:detail' news.author.id %}">{{ news.author.user.get_full_name }}</a>
+                                                                                       href="{% url 'oauth:detail' news.author.roll %}">{{ news.author.user.get_full_name }}</a>
                             </div>
                         </div>
                     </div>
