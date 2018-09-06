@@ -25,9 +25,6 @@ wheels/
 .installed.cfg
 *.egg
 *.sqlite3
-migrations/
-staticfiles/
-media/
 .idea/
 
 # PyInstaller
@@ -106,6 +103,13 @@ ENV/
 .mypy_cache/
 .DS_Store
 
+# Django migrations
+migrations/
+
+# Project asset folders
+staticfiles/
+static/
+media/
 
 # Database
 gymkhanadb
