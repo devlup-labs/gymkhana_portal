@@ -122,9 +122,11 @@
                 <div class="col-lg-4 col-md-6 pt-md-2 mb-r">
                     {% include 'main/mixins/user_card_mixin.html' with userprofile=society.secretary designation='Student Secretary' %}
                 </div>
+                {% if society.joint_secretary %}
                 <div class="col-lg-4 col-md-6 pt-md-2 mb-r">
                     {% include 'main/mixins/user_card_mixin.html' with userprofile=society.joint_secretary designation='Student Joint Secretary' %}
                 </div>
+                {% endif %}
                 {% if society.mentor %}
                 <div class="col-lg-4 col-md-6 pt-md-2 mb-r">
                     {% include 'main/mixins/user_card_mixin.html' with userprofile=society.mentor designation='Mentor' %}
