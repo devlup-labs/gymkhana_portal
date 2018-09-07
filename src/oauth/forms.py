@@ -33,9 +33,8 @@ class SocialLinkForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     gender = forms.ChoiceField(choices=UserProfile.GENDER_CHOICES, widget=forms.Select(attrs={'class': 'mdb-select'}))
     roll = forms.CharField(max_length=15, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    dob = forms.DateField(label='Date of birth',
-                          widget=forms.TextInput(
-                              attrs={'class': 'form-control datepicker', 'placeholder': 'Pick a date'}))
+    dob = forms.DateField(label='Date of Birth',
+                          widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control select-wrapper'}))
     prog = forms.ChoiceField(choices=UserProfile.PROG_CHOICES, widget=forms.Select(attrs={'class': 'mdb-select'}))
     year = forms.ChoiceField(choices=UserProfile.YEAR_CHOICES, widget=forms.Select(attrs={'class': 'mdb-select'}))
     phone = forms.CharField(max_length=10, validators=[UserProfile.contact],
