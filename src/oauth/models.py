@@ -90,6 +90,7 @@ class UserProfile(models.Model):
         ('CH', 'Chemistry'),
         ('MA', 'Mathematics'),
         ('PHY', 'Physics'),
+        ('MME', 'Metallurgical and Materials Engineering'),
         ('HSS', 'Humanities and Social Sciences'),
         ('BBE', 'Biosciences and Bioengineering'),
         ('BISS', 'BISS'),
