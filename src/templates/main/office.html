@@ -1,5 +1,8 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
+{% block customstyles %}
+    <link rel="stylesheet" href="{% static 'css/contact_card.css' %}"/>
+{% endblock %}
 {% block main %}
     <div class="container pt-5 section team-section">
         <div class="row flex-center">
