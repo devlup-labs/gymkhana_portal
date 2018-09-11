@@ -1,12 +1,14 @@
 from django.utils import timezone
 from django.views.generic import TemplateView, DetailView, ListView, CreateView
 from .models import Society, Club, Senate, Festival, Activity, Contact
+from oauth.models import UserProfile
 from .forms import ContactForm
 from .mixins import NavigationMixin
 from photologue.models import Gallery
 from events.models import Event
 from news.models import News
 from .utils import MaintenanceMixin
+from decouple import config
 
 
 class MaintenanceAndNavigationMixin(MaintenanceMixin, NavigationMixin):
@@ -89,4 +91,22 @@ class ContactListView(MaintenanceAndNavigationMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ContactListView, self).get_context_data(**kwargs)
         context['range'] = range(context["paginator"].num_pages)
+        return context
+
+
+class OfficeView(MaintenanceAndNavigationMixin, TemplateView):
+    template_name = 'main/office.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(OfficeView, self).get_context_data(**kwargs)
+        secretary_roll_no = config('GENERAL_SECRETARY_ROLL', cast=str, default='')
+        current_year = str(timezone.now().year)
+        context.update({
+            'general_secretary': UserProfile.objects.filter(
+                roll=secretary_roll_no).first() if UserProfile.objects.filter(
+                roll=secretary_roll_no).exists() else None,
+            'societies': Society.objects.filter(year=current_year),
+            'senate_secretary': Senate.objects.filter(year=current_year).first() if Senate.objects.filter(
+                year=current_year).exists() else None
+        })
         return context
