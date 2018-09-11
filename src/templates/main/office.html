@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+{% block main %}
+    <div class="container pt-5 section team-section">
+        <div class="row flex-center">
+            <div class="col-sm-10">
+                <!--Card Primary-->
+                <div class="card primary-color text-center z-depth-2 mt-2 mb-2">
+                    <div class="card-block">
+                        <h3 class="h3-responsive white-text mb-0">Office Bearers</h3>
+                    </div>
+                </div>
+                <!--/.Card Primary-->
+            </div>
+            {% if general_secretary %}
+                <div class="col-lg-4 col-md-6 pt-md-2 mb-r">
+                    {% include 'main/mixins/user_card_mixin.html' with userprofile=general_secretary designation='General Secretary' %}
+                </div>
+            {% endif %}
+            {% for society in societies %}
+                <div class="col-lg-4 col-md-6 pt-md-2 mb-r">
+                    {% include 'main/mixins/user_card_mixin.html' with userprofile=society.secretary designation=society.name|add:' Secretary' %}
+                </div>
+            {% endfor %}
+            {% if senate_secretary %}
+                <div class="col-lg-4 col-md-6 pt-md-2 mb-r">
+                    {% include 'main/mixins/user_card_mixin.html' with userprofile=senate_secretary designation='Student Elected Representative Society Secretary' %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
