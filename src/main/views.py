@@ -106,7 +106,8 @@ class OfficeView(MaintenanceAndNavigationMixin, TemplateView):
                 roll=secretary_roll_no).first() if UserProfile.objects.filter(
                 roll=secretary_roll_no).exists() else None,
             'societies': Society.objects.filter(year=current_year),
-            'senate_secretary': Senate.objects.filter(year=current_year).first() if Senate.objects.filter(
+            'senate_secretary': Senate.objects.filter(year=current_year).first().senatemembership_set.filter(
+                role='SECY').first().userprofile if Senate.objects.filter(
                 year=current_year).exists() else None
         })
         return context
