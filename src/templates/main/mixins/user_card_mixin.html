@@ -14,10 +14,12 @@
             </div>
             <!--Content-->
             <div class="card-block">
-                    <h4><a class="black-text" href="{{ userprofile.get_absolute_url }}">{{ userprofile.user.get_full_name|truncatewords:2 }}</a></h4>
-                <p>{{ designation|default:'' }}</p>
+                <h4><a class="black-text" href="{{ userprofile.get_absolute_url }}">{{ userprofile.user.get_full_name|truncatewords:2 }}</a></h4>
+                <p class = "h-48">{{ designation|default:''|truncatechars:75 }}</p>
                 <!--Triggering button-->
-                <a class="rotate-btn" data-card="card-{{ userprofile.id }}"><i class="fa fa-repeat"></i> Details</a>
+                <div class="flex-center">
+                    <a class="rotate-btn detail-btn" data-card="card-{{ userprofile.id }}"><i class="fa fa-repeat"></i> Details</a>
+                </div>
             </div>
         </div>
         <!--/.Front Side-->
@@ -33,7 +35,7 @@
                 </h5>
                 <h6 class="h6-responsive">
                     <a class="icons-sm email-ic" href="mailto:{{ userprofile.user.email }}">
-                    <i class="icons-sm-i fa fa-envelope-o"></i> {{ userprofile.user.email }}</a>
+                        <i class="icons-sm-i fa fa-envelope-o"></i> {{ userprofile.user.email }}</a>
                 </h6>
                 {{ userprofile.about|linebreaks }}
             </div>
