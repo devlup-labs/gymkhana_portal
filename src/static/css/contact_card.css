@@ -7,6 +7,11 @@
     height: 40%;
 }
 
+.card-wrapper .detail-btn {
+    position: absolute;
+    margin-top: -1rem;
+}
+
 .section.team-section .avatar {
     margin-bottom: 0;
 }
@@ -45,4 +50,8 @@
 
 .section .front p {
     margin-bottom: 2.2rem;
+}
+
+.card-block .h-48 {
+    height: 48px;
 }
