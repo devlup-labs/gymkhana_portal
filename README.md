@@ -30,6 +30,10 @@ Procedure:
     ```
     pip install -r requirements.txt
     ```
+- Copy .env.example to .env
+    ```
+    cp .env.example .env
+    ```
 - Change to `src` directory
     ```
     cd src
