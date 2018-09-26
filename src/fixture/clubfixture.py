@@ -24,6 +24,7 @@ class ClubFactory(factory.django.DjangoModelFactory):
     captain = factory.SubFactory(UserProfileFactory)
     vice_captain_one = factory.SubFactory(UserProfileFactory)
     vice_captain_two = factory.SubFactory(UserProfileFactory)
+    vice_captain_three = factory.SubFactory(UserProfileFactory)
     mentor = factory.SubFactory(UserProfileFactory)
     # gallery = models.ForeignKey(Gallery, blank=True, null=True, on_delete=models.SET_NULL,
     resources_link = factory.Faker('url')

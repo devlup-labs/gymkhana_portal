@@ -90,6 +90,9 @@ class Club(models.Model):
     vice_captain_two = models.ForeignKey(UserProfile, related_name='vice_cap_two',
                                          limit_choices_to={'user__is_staff': True},
                                          blank=True, null=True, default=None, on_delete=models.SET_NULL)
+    vice_captain_three = models.ForeignKey(UserProfile, related_name='vice_cap_three',
+                                           limit_choices_to={'user__is_staff': True},
+                                           blank=True, null=True, default=None, on_delete=models.SET_NULL)
     mentor = models.ForeignKey(UserProfile, related_name='cmentor', blank=True, null=True, default=None,
                                on_delete=models.SET_NULL)
     core_members = models.ManyToManyField(UserProfile, blank=True)

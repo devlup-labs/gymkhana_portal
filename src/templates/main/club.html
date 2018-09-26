@@ -114,6 +114,9 @@
             {% if club.vice_captain_two %}
                 {% include 'main/mixins/club_user_round_card_mixin.html' with userprofile=club.vice_captain_two designation='Vice Captain' %}
             {% endif %}
+           {% if club.vice_captain_three %}
+                {% include 'main/mixins/club_user_round_card_mixin.html' with userprofile=club.vice_captain_three designation='Vice Captain' %}
+            {% endif %}
             {% if club.mentor %}
                 {% include 'main/mixins/club_user_round_card_mixin.html' with userprofile=club.mentor designation='Mentor' %}
             {% endif %}
