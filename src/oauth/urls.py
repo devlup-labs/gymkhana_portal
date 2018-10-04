@@ -7,7 +7,8 @@ app_name = 'oauth'
 
 urlpatterns = [
     url(r'^register/$', RegisterView.as_view(), name='register'),
-    url(r'^password-reset/$', PasswordResetView.as_view(), name='password-reset'),
+    url(r'^password-reset/$', PasswordResetView.as_view(template_name='oauth/password_reset_form.html'),
+        name='password-reset'),
     url(r'^(?P<roll>[\w]+)/get/$', get_activation_link, name='get-act-link'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         AccountActivationView.as_view(), name='activate'),
