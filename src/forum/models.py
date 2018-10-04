@@ -36,6 +36,8 @@ class Topic(models.Model, HitCountMixin):
     CAT_CHOICES = (
         ('Q', 'Question'),
         ('F', 'Feedback'),
+        ('S', 'Suggestion'),
+        ('I', 'Improvement'),
     )
     # Topic Database Model
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="author of topic")
