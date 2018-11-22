@@ -60,6 +60,17 @@
                 <h2 class="h2-responsive mb-2">About</h2>
                 <div id="description">{{ society.description|safe }}
                 </div>
+                {% if society.report_link %}
+                    {% if request.user.is_authenticated %}
+                        <div>
+                            <a href="{{ society.report_link }}" target="_blank" role="button" class="btn btn-secondary">
+                                Annual Report <i class="fa fa-external-link ml-1"></i></a>
+                        </div>
+                    {% else %}
+                        <p class="blockquote"><a href="{% url 'login' %}?next={{ request.path }}">Login</a> to view the
+                            annual society report.</p>
+                    {% endif %}
+                {% endif %}
             </div>
             <div class="col-md-4">
                 {% include 'main/mixins/event_list_module.html' with event_list=event_list %}
@@ -123,14 +134,14 @@
                     {% include 'main/mixins/user_card_mixin.html' with userprofile=society.secretary designation='Student Secretary' %}
                 </div>
                 {% if society.joint_secretary %}
-                <div class="col-lg-4 col-md-6 pt-md-2 mb-r">
-                    {% include 'main/mixins/user_card_mixin.html' with userprofile=society.joint_secretary designation='Student Joint Secretary' %}
-                </div>
+                    <div class="col-lg-4 col-md-6 pt-md-2 mb-r">
+                        {% include 'main/mixins/user_card_mixin.html' with userprofile=society.joint_secretary designation='Student Joint Secretary' %}
+                    </div>
                 {% endif %}
                 {% if society.mentor %}
-                <div class="col-lg-4 col-md-6 pt-md-2 mb-r">
-                    {% include 'main/mixins/user_card_mixin.html' with userprofile=society.mentor designation='Mentor' %}
-                </div>
+                    <div class="col-lg-4 col-md-6 pt-md-2 mb-r">
+                        {% include 'main/mixins/user_card_mixin.html' with userprofile=society.mentor designation='Mentor' %}
+                    </div>
                 {% endif %}
             </div>
         </div>

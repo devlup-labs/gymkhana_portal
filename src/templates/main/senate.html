@@ -37,11 +37,11 @@
             }
         </style>
     {% endif %}
-        <style>
-            .cream-back {
-                background: #F5F5F5
-            }
-        </style>
+    <style>
+        .cream-back {
+            background: #F5F5F5
+        }
+    </style>
 {% endblock %}
 {% block main %}
     <div class="streak streak-lg streak-photo senate-photo view hm-black-light">
@@ -57,6 +57,17 @@
         <div class="col-md-12">
             <h2 class="h2-responsive mb-2">About</h2>
             <div id="description">{{ senate.description|safe }}</div>
+            {% if senate.report_link %}
+                {% if request.user.is_authenticated %}
+                    <div>
+                        <a href="{{ senate.report_link }}" target="_blank" role="button" class="btn btn-secondary">
+                            Annual Report <i class="fa fa-external-link ml-1"></i></a>
+                    </div>
+                {% else %}
+                    <p class="blockquote"><a href="{% url 'login' %}?next={{ request.path }}">Login</a> to view the
+                        annual society report.</p>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
     <div class="container-fluid">
@@ -77,9 +88,9 @@
                     <!--/.Card Primary-->
                 </div>
                 {% for membership in senate.senatemembership_set.all %}
-                <div class="col-lg-4 col-md-6 pt-md-2 mb-r">
-                    {% include 'main/mixins/user_card_mixin.html' with userprofile=membership.userprofile designation=membership.get_role_display %}
-                </div>
+                    <div class="col-lg-4 col-md-6 pt-md-2 mb-r">
+                        {% include 'main/mixins/user_card_mixin.html' with userprofile=membership.userprofile designation=membership.get_role_display %}
+                    </div>
                 {% endfor %}
             </div>
         </div>
