@@ -1,6 +1,7 @@
 from django.utils import timezone
 from django.views.generic import TemplateView, DetailView, ListView, CreateView
-from .models import Society, Club, Senate, Festival, Activity, Contact
+from .models import Society, Club, Senate, Activity, Contact
+from festivals.models import Festival
 from oauth.models import UserProfile
 from .forms import ContactForm
 from .mixins import NavigationMixin

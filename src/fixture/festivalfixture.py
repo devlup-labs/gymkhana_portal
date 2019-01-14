@@ -8,7 +8,7 @@ COLOUR = ["yellow", "black", "purple", "red", "orange", "green", '#084594', '#21
 
 class FestivalFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = 'main.Festival'
+        model = 'festivals.Festival'
 
     name = random.choice(['IGNS', 'VRCHS', 'SPNDN', 'NMBL'])
     photo = factory.django.ImageField(color=random.choice(COLOUR))
