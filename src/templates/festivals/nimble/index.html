@@ -1,6 +1,6 @@
 {% for events in event_category_list %}
 {{ events.name }}
-    {% for foo in events.event_set.all %}
+    {% for foo in events.festivalevent_set.all %}
     {{ foo }}
     {% endfor %}
 
