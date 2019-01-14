@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'gallery.apps.GalleryConfig',
     'news.apps.NewsConfig',
-    'konnekt.apps.KonnektConfig'
+    'konnekt.apps.KonnektConfig',
+    'festivals.apps.FestivalsConfig',
 ]
 
 if DEBUG:
