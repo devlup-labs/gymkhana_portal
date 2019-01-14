@@ -1,21 +1,21 @@
 from django.contrib import admin
-from .models import Event, EventCategory, Festival
+from .models import FestivalEvent, FestivalEventCategory, Festival
 
 
-class EventInLine(admin.StackedInline):
-    model = Event
+class FestivalEventInLine(admin.StackedInline):
+    model = FestivalEvent
     prepopulated_fields = {"slug": ("name",)}
 
 
 class EventCategoryAdmin(admin.ModelAdmin):
-    inlines = (EventInLine,)
+    inlines = (FestivalEventInLine,)
     prepopulated_fields = {"slug": ("name",)}
     list_display = ['name', 'festival']
     list_filter = ['festival__name', ]
 
     class Meta:
-        model = EventCategory
+        model = FestivalEventCategory
 
 
-admin.site.register(EventCategory, EventCategoryAdmin)
+admin.site.register(FestivalEventCategory, EventCategoryAdmin)
 admin.site.register(Festival)

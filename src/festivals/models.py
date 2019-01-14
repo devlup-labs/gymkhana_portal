@@ -12,14 +12,14 @@ class Festival(models.Model):
     )
     name = models.CharField(max_length=5, choices=FEST_CHOICES)
     photo = VersatileImageField(upload_to='festival')
-    about = models.TextField(max_length=2048)
+    about = models.TextField()
     link = models.URLField(blank=True, null=True, default=None)
 
     def __str__(self):
         return self.get_name_display()
 
 
-class EventCategory(models.Model):
+class FestivalEventCategory(models.Model):
     name = models.CharField(max_length=128)
     festival = models.ForeignKey(Festival, on_delete=models.CASCADE)
     cover = VersatileImageField(upload_to='festival_event_category', blank=True)
@@ -31,16 +31,16 @@ class EventCategory(models.Model):
 
     class Meta:
         ordering = ['name']
-        verbose_name_plural = 'event categories'
+        verbose_name = 'Festival Event Category'
+        verbose_name_plural = 'Festival Event Categories'
 
 
-class Event(models.Model):
-    event_category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
-    # limit_choices_to={"event_category__festival": festival.name}, name='Event Category')
+class FestivalEvent(models.Model):
+    event_category = models.ForeignKey(FestivalEventCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=64)
     slug = models.SlugField()
     unique_id = models.CharField(max_length=8)
-    description = models.TextField(name='Problem Statement')
+    description = RichTextUploadingField(name='Problem Statement')
     pdf = models.FileField(upload_to='pdf', null=True, blank=True)
     cover = VersatileImageField(upload_to='event', null=True, blank=True)
     location = models.CharField(max_length=64, blank=True)
@@ -51,6 +51,8 @@ class Event(models.Model):
 
     class Meta:
         ordering = ['date']
+        verbose_name = 'Festival Event'
+        verbose_name_plural = 'Festival Events'
 
     def __str__(self):
         return self.name
