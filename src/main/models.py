@@ -139,22 +139,6 @@ class Activity(models.Model):
         return self.name + ' - ' + self.club.name
 
 
-class Festival(models.Model):
-    FEST_CHOICES = (
-        ('IGNS', 'Ignus'),
-        ('VRCHS', 'Varchas'),
-        ('SPNDN', 'Spandan'),
-        ('NMBL', 'Nimble'),
-    )
-    name = models.CharField(max_length=5, choices=FEST_CHOICES)
-    photo = VersatileImageField(upload_to='festival')
-    about = models.TextField(max_length=2048)
-    link = models.URLField(blank=True, null=True, default=None)
-
-    def __str__(self):
-        return self.get_name_display()
-
-
 class Senate(models.Model):
     # Validators
     valid_year = RegexValidator(r'^[0-9]{4}$', message='Not a valid year!')
