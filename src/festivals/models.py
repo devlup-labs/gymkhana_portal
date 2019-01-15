@@ -4,23 +4,22 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Festival(models.Model):
-    FEST_CHOICES = (
-        ('IGNS', 'Ignus'),
-        ('VRCHS', 'Varchas'),
-        ('SPNDN', 'Spandan'),
-        ('NMBL', 'Nimble'),
-    )
-    name = models.CharField(max_length=5, choices=FEST_CHOICES)
+    name = models.CharField(max_length=32)
     photo = VersatileImageField(upload_to='festival')
     about = models.TextField()
+    slug = models.SlugField(unique=True, help_text="This will be used as URL. /festivals/slug")
     link = models.URLField(blank=True, null=True, default=None)
     published = models.BooleanField(default=False)
+    default_html = models.BooleanField(default=True, help_text="Unselect if you want custom home page")
 
     def __str__(self):
-        return self.get_name_display()
+        return self.name
+
+    def get_name_display(self):
+        return self.name.title()
 
 
-class FestivalEventCategory(models.Model):
+class EventCategory(models.Model):
     name = models.CharField(max_length=128)
     festival = models.ForeignKey(Festival, on_delete=models.CASCADE)
     cover = VersatileImageField(upload_to='festival_event_category', blank=True)
@@ -36,8 +35,8 @@ class FestivalEventCategory(models.Model):
         verbose_name_plural = 'Festival Event Categories'
 
 
-class FestivalEvent(models.Model):
-    event_category = models.ForeignKey(FestivalEventCategory, on_delete=models.CASCADE)
+class Event(models.Model):
+    event_category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=64)
     slug = models.SlugField()
     unique_id = models.CharField(max_length=8)
@@ -51,7 +50,7 @@ class FestivalEvent(models.Model):
     published = models.BooleanField(default=True)
 
     class Meta:
-        ordering = ['date']
+        ordering = ['timestamp']
         verbose_name = 'Festival Event'
         verbose_name_plural = 'Festival Events'
 
