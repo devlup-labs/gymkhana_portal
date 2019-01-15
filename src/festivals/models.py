@@ -14,6 +14,7 @@ class Festival(models.Model):
     photo = VersatileImageField(upload_to='festival')
     about = models.TextField()
     link = models.URLField(blank=True, null=True, default=None)
+    published = models.BooleanField(default=False)
 
     def __str__(self):
         return self.get_name_display()
