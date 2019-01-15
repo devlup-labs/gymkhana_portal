@@ -1,10 +1,10 @@
 {% for events in event_category_list %}
 {{ events.name }}
+    {{ events.festival.name }}
     {% if events.festival.published %}Published
     {% else %}Not published
     {% endif %}
-    {% for foo in events.festivalevent_set.all %}
+    {% for foo in events.event_set.all %}
     {{ foo }}
     {% endfor %}
-
 {% endfor %}

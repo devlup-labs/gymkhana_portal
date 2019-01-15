@@ -1,8 +1,8 @@
 from django.conf.urls import url
-from .views import NimbleView
+from .views import FestivalView
 
 app_name = 'festivals'
 
 urlpatterns = [
-    url(r'^nimble$', NimbleView.as_view(), name='nimble'),
+    url(r'^(?P<slug>[\w-]+)/$', FestivalView.as_view(), name='festival'),
 ]
