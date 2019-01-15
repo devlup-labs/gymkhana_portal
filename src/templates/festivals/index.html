@@ -1,10 +1,12 @@
-{% for events in event_category_list %}
-{{ events.name }}
-    {{ events.festival.name }}
-    {% if events.festival.published %}Published
-    {% else %}Not published
-    {% endif %}
-    {% for foo in events.event_set.all %}
-    {{ foo }}
+{% if festival.published %}
+    {{ festival.name }} is published .... <br><br>
+    {% for events in event_category_list %}
+        {{ events.name }} <br>
+        {% for event in events.event_set.all %}
+           <div style="padding-left: 30px">{{ event }} <br></div>
+        {% endfor %}
     {% endfor %}
-{% endfor %}
+{% else %}
+    {{ festival.name }} is not published .... <br>
+    {{ festival.name }} Coming Soon ....
+{% endif %}
