@@ -45,7 +45,7 @@ class FestivalEvent(models.Model):
     pdf = models.FileField(upload_to='pdf', null=True, blank=True)
     cover = VersatileImageField(upload_to='event', null=True, blank=True)
     location = models.CharField(max_length=64, blank=True)
-    date = models.DateTimeField(blank=True, null=True)
+    timestamp = models.DateTimeField(blank=True, null=True)
     max_team_size = models.PositiveSmallIntegerField(default=1, help_text='Leave 1 for single participant event')
     min_team_size = models.PositiveSmallIntegerField(default=1, help_text='Leave 1 for single participant event')
     published = models.BooleanField(default=True)
