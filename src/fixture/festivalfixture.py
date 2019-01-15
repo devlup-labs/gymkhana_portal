@@ -10,7 +10,7 @@ class FestivalFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = 'festivals.Festival'
 
-    name = random.choice(['Ignus', 'Verchas', 'Spandan', 'Nimble'])
+    name = random.choice(['Ignus', 'Varchas', 'Spandan', 'Nimble'])
     photo = factory.django.ImageField(color=random.choice(COLOUR))
     about = factory.Faker('sentence', nb_words=30)
     slug = factory.Sequence(lambda n: 'fest-%d' % n)
