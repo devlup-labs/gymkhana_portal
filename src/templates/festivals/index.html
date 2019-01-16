@@ -1,3 +1,11 @@
+{% extends 'festivals/base.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% load hitcount_tags %}
+{% block mdbcss %}
+    <link rel="stylesheet" href="{% static 'css/mdbadmin.min.css' %}">{% endblock %}
+{% block title %}{{ festival.name }} | Festival IIT Jodhpur{% endblock %}
+{% block main %}
 {% if festival.published %}
     {{ festival.name }} is published .... <br><br>
     {% for events in event_category_list %}
@@ -10,3 +18,4 @@
     {{ festival.name }} is not published .... <br>
     {{ festival.name }} Coming Soon ....
 {% endif %}
+{% endblock %}
