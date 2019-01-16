@@ -28,7 +28,7 @@ Procedure:
     ```
 - Use pip to install other dependencies from `requirements.txt`
     ```
-    pip install -r requirements.txt
+    pip install -r requirements/dev.txt
     ```
 - Copy `.env.example` to `.env`
     ```
