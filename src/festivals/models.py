@@ -50,11 +50,7 @@ class Event(models.Model):
     published = models.BooleanField(default=True)
 
     class Meta:
-<<<<<<< HEAD
-        ordering = ['timestamp']
-=======
         ordering = ('timestamp', )
->>>>>>> upstream/dev
         verbose_name = 'Festival Event'
         verbose_name_plural = 'Festival Events'
 
