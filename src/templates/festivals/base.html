@@ -19,10 +19,9 @@
     {% endblock %}
 </head>
 <body class="fixed-sn {% block skin %}white-skin{% endblock %}">
-{% block header %}
-    <header>
-    </header>
-{% endblock %}
+<!--Header-->
+{% block header %}{% endblock %}
+<!--/Header-->
 <!--Content-->
 {% block content %}
     <main>
@@ -30,12 +29,10 @@
         {% endblock %}
     </main>
 {% endblock %}
+<!--/Content-->
 <!--Footer-->
-{% block footer %}
-    <footer class="page-footer center-on-small-only pt-0">
-    </footer>
-{% endblock %}
-<!--/.Footer-->
+{% block footer %}{% endblock %}
+<!--/Footer-->
 
 <!--Scripts-->
 {% block scripts %}
