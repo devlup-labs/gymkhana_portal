@@ -30,7 +30,7 @@ class EventCategory(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['name']
+        ordering = ('name', )
         verbose_name = 'Festival Event Category'
         verbose_name_plural = 'Festival Event Categories'
 
@@ -50,7 +50,11 @@ class Event(models.Model):
     published = models.BooleanField(default=True)
 
     class Meta:
+<<<<<<< HEAD
         ordering = ['timestamp']
+=======
+        ordering = ('timestamp', )
+>>>>>>> upstream/dev
         verbose_name = 'Festival Event'
         verbose_name_plural = 'Festival Events'
 
