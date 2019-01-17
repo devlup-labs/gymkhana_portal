@@ -9,7 +9,9 @@
 {% block title %}{{ festival.name }} | Festival IIT Jodhpur{% endblock %}
 {% block customstyles %}
     <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/festivals/nimble.css' %}">
+    <link rel="stylesheet" href="{% static 'css/festivals/nimble/custom_frontpage.css' %}">
+    <!-- Common Html CSS -->
+    <link rel="stylesheet" href="{% static 'css/festivals/nimble/common.css' %}">
 {% endblock %}
 {% block header %}
     <header>
@@ -22,9 +24,9 @@
     </header>
 {% endblock %}
 {% block main %}
-    <div id="mascot">
-        <img src="{% static 'assets/festivals/nimble/bumblebeeFinal2.gif' %}"/>
-    </div>
+{#    <div id="mascot">#}
+{#        <img src="{% static 'assets/festivals/nimble/bumblebeeFinal2.gif' %}"/>#}
+{#    </div>#}
     <div class="front-page">
 
         <div class="section" id="section0">
@@ -43,5 +45,5 @@
             </div>
         </div>
     </div>
-
+    {% include 'festivals/common.html' %}
 {% endblock %}
