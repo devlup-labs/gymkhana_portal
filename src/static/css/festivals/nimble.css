@@ -26,14 +26,16 @@ main {
 
 
 header {
-    height: 5vh;
+    height: 5vmax;
     width: 100vw;
-    background-color: rgba(23, 23, 23, 0.7) !important;
+    /*background-color: rgba(23, 23, 23, 0.7) !important;*/
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     z-index: 1;
     position: fixed;
+    font-size: 4vmax;
+    min-height: 50px;
 }
 
 #back_arrow, #nav_bars {
@@ -59,10 +61,19 @@ header {
     cursor: pointer;
 }
 
+/*.front-page{*/
+    /*height: 100vh;*/
+    /*width: 100vw;*/
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*z-index: 0;*/
+/*}*/
+
 #section0 {
-    height: 95vh;
+    height: 100vh;
     padding: 0;
-    background: url('../../assets/nimble/nimble_front_page.png') no-repeat center center scroll;
+    background: url('../../assets/festivals/nimble/nimble_front_page.png') no-repeat center center scroll;
     background-size: cover;
 }
 
@@ -207,15 +218,16 @@ header {
 
 #mascot {
     position: fixed;
-    left: 1vh;
-    top: 50vh;
+    left: 0vh;
+    bottom: 1vh;
     z-index: 1;
-    transform: translateY(-50%);
+    /*transform: translateY(-50%);*/
 }
 
 #mascot img {
-    height: 25vh;
-    width: 25vw;
+    height: 15vw;
+    min-height: 70px;
+    width: auto;
 }
 
 #nav {
@@ -294,9 +306,9 @@ header {
 
 
 @media screen and (max-width: 1024px) {
-    .section {
-        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .4);
-    }
+    /*.section {*/
+        /*box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .4);*/
+    /*}*/
 }
 
 .events_div {
