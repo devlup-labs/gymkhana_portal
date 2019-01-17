@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div class="container">
 
-</body>
-</html>
+    <table class="table">
+        <tbody>
+        {% for events in event_category_list %}
+            <tr>
+                <td scope="row" colspan="3" class="text-center">{{ events.name }}</td>
+            </tr>
+            <tr>
+                <th>Event</th>
+                <th>Date & Time</th>
+                <th>Venue</th>
+            </tr>
+            {% for event in events.event_set.all %}
+                <tr>
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.timestamp|date:'d N , P'|default:'Realeased Soon'}}</td>
+                    <td>{{ event.location|default:'Realeased Soon' }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
