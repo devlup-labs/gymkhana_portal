@@ -4,10 +4,14 @@
 {% load hitcount_tags %}
 {% block mdbcss %}
     <link rel="stylesheet" href="{% static 'css/mdbadmin.min.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Thasadith" rel="stylesheet">
 {% endblock %}
 {% block title %}{{ festival.name }} | Festival IIT Jodhpur{% endblock %}
 {% block customstyles %}
+    <link href="https://fonts.googleapis.com/css?family=Thasadith" rel="stylesheet">
+    <!-- Common Html CSS -->
+    <link rel="stylesheet" href="{% static 'css/festivals/common/about_fest.css' %}">
+    <link rel="stylesheet" href="{% static 'css/festivals/common/events.css' %}">
+    <link rel="stylesheet" href="{% static 'css/festivals/common/events_schedule.css' %}">
     <style>
         .body {
             background: url("{{ festival.photo.url }}") no-repeat center center scroll;
