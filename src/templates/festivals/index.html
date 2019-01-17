@@ -1,9 +1,12 @@
-{% if festival.published %}
+{% if festival.published and event_category_list %}
     {% if festival.default_html %}
+        {# if festival is published and defualt html code selected then render defult html page #}
         {% include 'festivals/default.html' %}
     {% else %}
+        {# if defult html page not selected render custom html page #}
         {% include 'festivals/custom.html' %}
     {% endif %}
 {% else %}
+    {# if festival is not published or it has no event then render cooming soon page #}
     {% include 'festivals/coming_soon.html' %}
 {% endif %}
