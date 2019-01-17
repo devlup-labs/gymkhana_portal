@@ -22,7 +22,7 @@ class Command(BaseCommand):
         self.create_objects(ActivityFactory)
         self.create_objects(EventFactory)
         self.create_objects(FestivalEventFactory)
-        self.create_objects(ClubFactory)
+        self.create_objects(ClubFactory, m2m=True)
         self.create_objects(MemberWithSenateFactory)
         self.create_objects(ContactFactory)
         self.create_objects(AnswerFactory, 20, m2m=True)
