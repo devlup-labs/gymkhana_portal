@@ -1,7 +1,0 @@
-{{ festival.name }} is published .... <br><br>
-{% for events in event_category_list %}
-    {{ events.name }} <br>
-    {% for event in events.event_set.all %}
-        <div style="padding-left: 30px">{{ event }} <br></div>
-    {% endfor %}
-{% endfor %}
