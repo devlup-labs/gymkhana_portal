@@ -14,34 +14,34 @@
 {% block header %}
     <header>
         <a id="back_arrow">
-            <i class="fa fa-arrow-circle-left fa-3x"></i>
+            <i class="fa fa-arrow-circle-left"></i>
         </a>
-        <a id="nav_bars">
-            <i class="fa fa-bars fa-3x"></i>
-        </a>
+        {#        <a id="nav_bars">#}
+        {#            <i class="fa fa-bars fa-3x"></i>#}
+        {#        </a>#}
     </header>
 {% endblock %}
 {% block main %}
+    <div id="mascot">
+        <img src="{% static 'assets/festivals/nimble/bumblebeeFinal2.gif' %}"/>
+    </div>
+    <div class="front-page">
 
-	<div id="mascot">
-		<img src="{% static 'assets/nimble/bumblebeeFinal2.gif' %}" />
-	</div>
-    <div class="section" id="section0">
-        <div id="nimble_heading">
-            NIMBLE
-        </div>
-        <div id="nimble_nfs">
-            NEED FOR SPEED
-        </div>
-        <div id="nimble_date">
-            8-10 Feb'19
-        </div>
-        <div class="social_icons">
-            <a href=""><img src="{% static 'assets/nimble/facebook_nimble.png' %}"></a>
-            <a href=""><img src="{% static 'assets/nimble/youtube_nimble.png' %}"></a>
+        <div class="section" id="section0">
+            <div id="nimble_heading">
+                NIMBLE
+            </div>
+            <div id="nimble_nfs">
+                NEED FOR SPEED
+            </div>
+            <div id="nimble_date">
+                8-10 Feb'19
+            </div>
+            <div class="social_icons">
+                <a href=""><img src="{% static 'assets/festivals/nimble/facebook_nimble.png' %}"></a>
+                <a href=""><img src="{% static 'assets/festivals/nimble/youtube_nimble.png' %}"></a>
+            </div>
         </div>
     </div>
-    <div class="section" id="section1">
 
-    </div>
 {% endblock %}
