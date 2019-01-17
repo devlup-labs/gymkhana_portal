@@ -6,7 +6,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 class Festival(models.Model):
     name = models.CharField(max_length=32)
     photo = VersatileImageField(upload_to='festival')
-    about = models.TextField()
+    about = RichTextUploadingField(blank=True, null=True)
     slug = models.SlugField(unique=True, help_text="This will be used as URL. /festivals/slug")
     link = models.URLField(blank=True, null=True, default=None)
     published = models.BooleanField(default=False)

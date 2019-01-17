@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<div id="about_fest">
+    <div class="container">
+        <div id="about_fest_heading">About {{ festival.name }}
+        </div>
+        <div id="about_fest_detail">
+            {{ festival.about| safe }}
+        </div>
+    </div>
+</div>
