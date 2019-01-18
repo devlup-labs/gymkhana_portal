@@ -1,0 +1,43 @@
+<div class="events">
+    <div class="event-title">
+        Events
+    </div>
+    <!-- Grid row -->
+    <div class="row accordion-gradient-bcg d-flex justify-content-center">
+        <!-- Grid column -->
+        <div class="col-10 col-md-10 col-xl-8 py-5">
+            <!--Accordion wrapper-->
+            <div class="accordion md-accordion accordion-2" id="{{ events.slug }}-accordian" role="tablist"
+                 aria-multiselectable="true">
+                {% for events in event_category_list %}
+                    <!-- Accordion card -->
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header rgba-stylish-strong z-depth-1 mb-1" role="tab"
+                             id="{{ events.slug }}-id">
+                            <a data-toggle="collapse" data-parent="#{{ events.slug }}-accordian"
+                               href="#{{ events.slug }}-collapse" aria-expanded="true"
+                               aria-controls="{{ events.slug }}-collapse">
+                                <h5 class="mb-0 white-text text-uppercase font-thin">
+                                    {{ events.name | safe }} <i class="fa fa-angle-down rotate-icon"></i>
+                                </h5>
+                            </a>
+                        </div>
+                        <!-- Card body -->
+                        <div id="{{ events.slug }}-collapse" class="collapse show" role="tabpanel"
+                             aria-labelledby="{{ events.slug }}-id"
+                             data-parent="#{{ events.slug }}-accordian">
+                            <div class="card-body mb-1 rgba-grey-light white-text">
+                                {{ events.about | safe }}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Accordion card -->
+                {% endfor %}
+            </div>
+            <!--/.Accordion wrapper-->
+        </div>
+        <!-- Grid column -->
+    </div>
+    <!-- Grid row -->
+</div>
