@@ -19,21 +19,27 @@
     </style>
 {% endblock %}
 {% block content %}
+    <!--MainContent-->
     <div class="container vertical-center justify-content text-center text-white">
         <div style="font-size: 10vmax;">{{ festival.name }}</div>
         <div style="font-size: 5vmax;">is coming soon ...</div>
     </div>
+    <!--MainContent-->
+    <!--BackButton-->
     <a href="/">
         <i class="fa fa-arrow-circle-left fa-3x"
            style="position: absolute; left: 1vmax; top: 1vmax;z-index: 2;color: white"></i>
     </a>
-    <!--
+    <!--/BackButton-->
+    <!--SocialLink-->
     <div style="position: absolute; right: 1vmax; bottom: 1vmax;z-index: 2;">
-        <a href="/" class="btn-floating btn-small btn-fb">
-            <i class="fa fa-facebook"></i>
-        </a>
-        <a href="/" class="btn-floating btn-small btn-yt">
-            <i class="fa fa-youtube-play" ></i>
-        </a>
-    </div>-->
+        {% for link in festival.sociallink_set.all %}
+            {% if forloop.counter < 6 %}
+                <a href="{{ link.link }}" class="btn-small icons-sm {{ link.get_sm_ic }}">
+                    <i class="{{ link.get_fai }}"></i>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <!--/SocialLink-->
 {% endblock %}

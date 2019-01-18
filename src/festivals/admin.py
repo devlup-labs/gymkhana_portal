@@ -1,8 +1,13 @@
 from django.contrib import admin
-from .models import Event, EventCategory, Festival
+from .models import Event, EventCategory, Festival, SocialLink
+
+
+class SocialLinkInline(admin.TabularInline):
+    model = SocialLink
 
 
 class FestivalAdmin(admin.ModelAdmin):
+    inlines = (SocialLinkInline, )
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('name', 'published', 'default_html')
     list_filter = ('published', 'default_html')
