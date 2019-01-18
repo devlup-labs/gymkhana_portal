@@ -1,0 +1,49 @@
+#event_schedule_table {
+    height: 100vh !important;
+    width: 100vw !important;
+    color: var(--theme_light_color) !important;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-family: 'Roboto Mono', monospace;
+}
+
+#event_schedule_table .container {
+    justify-content: center;
+}
+
+.table-bordered td, .table-bordered th {
+    border: var(--theme_light_color) 1px solid !important;
+}
+
+.table-heading {
+    font-size: 5vmin;
+}
+
+.event-heading {
+    font-size: 3.5vmin;
+    font-family: Roboto, sans-serif;
+}
+
+.table-sub-heading {
+    font-size: 2.75vmin;
+}
+
+.table {
+    width: inherit !important;
+}
+
+td {
+    font-size: large;
+}
+@media screen and (max-width: 1024px){
+td {
+    font-size: x-small;
+}
+
+.table {
+    width: 90vw !important;
+}
+
+}

@@ -1,24 +1,28 @@
-<div class="container">
-
-    <table class="table">
-        <tbody>
-        {% for events in event_category_list %}
+<div id="event_schedule_table">
+    <div class="container" style="overflow-y: auto; padding: 0">
+        <table class="table table-bordered">
+            <tbody>
             <tr>
-                <td scope="row" colspan="3" class="text-center">{{ events.name }}</td>
+                <td scope="row" colspan="3" class="text-center table-heading text-uppercase">{{ festival.name }} Event Schedule</td>
             </tr>
-            <tr>
-                <th>Event</th>
-                <th>Date & Time</th>
-                <th>Venue</th>
-            </tr>
-            {% for event in events.event_set.all %}
+            {% for events in event_category_list %}
                 <tr>
-                    <td>{{ event.name }}</td>
-                    <td>{{ event.timestamp|date:'d N , P'|default:'Realeased Soon'}}</td>
-                    <td>{{ event.location|default:'Realeased Soon' }}</td>
+                    <td scope="row" colspan="3" class="text-center event-heading text-uppercase">{{ events.name }}</td>
                 </tr>
+                <tr class="table-sub-heading text-uppercase">
+                    <th style="width: 60%;">Events</th>
+                    <th style="width: 20%;">Date & Time</th>
+                    <th style="width: 20%;">Venue</th>
+                </tr>
+                {% for event in events.event_set.all %}
+                    <tr>
+                        <td>{{ event.name.title }}</td>
+                        <td>{{ event.timestamp|date:'d N , P'|default:'Available Soon'}}</td>
+                        <td>{{ event.location.title|default:'Available Soon' }}</td>
+                    </tr>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
