@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="{% static 'css/festivals/common/events.css' %}">
     <link rel="stylesheet" href="{% static 'css/festivals/common/events_schedule.css' %}">
     <style>
+        :root {
+            --theme_light_color: #FFF;
+            --theme_dark_color: #008EE3;
+        }
         .body {
             background: url("{{ festival.photo.url }}") no-repeat center center scroll;
             background-size: cover;
