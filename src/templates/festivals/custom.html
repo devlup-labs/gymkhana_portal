@@ -8,6 +8,14 @@
 {% endblock %}
 {% block title %}{{ festival.name }} | Festival IIT Jodhpur{% endblock %}
 {% block customstyles %}
+
+    <noscript>
+        <style>
+            .loader {
+                display: none;
+            }
+        </style>
+    </noscript>
     <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Thasadith" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -18,6 +26,7 @@
     <link rel="stylesheet" href="{% static 'css/festivals/common/events_schedule.css' %}">
 {% endblock %}
 {% block header %}
+    <div class="loader"></div>
     <header>
         <a id="back_arrow" href="{% url 'main:index' %} ">
             <i class="fa fa-arrow-circle-left"></i>
@@ -60,4 +69,5 @@
 
 {% block customscripts %}
     <script src="{% static 'js/festivals/common/events.js' %}"></script>
+    <script src="{% static 'js/festivals/custom_frontpage.js' %}"></script>
 {% endblock %}

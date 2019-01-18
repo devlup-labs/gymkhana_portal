@@ -18,6 +18,27 @@ body {
     overflow-x: hidden;
 }
 
+.loader {
+    width: 100vw;
+    height: 100vh;
+    background: url('../../../assets/festivals/nimble/loader2.gif') center no-repeat #000;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    position: fixed;
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 main {
     padding: 0 !important;
     margin: 0 !important;
