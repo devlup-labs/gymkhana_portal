@@ -41,7 +41,7 @@ class Event(models.Model):
     name = models.CharField(max_length=64)
     slug = models.SlugField(unique=True)
     unique_id = models.CharField(unique=True, max_length=8)
-    description = RichTextUploadingField(name='Problem Statement')
+    about = RichTextUploadingField(verbose_name='About', blank=True)
     pdf = models.FileField(upload_to='pdf', null=True, blank=True)
     cover = VersatileImageField(upload_to='event', null=True, blank=True)
     location = models.CharField(max_length=64, blank=True)

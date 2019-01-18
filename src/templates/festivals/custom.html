@@ -19,7 +19,7 @@
 {% endblock %}
 {% block header %}
     <header>
-        <a id="back_arrow">
+        <a id="back_arrow" href="{% url 'main:index' %} ">
             <i class="fa fa-arrow-circle-left"></i>
         </a>
         {#        <a id="nav_bars">#}
@@ -28,9 +28,9 @@
     </header>
 {% endblock %}
 {% block main %}
-{#    <div id="mascot">#}
-{#        <img src="{% static 'assets/festivals/nimble/bumblebeeFinal2.gif' %}"/>#}
-{#    </div>#}
+    {#    <div id="mascot">#}
+    {#        <img src="{% static 'assets/festivals/nimble/bumblebeeFinal2.gif' %}"/>#}
+    {#    </div>#}
     <div class="front-page">
 
         <div class="section" id="section0">
@@ -44,8 +44,14 @@
                 8-10 Feb'19
             </div>
             <div class="social_icons">
-                <a href=""><img src="{% static 'assets/festivals/nimble/facebook_nimble.png' %}"></a>
-                <a href=""><img src="{% static 'assets/festivals/nimble/youtube_nimble.png' %}"></a>
+                {% for sociallink in festival.sociallink_set.all %}
+                    {% if sociallink.social_media == 'FB' %}
+                        <a href="{{ sociallink.link }}"><img src="{% static 'assets/festivals/nimble/facebook_nimble.png' %}"></a>
+                    {% endif %}
+                    {% if sociallink.social_media == 'YT' %}
+                        <a href="{{ sociallink.link }}"><img src="{% static 'assets/festivals/nimble/youtube_nimble.png' %}"></a>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>

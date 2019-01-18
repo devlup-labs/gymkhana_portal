@@ -12,32 +12,103 @@
                 {% for events in event_category_list %}
                     <!-- Accordion card -->
                     <div class="card">
-                        <!-- Card header -->
-                        <div class="card-header rgba-stylish-strong z-depth-1 mb-1" role="tab"
-                             id="{{ events.slug }}-id">
-                            <a data-toggle="collapse" data-parent="#{{ events.slug }}-accordian"
-                               href="#{{ events.slug }}-collapse" aria-expanded="true"
-                               aria-controls="{{ events.slug }}-collapse">
-                                <h5 class="mb-0 white-text text-uppercase font-thin">
-                                    {{ events.name | safe }} <i class="fa fa-angle-down rotate-icon"></i>
-                                </h5>
-                            </a>
-                        </div>
-                        <!-- Card body -->
-                        <div id="{{ events.slug }}-collapse" class="collapse show" role="tabpanel"
-                             aria-labelledby="{{ events.slug }}-id"
-                             data-parent="#{{ events.slug }}-accordian">
-                            <div class="card-body mb-1 rgba-grey-light white-text">
-                                {{ events.about | safe }}
+                    <!-- Card header -->
+                    <div class="card-header rgba-stylish-strong z-depth-1 mb-1" role="tab"
+                         id="{{ events.slug }}-id">
+                        <a data-toggle="collapse" data-parent="#{{ events.slug }}-accordian"
+                           href="#{{ events.slug }}-collapse" aria-expanded="true"
+                           aria-controls="{{ events.slug }}-collapse">
+                            <h5 class="mb-0 white-text text-uppercase font-thin">
+                                {{ events.name | safe }} <i class="fa fa-angle-down rotate-icon"></i>
+                            </h5>
+                        </a>
+                    </div>
+                    <!-- Card body -->
+                    <div id="{{ events.slug }}-collapse" class="collapse show" role="tabpanel"
+                         aria-labelledby="{{ events.slug }}-id"
+                         data-parent="#{{ events.slug }}-accordian">
+                        <div class="card-body mb-1 rgba-grey-light white-text pb-3">
+                            {{ events.about | safe }}
+
+                            <div id="carousel-{{ events.slug }}-id" class="carousel slide carousel-multi-item v-2"
+                                 data-ride="carousel">
+                                <!--Controls-->
+                                <div class="controls-top">
+                                    <a class="btn-floating" href="#carousel-{{ events.slug }}-id" data-slide="prev"><i
+                                            class="fa fa-chevron-left"></i></a>
+                                    <a class="btn-floating" href="#carousel-{{ events.slug }}-id" data-slide="next"><i
+                                            class="fa fa-chevron-right"></i></a>
+                                </div>
+                                <div class="carousel-inner" role="listbox">
+                                    {% for event in events.event_set.all %}
+                                        {% if forloop.counter0 == 0 %}
+                                            <div class="carousel-item active">
+                                        {% else %}
+                                            <div class="carousel-item">
+                                        {% endif %}
+                                    <div class="col-md-12 col-12">
+                                        <div class="card mb-2">
+                                            <img class="card-img-top"
+                                                 src="{{ event.cover.url }}"
+                                                 alt="{{ event.slug }}">
+                                            <div class="card-body">
+                                                <h4 class="card-title text-uppercase pt-2">{{ event.name }}</h4>
+                                                <h6>{{ event.timestamp|date:'d N , P'|default:'Available Soon'}}</h6>
+                                                <a class="btn btn-rounded event-info my-3"
+                                                   id="{{ event.slug }}">Explore...</a>
+                                                {% if event.contact %}
+                                                    <a class="btn btn-rounded event-contact my-3"
+                                                       id="{{ event.slug }}-contact-btn">
+                                                        <i class="fa fa-phone"></i>
+                                                    </a>
+                                                {% endif %}
+                                                {% if event.register %}
+                                                    <a class="btn btn-rounded event-register my-3"
+                                                       id="{{ event.slug }}-register-btn" href="#{{ event.register }}"
+                                                       target="_blank">
+                                                        Register
+                                                        {#                                                    <i class="fa fa-user-plus"></i>#}
+                                                    </a>
+                                                {% endif %}
+                                                {% if event.pdf %}
+                                                    <a class="btn btn-rounded event-register my-3"
+                                                       id="{{ event.slug }}-register-btn" href="#{{ event.pdf.url }}"
+                                                       target="_blank">
+                                                        Rulebook
+                                                        {#                                                    <i class="fa fa-user-plus"></i>#}
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                            <div class="event-info-wrapper" id="{{ event.slug }}-info-wrapper">
+                                                <h4 class="my-3 py-1">About</h4>
+                                                <div class="event_detail">
+                                                    {{ event.about | safe }}
+                                                </div>
+                                            </div>
+                                            {% if event.contact %}
+                                                <div class="event-info-wrapper" id="{{ event.slug }}-contact-wrapper">
+                                                    <h4 class="my-3 py-1">About</h4>
+                                                    <div class="event_detail">
+                                                        {{ event.contact | safe }}
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    </div>
+                                    {% endfor %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Accordion card -->
                 {% endfor %}
+                </div>
+                <!--/.Accordion wrapper-->
             </div>
-            <!--/.Accordion wrapper-->
+            <!-- Grid column -->
         </div>
-        <!-- Grid column -->
+        <!-- Grid row -->
     </div>
-    <!-- Grid row -->
 </div>
