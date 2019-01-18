@@ -2,6 +2,7 @@
     height: 100vh !important;
     width: 100vw !important;
     color: var(--theme_light_color) !important;
+    background-color: var(--theme_dark_color) !important;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -11,6 +12,8 @@
 
 #event_schedule_table .container {
     justify-content: center;
+    overflow-y: auto;
+    padding: 0;
 }
 
 .table-bordered td, .table-bordered th {
