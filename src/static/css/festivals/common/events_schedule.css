@@ -1,6 +1,8 @@
+
 #event_schedule_table {
-    height: 100vh !important;
-    width: 100vw !important;
+    height: auto !important;
+    width: auto !important;
+    padding-top: 2vh;
     color: var(--theme_light_color) !important;
     background-color: var(--theme_dark_color) !important;
     display: flex;
@@ -40,13 +42,14 @@
 td {
     font-size: large;
 }
-@media screen and (max-width: 1024px){
-td {
-    font-size: x-small;
-}
 
-.table {
-    width: 90vw !important;
-}
+@media screen and (max-width: 1024px) {
+    td {
+        font-size: x-small;
+    }
+
+    .table {
+        width: 90vw !important;
+    }
 
 }
