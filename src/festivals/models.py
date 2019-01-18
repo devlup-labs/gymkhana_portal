@@ -24,7 +24,7 @@ class EventCategory(models.Model):
     name = models.CharField(max_length=128)
     festival = models.ForeignKey(Festival, on_delete=models.CASCADE)
     cover = VersatileImageField(upload_to='festival_event_category', blank=True)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     about = RichTextUploadingField()
 
     def __str__(self):
@@ -39,8 +39,8 @@ class EventCategory(models.Model):
 class Event(models.Model):
     event_category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=64)
-    slug = models.SlugField()
-    unique_id = models.CharField(max_length=8)
+    slug = models.SlugField(unique=True)
+    unique_id = models.CharField(unique=True, max_length=8)
     description = RichTextUploadingField(name='Problem Statement')
     pdf = models.FileField(upload_to='pdf', null=True, blank=True)
     cover = VersatileImageField(upload_to='event', null=True, blank=True)
