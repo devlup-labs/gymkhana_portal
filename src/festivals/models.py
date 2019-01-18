@@ -66,7 +66,6 @@ class SocialLink(models.Model):
         ('LI', 'LinkedIn'),
         ('GP', 'Google Plus'),
         ('IG', 'Instagram'),
-        ('GH', 'GitHub'),
         ('YT', 'YouTube'),
     )
     FA_CHOICES = (
@@ -75,8 +74,7 @@ class SocialLink(models.Model):
         ('fa fa-linkedin', 'LI'),
         ('fa fa-google-plus', 'GP'),
         ('fa fa-instagram', 'IG'),
-        ('fa fa-github', 'GH'),
-        ('fa fa-youtube', 'YT'),
+        ('fa fa-youtube-play', 'YT'),
     )
     IC_CHOICES = (
         ('fb-ic', 'FB'),
@@ -84,7 +82,6 @@ class SocialLink(models.Model):
         ('li-ic', 'LI'),
         ('gplus-ic', 'GP'),
         ('ins-ic', 'IG'),
-        ('git-ic', 'GH'),
         ('yt-ic', 'YT'),
     )
     festival = models.ForeignKey(Festival, on_delete=models.CASCADE)
