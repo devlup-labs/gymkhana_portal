@@ -8,6 +8,7 @@
     flex-wrap: wrap;
     justify-content: center;
     font-family: 'Roboto Mono', monospace;
+    padding: 5%;
 }
 
 #event_schedule_table .container {
