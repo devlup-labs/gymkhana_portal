@@ -35,7 +35,8 @@
     <div style="position: absolute; right: 1vmax; bottom: 1vmax;z-index: 2;">
         {% for link in festival.sociallink_set.all %}
             {% if forloop.counter < 6 %}
-                <a href="{{ link.link }}" class="btn-small icons-sm {{ link.get_sm_ic }}">
+                <a href="{{ link.link }}" class="btn-small icons-sm {{ link.get_sm_ic }}" target="_blank"
+                   style="outline: none">
                     <i class="{{ link.get_fai }}"></i>
                 </a>
             {% endif %}

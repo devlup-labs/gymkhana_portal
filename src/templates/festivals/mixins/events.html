@@ -18,7 +18,7 @@
                          id="{{ events.slug }}-id">
                         <a data-toggle="collapse" data-parent="#{{ events.slug }}-accordian"
                            href="#{{ events.slug }}-collapse" aria-expanded="true"
-                           aria-controls="{{ events.slug }}-collapse">
+                           aria-controls="{{ events.slug }}-collapse" style="outline: none;">
                             <h5 class="mb-0 white-text text-uppercase font-thin">
                                 {{ events.name | safe }} <i class="fa fa-angle-down rotate-icon"></i>
                             </h5>
@@ -50,7 +50,8 @@
                                     <div class="col-md-12 col-12">
                                         <div class="card mb-2">
                                             <img class="card-img-top"
-                                                 src="{{ event.cover.url}}"
+                                                 src="{% if event.cover %}{{ event.cover.url }}
+                                                      {% else %}{{ festival.photo.url }}{% endif %}"
                                                  alt="{{ event.slug }}">
                                             <div class="card-body">
                                                 <h4 class="card-title text-uppercase pt-2">{{ event.name }}</h4>

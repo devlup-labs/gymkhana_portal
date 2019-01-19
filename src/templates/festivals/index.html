@@ -4,9 +4,13 @@
         {% include 'festivals/default.html' %}
     {% else %}
         {# if defult html page not selected render custom html page #}
-        {% include 'festivals/custom.html' %}
+        {# festival specific custom code { if-else } #}
+        {% if festival.name.lower == 'nimble' %}
+            {% include 'festivals/custom.html' %}
+        {% else %}
+            {% include 'festivals/default.html' %}
+        {% endif %}
     {% endif %}
-
 {% else %}
     {# if festival is not published or it has no event then render cooming soon page #}
     {% include 'festivals/coming_soon.html' %}
