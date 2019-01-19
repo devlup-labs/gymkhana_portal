@@ -18,7 +18,7 @@
                     <tr>
                         <td>{{ event.name.title }}</td>
                         <td>{{ event.timestamp|date:'d N , P'|default:'Available Soon'}}</td>
-                        <td>{{ event.location.title|default:'Available Soon' }}</td>
+                        <td>{{ event.location|default:'Available Soon' }}</td>
                     </tr>
                 {% endfor %}
             {% endfor %}
