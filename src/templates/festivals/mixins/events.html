@@ -58,7 +58,7 @@
                                                 <h6>{{ event.timestamp|date:'d N , P'|default:'Available Soon'}}</h6>
                                                 <a class="btn btn-rounded event-info my-3"
                                                    id="{{ event.slug }}">Explore...</a>
-                                                {% if event.contact %}
+                                                {% if event.phone %}
                                                     <a class="btn btn-rounded event-contact my-3"
                                                        id="{{ event.slug }}-contact-btn">
                                                         <i class="fa fa-phone"></i>
@@ -66,10 +66,10 @@
                                                 {% endif %}
                                                 {% if event.register %}
                                                     <a class="btn btn-rounded event-register my-3"
-                                                       id="{{ event.slug }}-register-btn" href="#{{ event.register }}"
+                                                       id="{{ event.slug }}-register-btn" href="{{ event.register }}"
                                                        target="_blank">
                                                         Register
-                                                        {#                                                    <i class="fa fa-user-plus"></i>#}
+                                                        <i class="fa fa-user-plus"></i>
                                                     </a>
                                                 {% endif %}
                                                 {% if event.pdf %}
@@ -87,11 +87,11 @@
                                                     {{ event.about | safe }}
                                                 </div>
                                             </div>
-                                            {% if event.contact %}
+                                            {% if event.phone %}
                                                 <div class="event-info-wrapper" id="{{ event.slug }}-contact-wrapper">
                                                     <h4 class="my-3 py-1">About</h4>
                                                     <div class="event_detail">
-                                                        {{ event.contact | safe }}
+                                                        {{ event.phone}}
                                                     </div>
                                                 </div>
                                             {% endif %}

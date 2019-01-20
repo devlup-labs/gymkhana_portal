@@ -1,6 +1,8 @@
+from django.core.validators import RegexValidator
 from django.db import models
 from versatileimagefield.fields import VersatileImageField
 from ckeditor_uploader.fields import RichTextUploadingField
+from main.models import Society
 
 
 class Festival(models.Model):
@@ -9,6 +11,7 @@ class Festival(models.Model):
     photo = VersatileImageField(upload_to='festival')
     about = RichTextUploadingField(blank=True, null=True)
     slug = models.SlugField(unique=True, help_text="This will be used as URL. /festivals/slug")
+    society = models.ManyToManyField(Society, blank=True)
     link = models.URLField(blank=True, null=True, default=None)
     published = models.BooleanField(default=False)
     default_html = models.BooleanField(default=True, help_text="Unselect if you want custom home page")
@@ -37,6 +40,9 @@ class EventCategory(models.Model):
 
 
 class Event(models.Model):
+    # Validators
+    contact = RegexValidator(r'^[0-9]{10}$', message='Not a valid number!')
+
     event_category = models.ForeignKey(EventCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=64)
     slug = models.SlugField(unique=True)
@@ -46,6 +52,8 @@ class Event(models.Model):
     cover = VersatileImageField(upload_to='event', null=True, blank=True)
     location = models.CharField(max_length=64, blank=True)
     timestamp = models.DateTimeField(blank=True, null=True)
+    register = models.URLField(blank=True, help_text="Registration URL")
+    phone = models.CharField(max_length=10, blank=True, verbose_name="Organizer's Contact", validators=[contact])
     max_team_size = models.PositiveSmallIntegerField(default=1, help_text='Leave 1 for single participant event')
     min_team_size = models.PositiveSmallIntegerField(default=1, help_text='Leave 1 for single participant event')
     published = models.BooleanField(default=True)

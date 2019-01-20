@@ -29,11 +29,12 @@
         }
     </style>
 {% endblock %}
+{% block skin %}MDB white{% endblock %}
 {% block content %}
     <!--BackButton-->
     <a href="{% url 'main:index' %}">
         <i class="fa fa-arrow-circle-left fa-3x"
-           style="position: fixed; left: 1vmax; top: 1vmax;z-index: 2;color: white;mix-blend-mode: difference"></i>
+           style="position: fixed; left: 0.5vmin; top: 0.5vmax;z-index: 2;color: white;mix-blend-mode: difference"></i>
     </a>
     <!--/BackButton-->
     <!--Social Link-->
@@ -57,7 +58,7 @@
         </div>
     {% endblock %}
     {% block main %}
-        <div class="container">
+        <div class="container" style="background-color: inherit">
             <!--about us-->
             <section id="about" class="section">
                 <!--Secion heading-->
@@ -143,7 +144,7 @@
         </div>
         <!--/Schedule-->
         <!--Events-->
-        <div class="container wow fadeIn">
+        <div class="container wow fadeIn" style="background-color: inherit">
             <section id="events" class="section">
                 <!--Section heading-->
                 <h1 class="section-heading wow fadeIn" data-wow-delay="0.2s"
@@ -237,15 +238,10 @@
                                                                         </h6>
                                                                         <div class="row justify-content-center d-flex"
                                                                              style="margin-bottom: 15px">
-                                                                            {% if False %}
-                                                                                <div class="btn btn-rounded"
-                                                                                     style="background-color: #7D348D">
-                                                                                    Explore..
-                                                                                </div>
-                                                                            {% endif %}
-                                                                            {% if event.contact %}
+                                                                            {% if event.phone %}
                                                                                 <div class="btn btn-dark-green btn-rounded">
-                                                                                    <a><i class="fa fa-phone"></i></a>
+                                                                                    <a>+91-{{ event.phone }} <i
+                                                                                            class="fa fa-phone"></i></a>
                                                                                 </div>
                                                                             {% endif %}
                                                                             {% if event.register %}
@@ -257,7 +253,7 @@
                                                                             {% endif %}
                                                                             {% if event.pdf %}
                                                                                 <div class="btn btn-rounded"
-                                                                                     style="background-color: #FF66FF">
+                                                                                     style="background-color: #7D348D">
                                                                                     <a>Rulebook<i
                                                                                             class="fa fa fa-book"></i></a>
                                                                                 </div>
@@ -288,7 +284,7 @@
     {% endblock %}
 {% endblock %}
 {% block footer %}
-    <footer class="page-footer mt-0" style="background-color: #3E4551; color: #fff;">
+    <footer class="page-footer mt-0">
         <!--Footer Links-->
         <div class="container wow fadeIn" data-wow-delay="0.3s">
             <div class="row">
@@ -303,11 +299,12 @@
                 <div class="col-md-3 ml-auto text-md-right">
                     <h5 class="title">Quick Links</h5>
                     <ul>
+                        {% for society in festival.society.all %}
+                            <li><a href="{{ society.get_absolute_url }}" target="_blank"
+                                   style="opacity: 0.6">{{ society.name }}</a></li>
+                        {% endfor %}
                         <li><a href="http://iitj.ac.in" target="_blank" style="opacity: 0.6">IIT Jodhpur</a></li>
                         <li><a href="{% url 'main:contact' %}" style="opacity: 0.6">Contact Us</a></li>
-                        <li><a href="http://iitj.ac.in/academics/index.php?id=academic_calendar"
-                               style="opacity: 0.6">Acadmic
-                            Calender</a></li>
                     </ul>
                 </div>
                 <!--/.Second column-->
