@@ -1,9 +1,0 @@
-{% if festival.published and event_category_list %}
-    {% if festival.use_custom_html %}
-        {% include 'festivals/default.html' %}
-    {% else %}
-        {% include 'festivals/default.html' %}
-    {% endif %}
-{% else %}
-    {% include 'festivals/coming_soon.html' %}
-{% endif %}
