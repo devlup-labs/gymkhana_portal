@@ -17,8 +17,14 @@ class FestivalView(DetailView):
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.use_custom_html:
-            self.template_name = self.object.custom_html.name.split('/')[-1] \
-                if custom_template_folder_name in self.object.custom_html.name else self.object.custom_html.name
         context = self.get_context_data(object=self.object)
+        if self.object.published and context['event_category_list']:
+            if self.object.use_custom_html:
+                self.template_name = self.object.custom_html.name.split('/')[-1] \
+                    if custom_template_folder_name in self.object.custom_html.name else self.object.custom_html.name
+            else:
+                self.template_name = 'festivals/default.html'
+        else:
+            self.template_name = 'festivals/coming_soon.html'
+
         return self.render_to_response(context)
