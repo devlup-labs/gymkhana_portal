@@ -17,7 +17,7 @@ class FestivalFactory(factory.django.DjangoModelFactory):
     slug = factory.Sequence(lambda n: 'fest-%d' % n)
     link = factory.Faker('url')
     published = random.choice([True, False])
-    default_html = random.choice([True, False])
+    use_custom_html = False
 
 
 class EventCategoryFactory(factory.django.DjangoModelFactory):
