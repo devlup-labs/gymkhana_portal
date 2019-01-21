@@ -1,4 +1,6 @@
 from django.db import models
+from django.conf import settings
+from django.core.exceptions import ValidationError
 from versatileimagefield.fields import VersatileImageField
 from ckeditor_uploader.fields import RichTextUploadingField
 
@@ -11,20 +13,17 @@ class Festival(models.Model):
     link = models.URLField(blank=True, null=True, default=None)
     published = models.BooleanField(default=False)
     use_custom_html = models.BooleanField(default=False, help_text="Select if you want custom page")
-    custom_html = models.FileField(upload_to='html', verbose_name='Custom HTML', blank=True, null=True)
+    custom_html = models.FileField(upload_to=settings.CUSTOM_TEMPLATE_DIR_NAME, verbose_name='Custom HTML', blank=True,
+                                   null=True)
     custom_css = models.FileField(upload_to='css', verbose_name='Custom CSS', blank=True, null=True)
     custom_js = models.FileField(upload_to='js', verbose_name='Custom JS', blank=True, null=True)
 
     def __str__(self):
         return self.name
 
-    @property
-    def assets_present(self):
-        return self.custom_html is not None and self.custom_css is not None and self.custom_js is not None
-
     def clean(self):
-        if self.use_custom_html and not self.assets_present:
-            pass
+        if self.use_custom_html and not self.custom_html:
+            raise ValidationError('Custom HTML should be present with Use custom html option')
 
     def get_name_display(self):
         return self.name.title()
@@ -41,7 +40,7 @@ class EventCategory(models.Model):
         return self.name
 
     class Meta:
-        ordering = ('name', )
+        ordering = ('name',)
         verbose_name = 'Festival Event Category'
         verbose_name_plural = 'Festival Event Categories'
 
@@ -61,7 +60,7 @@ class Event(models.Model):
     published = models.BooleanField(default=True)
 
     class Meta:
-        ordering = ('timestamp', )
+        ordering = ('timestamp',)
         verbose_name = 'Festival Event'
         verbose_name_plural = 'Festival Events'
 
