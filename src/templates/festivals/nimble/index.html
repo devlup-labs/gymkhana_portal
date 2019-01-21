@@ -1,7 +1,0 @@
-{% for events in event_category_list %}
-{{ events.name }}
-    {% for foo in events.event_set.all %}
-    {{ foo }}
-    {% endfor %}
-
-{% endfor %}

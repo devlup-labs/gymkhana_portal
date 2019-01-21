@@ -9,8 +9,8 @@ class SocialLinkInline(admin.TabularInline):
 class FestivalAdmin(admin.ModelAdmin):
     inlines = (SocialLinkInline, )
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ('name', 'published', 'default_html')
-    list_filter = ('published', 'default_html', 'society')
+    list_display = ('name', 'published', 'use_custom_html')
+    list_filter = ('published', 'use_custom_html', 'society')
     filter_horizontal = ('society',)
 
     class Meta:
