@@ -14,10 +14,21 @@ class Festival(models.Model):
     society = models.ManyToManyField(Society, blank=True)
     link = models.URLField(blank=True, null=True, default=None)
     published = models.BooleanField(default=False)
-    default_html = models.BooleanField(default=True, help_text="Unselect if you want custom home page")
+    use_custom_html = models.BooleanField(default=False, help_text="Select if you want custom page")
+    custom_html = models.FileField(upload_to='html', verbose_name='Custom HTML', blank=True, null=True)
+    custom_css = models.FileField(upload_to='css', verbose_name='Custom CSS', blank=True, null=True)
+    custom_js = models.FileField(upload_to='js', verbose_name='Custom JS', blank=True, null=True)
 
     def __str__(self):
         return self.name
+
+    @property
+    def assets_present(self):
+        return self.custom_html is not None and self.custom_css is not None and self.custom_js is not None
+
+    def clean(self):
+        if self.use_custom_html and not self.assets_present:
+            pass
 
     def get_name_display(self):
         return self.name.title()
