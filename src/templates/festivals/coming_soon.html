@@ -1,4 +1,4 @@
-{% extends 'festivals/base.html' %}
+{% extends 'main/base.html' %}
 {% load staticfiles %}
 {% load humanize %}
 {% load hitcount_tags %}
@@ -18,7 +18,8 @@
         }
     </style>
 {% endblock %}
-{% block content %}
+{% block header %}{% endblock %}
+{% block fullpagecontent %}
     <!--MainContent-->
     <div class="container vertical-center justify-content text-center text-white">
         <div style="font-size: 10vmax;">{{ festival.name }}</div>
@@ -44,3 +45,5 @@
     </div>
     <!--/SocialLink-->
 {% endblock %}
+{% block main %}{% endblock %}
+{% block footer %}{% endblock %}
