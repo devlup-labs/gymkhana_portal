@@ -7,10 +7,11 @@ class SocialLinkInline(admin.TabularInline):
 
 
 class FestivalAdmin(admin.ModelAdmin):
-    inlines = (SocialLinkInline, )
+    inlines = (SocialLinkInline,)
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ('name', 'published', 'default_html')
-    list_filter = ('published', 'default_html')
+    list_display = ('name', 'published', 'use_custom_html')
+    list_filter = ('published', 'use_custom_html', 'society')
+    filter_horizontal = ('society',)
 
     class Meta:
         model = Festival
@@ -19,13 +20,14 @@ class FestivalAdmin(admin.ModelAdmin):
 class EventInLine(admin.StackedInline):
     model = Event
     prepopulated_fields = {"slug": ("name",)}
+    filter_horizontal = ('organizers',)
 
 
 class EventCategoryAdmin(admin.ModelAdmin):
     inlines = (EventInLine,)
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('name', 'festival')
-    list_filter = ('festival__name', )
+    list_filter = ('festival__name',)
 
     class Meta:
         model = EventCategory

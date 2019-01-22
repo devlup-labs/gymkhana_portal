@@ -11,6 +11,7 @@ class FestivalFactory(factory.django.DjangoModelFactory):
         model = 'festivals.Festival'
 
     name = random.choice(['Ignus', 'Varchas', 'Spandan', 'Nimble'])
+    tag_line = factory.Faker('sentence', nb_words=3)
     photo = factory.django.ImageField(color=random.choice(COLOUR))
     about = factory.Faker('sentence', nb_words=30)
     slug = factory.Sequence(lambda n: 'fest-%d' % n)

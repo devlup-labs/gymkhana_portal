@@ -1,15 +1,20 @@
+from django.core.validators import RegexValidator
 from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from versatileimagefield.fields import VersatileImageField
 from ckeditor_uploader.fields import RichTextUploadingField
+from main.models import Society
+from oauth.models import UserProfile
 
 
 class Festival(models.Model):
     name = models.CharField(max_length=32)
+    tag_line = models.CharField(max_length=128, blank=True, null=True)
     photo = VersatileImageField(upload_to='festival')
-    about = models.TextField()
+    about = RichTextUploadingField(blank=True, null=True)
     slug = models.SlugField(unique=True, help_text="This will be used as URL. /festivals/slug")
+    society = models.ManyToManyField(Society, blank=True)
     link = models.URLField(blank=True, null=True, default=None)
     published = models.BooleanField(default=False)
     use_custom_html = models.BooleanField(default=False, help_text="Select if you want custom page")
@@ -50,11 +55,14 @@ class Event(models.Model):
     name = models.CharField(max_length=64)
     slug = models.SlugField(unique=True)
     unique_id = models.CharField(unique=True, max_length=8)
-    description = RichTextUploadingField(name='Problem Statement')
+    about = RichTextUploadingField(verbose_name='About', blank=True, null=True)
     pdf = models.FileField(upload_to='pdf', null=True, blank=True)
     cover = VersatileImageField(upload_to='event', null=True, blank=True)
     location = models.CharField(max_length=64, blank=True)
     timestamp = models.DateTimeField(blank=True, null=True)
+    register = models.URLField(blank=True, help_text="Registration URL")
+    organizers = models.ManyToManyField(UserProfile, blank=True,
+                                        help_text="First organizer's detail will show in default event page.")
     max_team_size = models.PositiveSmallIntegerField(default=1, help_text='Leave 1 for single participant event')
     min_team_size = models.PositiveSmallIntegerField(default=1, help_text='Leave 1 for single participant event')
     published = models.BooleanField(default=True)
@@ -75,8 +83,7 @@ class SocialLink(models.Model):
         ('LI', 'LinkedIn'),
         ('GP', 'Google Plus'),
         ('IG', 'Instagram'),
-        ('GH', 'GitHub'),
-        ('YT', 'YouTube'),
+        ('YT', 'YouTube')
     )
     FA_CHOICES = (
         ('fa fa-facebook', 'FB'),
@@ -84,8 +91,7 @@ class SocialLink(models.Model):
         ('fa fa-linkedin', 'LI'),
         ('fa fa-google-plus', 'GP'),
         ('fa fa-instagram', 'IG'),
-        ('fa fa-github', 'GH'),
-        ('fa fa-youtube', 'YT'),
+        ('fa fa-youtube-play', 'YT')
     )
     IC_CHOICES = (
         ('fb-ic', 'FB'),
@@ -93,8 +99,7 @@ class SocialLink(models.Model):
         ('li-ic', 'LI'),
         ('gplus-ic', 'GP'),
         ('ins-ic', 'IG'),
-        ('git-ic', 'GH'),
-        ('yt-ic', 'YT'),
+        ('yt-ic', 'YT')
     )
     festival = models.ForeignKey(Festival, on_delete=models.CASCADE)
     social_media = models.CharField(max_length=2, choices=SM_CHOICES)

@@ -258,7 +258,7 @@
                                         <!--Second column-->
                                         <div class="col-lg-6 offset-lg-1 col-md-12 text-center text-md-left">
                                             <!--Description-->
-                                            <p style="color: #d7d7d7">{{ festival.about|linebreaks }}</p>
+                                            <p style="color: #d7d7d7">{{ festival.about|safe|linebreaks }}</p>
                                         </div>
                                         <!--/Second column-->
                                     </div>
