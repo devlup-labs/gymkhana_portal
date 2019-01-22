@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.urls import reverse
 from versatileimagefield.fields import VersatileImageField
 from ckeditor_uploader.fields import RichTextUploadingField
 from main.models import Society
@@ -14,7 +15,8 @@ class Festival(models.Model):
     about = RichTextUploadingField(blank=True, null=True)
     slug = models.SlugField(unique=True, help_text="This will be used as URL. /festivals/slug")
     society = models.ManyToManyField(Society, blank=True)
-    link = models.URLField(blank=True, null=True, default=None)
+    link = models.URLField(help_text='Override default generated URL (useful for festival having separate website)',
+                           blank=True, null=True, default=None)
     published = models.BooleanField(default=False)
     use_custom_html = models.BooleanField(default=False, help_text="Select if you want custom page")
     custom_html = models.FileField(upload_to=settings.CUSTOM_TEMPLATE_DIR_NAME, verbose_name='Custom HTML', blank=True,
@@ -31,6 +33,9 @@ class Festival(models.Model):
 
     def get_name_display(self):
         return self.name.title()
+
+    def get_absolute_url(self):
+        return self.link if self.link else reverse('festivals:detail', kwargs={'slug': self.slug})
 
 
 class EventCategory(models.Model):

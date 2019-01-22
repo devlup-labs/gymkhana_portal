@@ -2,8 +2,6 @@ from django.views.generic import DetailView
 from django.conf import settings
 from .models import Festival
 from main.views import MaintenanceAndNavigationMixin
-from django.urls import reverse_lazy
-from django.shortcuts import Http404
 
 custom_template_folder_name = settings.CUSTOM_TEMPLATE_DIR_NAME
 
@@ -26,8 +24,5 @@ class FestivalView(MaintenanceAndNavigationMixin, DetailView):
                 self.template_name = self.object.custom_html.name.split('/')[-1] \
                     if custom_template_folder_name in self.object.custom_html.name else self.object.custom_html.name
         else:
-            if str(reverse_lazy('festivals:festival', kwargs={'slug': self.object.slug})) in self.object.link:
-                self.template_name = 'festivals/coming_soon.html'
-            else:
-                raise Http404
+            self.template_name = 'festivals/coming_soon.html'
         return self.render_to_response(context)

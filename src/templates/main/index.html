@@ -97,7 +97,8 @@
         <!--Indicators-->
         <ol class="carousel-indicators">
             {% for item in carousel.public|slice:":10" %}
-                <li data-target="#carousel-home" data-interval="3000" data-slide-to="{{ forloop.counter0 }}"{% if forloop.counter0 == 0 %}
+                <li data-target="#carousel-home" data-interval="3000" data-slide-to="{{ forloop.counter0 }}"
+                        {% if forloop.counter0 == 0 %}
                     class="active"{% endif %}></li>
             {% endfor %}
         </ol>
@@ -250,9 +251,9 @@
                                             <div class="view overlay hm-white-slight z-depth-2 mb-2">
                                                 <img src="{{ festival.photo.crop.708x472 }}">
                                             </div>
-                                            {% if festival.link %}<a href="{{ festival.link }}" target="_blank"
-                                                                     class="btn btn-secondary mb-1"><i
-                                                    class="fa fa-external-link pr-0"></i></a>{% endif %}
+                                            <a href="{{ festival.get_absolute_url }}" target="_blank"
+                                               class="btn btn-secondary mb-1"><i
+                                                    class="fa fa-external-link pr-0"></i></a>
                                         </div>
                                         <!--/First column-->
                                         <!--Second column-->
@@ -323,18 +324,18 @@
         </section>
     </div>
     {% comment %}<!--streak-->
-    <div class="streak streak-lg streak-photo"
-         style="background-image:url('http://mdbootstrap.com/img/Photos/Horizontal/Things/full%20page/img%20(6).jpg')">
-        <div class="flex-center white-text pattern-1">
-            <ul>
-                <li><h2 class="h2-responsive wow fadeIn"><i class="fa fa-quote-left" aria-hidden="true"></i> The
-                    people who are crazy enough to think they can change the world are the ones who do. <i
-                            class="fa fa-quote-right" aria-hidden="true"></i></h2></li>
-                <li><h5 class="text-xs-center font-italic wow fadeIn" data-wow-delay="0.2s">~ Steve Jobs</h5></li>
+        <div class="streak streak-lg streak-photo"
+             style="background-image:url('http://mdbootstrap.com/img/Photos/Horizontal/Things/full%20page/img%20(6).jpg')">
+            <div class="flex-center white-text pattern-1">
+                <ul>
+                    <li><h2 class="h2-responsive wow fadeIn"><i class="fa fa-quote-left" aria-hidden="true"></i> The
+                        people who are crazy enough to think they can change the world are the ones who do. <i
+                                class="fa fa-quote-right" aria-hidden="true"></i></h2></li>
+                    <li><h5 class="text-xs-center font-italic wow fadeIn" data-wow-delay="0.2s">~ Steve Jobs</h5></li>
 
-            </ul>
-        </div>
-    </div>{% endcomment %}
+                </ul>
+            </div>
+        </div>{% endcomment %}
     {% if gallery %}
         <div id="mdb-lightbox-ui"></div>
         <!--gallery-->
