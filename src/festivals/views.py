@@ -9,7 +9,7 @@ custom_template_folder_name = settings.CUSTOM_TEMPLATE_DIR_NAME
 
 
 class FestivalView(MaintenanceAndNavigationMixin, DetailView):
-    template_name = 'festivals/default.html'
+    template_name = 'festivals/index.html'
     model = Festival
 
     def get_context_data(self, **kwargs):
