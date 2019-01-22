@@ -1,12 +1,12 @@
 from django.views.generic import DetailView
 from django.conf import settings
 from .models import Festival
+from main.views import MaintenanceAndNavigationMixin
 
 custom_template_folder_name = settings.CUSTOM_TEMPLATE_DIR_NAME
 
 
-class FestivalView(DetailView):
-    template_name = 'festivals/index.html'
+class FestivalView(MaintenanceAndNavigationMixin, DetailView):
     model = Festival
 
     def get_context_data(self, **kwargs):
