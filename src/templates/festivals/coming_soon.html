@@ -18,7 +18,6 @@
         }
     </style>
 {% endblock %}
-{% block header %}{% endblock %}
 {% block fullpagecontent %}
     <!--MainContent-->
     <div class="container vertical-center justify-content text-center text-white">
@@ -26,12 +25,6 @@
         <div style="font-size: 5vmax;">is coming soon ...</div>
     </div>
     <!--MainContent-->
-    <!--BackButton-->
-    <a href="{% url 'main:index' %}">
-        <i class="fa fa-arrow-circle-left fa-3x"
-           style="position: absolute; left: 1vmax; top: 1vmax;z-index: 2;color: white"></i>
-    </a>
-    <!--/BackButton-->
     <!--SocialLink-->
     <div style="position: absolute; right: 1vmax; bottom: 1vmax;z-index: 2;">
         {% for link in festival.sociallink_set.all %}
