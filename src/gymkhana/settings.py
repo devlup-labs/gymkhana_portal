@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'gallery.apps.GalleryConfig',
     'news.apps.NewsConfig',
-    'konnekt.apps.KonnektConfig'
+    'konnekt.apps.KonnektConfig',
+    'festivals.apps.FestivalsConfig',
 ]
 
 if DEBUG:
@@ -80,10 +81,30 @@ SITE_ID = 1
 
 ROOT_URLCONF = 'gymkhana.urls'
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, config('STATIC_PATH', default='../staticfiles', cast=str))
+
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, config('MEDIA_PATH', default='../media', cast=str))
+
+MEDIA_URL = '/media/'
+
+CUSTOM_TEMPLATE_DIR_NAME = 'html_templates'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(MEDIA_ROOT, CUSTOM_TEMPLATE_DIR_NAME)
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -191,20 +212,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
-
-STATIC_ROOT = os.path.join(BASE_DIR, config('STATIC_PATH', default='../staticfiles', cast=str))
-
-STATIC_URL = '/static/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, config('MEDIA_PATH', default='../media', cast=str))
-MEDIA_URL = '/media/'
 
 HITCOUNT_KEEP_HIT_ACTIVE = {'minutes': 1}
 

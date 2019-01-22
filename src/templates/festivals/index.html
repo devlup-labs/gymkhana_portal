@@ -1,0 +1,298 @@
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% load hitcount_tags %}
+{% block mdbcss %}
+    <link rel="stylesheet" href="{% static 'css/mdbadmin.min.css' %}">
+{% endblock %}
+{% block title %}{{ festival.name }} | Festival IIT Jodhpur{% endblock %}
+{% block customstyles %}
+    <link rel="stylesheet" href="{% static 'css/compiled.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Thasadith" rel="stylesheet">
+    <!-- Common Html CSS -->
+    <style>
+        .body {
+            background: url("{{ festival.photo.url }}") no-repeat center center scroll;
+            background-size: cover;
+            height: 100vh;
+            width: 100vw;
+            box-shadow: inset 0 0 0 100vmax rgba(0, 0, 0, 0.4);
+            font-family: 'Thasadith', sans-serif;
+        }
+
+        caption {
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+            text-align: center;
+            caption-side: top;
+            font-size: 4.45vmin;
+        }
+    </style>
+{% endblock %}
+{% block skin %}mdb-skin{% endblock %}
+{% block fullpagecontent %}
+    <!--Social Link-->
+    <div style="position: absolute; right: 1vmax; bottom: 1vmax;z-index: 2;">
+        {% for link in festival.sociallink_set.all %}
+            {% if forloop.counter < 6 %}
+                <a href="{{ link.link }}" class="btn-small icons-sm {{ link.get_sm_ic }}" target="_blank"
+                   style="outline: none">
+                    <i class="{{ link.get_fai }}"></i>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% block sociallink %}
+        <!--/Social Link-->
+        <div class="container body">
+            <div class="container vertical-center justify-content text-center text-white">
+                <div style="font-size: 10vmax;">{{ festival.name }}</div>
+                <div style="font-size: 4vmax;">{{ festival.tag_line|default:" IITJ Fest" }}</div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+{% block main %}
+    <div class="container" style="background-color: inherit">
+        <!--about us-->
+        {% block aboutus %}
+            <section id="about" class="section">
+                <!--Secion heading-->
+                <h3 class="h3-responsive section-heading wow fadeIn" data-wow-delay="0.2s"
+                    style="visibility: visible; animation-delay: 0.2s; animation-name: fadeIn; margin-bottom: 30px">
+                    About {{ festival.name.title }}
+                </h3>
+                <!--First row-->
+                <div class="row">
+                    <!--First column-->
+                    <div class="col-lg-12 col-md-12 wow fadeIn" data-wow-delay="0.4s"
+                         style="visibility: visible; animation-delay: 0.4s; animation-name: fadeIn;">
+                        <!--Description-->
+                        {{ festival.about|safe }}
+                    </div>
+                    <!--/First column-->
+                </div>
+                <!--/First row-->
+            </section>
+            </div>
+        {% endblock %}
+    <!--Schedule-->
+    {% block schedule %}
+        <div class="container pb-1 wow fadeIn"
+             style="background: url('{% static 'assets/others/background2.svg' %}');
+                     background-size: cover !important; box-shadow: inset 0 0 0 100vmax rgba(0, 0, 0, 0.2);">
+            <table class="table accordion md-accor">
+                <caption style="color: #001100;">{{ festival.name }} Event Schedule</caption>
+            </table>
+            {% for events in event_category_list %}
+                <!--Accordion wrapper-->
+                <div class="accordion md-accordion accordion-blocks" id="accordion-{{ events.slug }}" role="tablist"
+                     aria-multiselectable="true">
+                    <!-- Accordion card -->
+                    <div class="card" style="background: initial;border-top: 1px solid white">
+                        <!-- Card header -->
+                        <div class="card-header text-center" role="tab" id="headingUnfiled-{{ events.slug }}">
+                            <!-- Heading -->
+                            <a data-toggle="collapse" data-parent="#accordion-{{ events.slug }}"
+                               href="#collapseUnfiled-{{ events.slug }}"
+                               aria-expanded="true"
+                               aria-controls="collapseUnfiled-{{ events.slug }}"
+                               style="outline: none">
+                                <h5 class="mt-1 mb-0">
+                                    <span style="color: #001100;">{{ events.name }}</span>
+                                    <i class="fa fa-angle-down rotate-icon" style="color: #001100;"></i>
+                                </h5>
+                            </a>
+                        </div>
+                        <!-- Card body -->
+                        <div id="collapseUnfiled-{{ events.slug }}" class="collapse" role="tabpanel"
+                             aria-labelledby="headingUnfiled-{{ events.slug }}"
+                             data-parent="#accordion-{{ events.slug }}">
+                            <div class="card-body">
+                                <!-- Table responsive wrapper -->
+                                <div class="table-responsive mx-3" style="width: inherit">
+                                    <!--Table-->
+                                    <table class="table table-hover mb-0">
+                                        <!--Table head-->
+                                        <thead>
+                                        <tr>
+                                            <th class="th-lg"><a>Event</a></th>
+                                            <th class="th-lg"><a>Date & Time</a></th>
+                                            <th class="th-lg"><a>Venue</a></th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <!--Table head-->
+                                        {% for event in events.event_set.all %}
+                                            <!--Table body-->
+                                            <tbody>
+                                            <tr>
+                                                <td>{{ event.name.title }}</td>
+                                                <td>{{ event.timestamp|date:'d N , P'|default:'Available Soon'}}</td>
+                                                <td>{{ event.location|default:'Available Soon' }}</td>
+                                            </tr>
+                                            </tbody>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!--/Schedule-->
+    {% endblock %}
+    <!--Events-->
+    {% block events %}
+    <div class="container wow fadeIn" style="background-color: inherit">
+        <section id="events" class="section">
+            <!--Section heading-->
+            <h1 class="section-heading wow fadeIn" data-wow-delay="0.2s"
+                style="visibility: visible; animation-delay: 0.2s;
+                     animation-name: fadeIn; margin-bottom: 30px">Events</h1>
+            <!-- Grid row -->
+            <div class="row accordion-gradient-bcg d-flex justify-content-center">
+                <!-- Grid column -->
+                <div class="col-12 col-md-8 col-xl-8">
+                    <!--Accordion wrapper-->
+                    <div class="accordion md-accordion accordion-1" id="accordian"
+                         role="tablist"
+                         aria-multiselectable="true">
+                        {% for events in event_category_list %}
+                            <!-- Accordion card -->
+                            <div class="card">
+                                <!-- Card header -->
+                                <div class="card-header rgba-stylish-strong z-depth-1 mb-1 mt-1" role="tab"
+                                     id="{{ events.slug }}-id">
+                                    <a data-toggle="collapse" data-parent="#{{ events.slug }}-accordian"
+                                       href="#{{ events.slug }}-collapse" aria-expanded="true"
+                                       aria-controls="{{ events.slug }}-collapse"
+                                       style="outline: none">
+                                        <h5 class="mb-0 white-text font-thin text-center">
+                                            {{ events.name }} <i class="fa fa-angle-down rotate-icon"></i>
+                                        </h5>
+                                    </a>
+                                </div>
+                                <!-- Card body -->
+                                <div id="{{ events.slug }}-collapse" class="collapse" role="tabpanel"
+                                     aria-labelledby="{{ events.slug }}-id"
+                                     data-parent="#{{ events.slug }}-accordian" style="background-color: #F5F5F5;">
+                                    <div class="card-body mb-1 rgba-grey-light white-text">
+                                        <div class="p-3 " style="color: black">
+                                            {{ events.about | safe }}
+                                        </div>
+                                        <div id="carousel-{{ events.slug }}-id"
+                                             class="carousel slide carousel-multi-item v-2"
+                                             data-ride="carousel"
+                                             style="margin-bottom: -15px; bottom: 15px;">
+                                            <!--Controls-->
+                                            <div class="controls-top">
+                                                <a class="btn-floating" href="#carousel-{{ events.slug }}-id"
+                                                   data-slide="prev" style="outline: none;">
+                                                    <i class="fa fa-chevron-left pr-1"></i></a>
+                                                <a class="btn-floating" href="#carousel-{{ events.slug }}-id"
+                                                   data-slide="next" style="outline: none;">
+                                                    <i class="fa fa-chevron-right pl-1"></i></a>
+                                            </div>
+                                            <div class="carousel-inner" role="listbox">
+                                                {% for event in events.event_set.all %}
+                                                    <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
+                                                        <div class="col-md-12 col-12">
+                                                            <!--Collection card-->
+                                                            <div class="card collection-card z-depth-1-half">
+                                                                <!--Card image-->
+                                                                <div class="view hm-zoom">
+                                                                    <img {% if event.cover %}
+                                                                        src="{{ event.cover.crop.720x440 }}"
+                                                                    {% else %}
+                                                                        src="{{ festival.photo.crop.720x440 }}"
+                                                                    {% endif %}
+                                                                        class="img-responsive"
+                                                                        alt="{{ event.name }}">
+                                                                    <div class="stripe light">
+                                                                        <h3 class="m-0 h3-responsive"
+                                                                            style="color: black;">{{ event.name }}</h3>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/.Card image-->
+                                                                <div class="card-body pt-2"
+                                                                     style="color: black">
+                                                                    <div class="p-3 ">
+                                                                        {{ event.about | safe }}
+                                                                    </div>
+                                                                    <h6 class="text-center">
+                                                                        Date & Time:
+                                                                        {{ event.timestamp|date:'d N , P'|default:'Available Soon' }}
+                                                                    </h6>
+                                                                    <h6 class="text-center">
+                                                                        Venue:
+                                                                        {{ event.venue|default:'Available Soon' }}
+                                                                    </h6>
+                                                                    <h6 class="text-center">
+                                                                        Max Team Size:
+                                                                        {{ event.max_team_size }}
+                                                                    </h6>
+                                                                    <h6 class="text-center">
+                                                                        Min Team Size
+                                                                        {{ event.min_team_size }}
+                                                                    </h6>
+                                                                    <div class="row justify-content-center d-flex"
+                                                                         style="margin-bottom: 15px">
+                                                                        {% if event.organizers.all %}
+                                                                            <div class="btn btn-dark-green btn-rounded">
+                                                                                <a href="tel:91{{ event.organizers.all.0.phone }}"
+                                                                                   style="color: white">
+                                                                                    {{ event.organizers.all.0.user.get_full_name|truncatewords:'1'}}
+                                                                                    <i class="fa fa-phone"></i></a>
+                                                                            </div>
+                                                                        {% endif %}
+                                                                        {% if event.register %}
+                                                                            <div class="btn btn-rounded"
+                                                                                 style="background-color: #2196F3">
+                                                                                <a href="{{ event.register }}"
+                                                                                   style="color: white" ;>Register
+                                                                                    <i class="fa fa fa-user-plus"></i></a>
+                                                                            </div>
+                                                                        {% endif %}
+                                                                        {% if event.pdf %}
+                                                                            <div class="btn btn-rounded"
+                                                                                 style="background-color: #7D348D">
+                                                                                <a href="{{ event.pdf }}"
+                                                                                   style="color: white" ;>Rulebook<i
+                                                                                        class="fa fa fa-book"></i></a>
+                                                                            </div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/.Collection card-->
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                                <!-- Accordion card -->
+                                            </div>
+                                            <!--/.Accordion wrapper-->
+                                        </div>
+                                        <!-- Grid column -->
+                                    </div>
+                                    <!-- Grid row -->
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {% endblock %}
+    <!--/Events-->
+{% endblock %}
+{% block customscripts %}
+    <script>
+        new WOW().init();
+        $('.carousel').carousel({
+            interval: false
+        });
+    </script>
+{% endblock %}

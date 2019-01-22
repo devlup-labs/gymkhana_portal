@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^forum/', include('forum.urls')),
     url(r'^forum/api/', include('forum.api.urls')),
     url(r'^konnekt/', include('konnekt.urls')),
+    url(r'^festivals/', include('festivals.urls', namespace='festivals')),
     path('', include('social_django.urls', namespace='social')),
     url(r'^', include('main.urls')),
 ]

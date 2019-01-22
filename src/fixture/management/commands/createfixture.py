@@ -2,13 +2,14 @@ from django.core.management.base import BaseCommand
 from fixture.activityfixture import ActivityFactory
 from fixture.contactfixture import ContactFactory
 from fixture.eventfixture import EventFactory
-from fixture.festivalfixture import FestivalFactory
+from fixture.festivalfixture import EventFactory as FestivalEventFactory
 from fixture.senatemembershipfixture import MemberWithSenateFactory
 from fixture.answerfixture import AnswerFactory
 from fixture.topicfixture import TopicFactory
 from fixture.clubfixture import ClubFactory
 import random
 from main.models import UserProfile
+from django.db.utils import IntegrityError
 
 
 class Command(BaseCommand):
@@ -20,7 +21,7 @@ class Command(BaseCommand):
     def create_fixtures(self):
         self.create_objects(ActivityFactory)
         self.create_objects(EventFactory)
-        self.create_objects(FestivalFactory, 4)
+        self.create_objects(FestivalEventFactory)
         self.create_objects(ClubFactory, m2m=True)
         self.create_objects(MemberWithSenateFactory)
         self.create_objects(ContactFactory)
@@ -31,12 +32,18 @@ class Command(BaseCommand):
     def create_objects(klass=None, object_count=5, m2m=False):
         if klass is not None and m2m is False:
             for i in range(object_count):
-                klass.create()
+                try:
+                    klass.create()
+                except IntegrityError:
+                    pass
         elif klass is not None and m2m is True:
             for i in range(object_count):
                 multiple_users = (UserProfile.objects.get(roll='B16CS%d' % random.randint(0, 10)),
                                   UserProfile.objects.get(roll='B16CS%d' % random.randint(10, 20)),
                                   )
-                klass.create(users=multiple_users)
+                try:
+                    klass.create(users=multiple_users)
+                except IntegrityError:
+                    pass
         else:
             raise ValueError("klass argument cannot be null")

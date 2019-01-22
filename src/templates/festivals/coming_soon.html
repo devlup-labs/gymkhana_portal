@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% load hitcount_tags %}
+{% block mdbcss %}
+    <link rel="stylesheet" href="{% static 'css/mdbadmin.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Thasadith" rel="stylesheet">
+{% endblock %}
+{% block title %}{{ festival.name }} | Festival IIT Jodhpur{% endblock %}
+{% block customstyles %}
+    <style>
+        body {
+            background: url("{{ festival.photo.url }}") no-repeat center center scroll;
+            background-size: cover;
+            height: 100vh;
+            box-shadow: inset 0 0 0 100vmax rgba(0, 0, 0, 0.4);
+            font-family: 'Thasadith', sans-serif;
+        }
+    </style>
+{% endblock %}
+{% block fullpagecontent %}
+    <!--MainContent-->
+    <div class="container vertical-center justify-content text-center text-white">
+        <div style="font-size: 10vmax;">{{ festival.name }}</div>
+        <div style="font-size: 5vmax;">is coming soon ...</div>
+    </div>
+    <!--MainContent-->
+    <!--SocialLink-->
+    <div style="position: absolute; right: 1vmax; bottom: 1vmax;z-index: 2;">
+        {% for link in festival.sociallink_set.all %}
+            {% if forloop.counter < 6 %}
+                <a href="{{ link.link }}" class="btn-small icons-sm {{ link.get_sm_ic }}" target="_blank"
+                   style="outline: none">
+                    <i class="{{ link.get_fai }}"></i>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <!--/SocialLink-->
+{% endblock %}
+{% block main %}{% endblock %}
+{% block footer %}{% endblock %}
