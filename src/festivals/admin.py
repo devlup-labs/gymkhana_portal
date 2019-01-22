@@ -20,6 +20,7 @@ class FestivalAdmin(admin.ModelAdmin):
 class EventInLine(admin.StackedInline):
     model = Event
     prepopulated_fields = {"slug": ("name",)}
+    filter_horizontal = ('organizers', )
 
 
 class EventCategoryAdmin(admin.ModelAdmin):

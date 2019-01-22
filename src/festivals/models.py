@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from versatileimagefield.fields import VersatileImageField
 from ckeditor_uploader.fields import RichTextUploadingField
 from main.models import Society
+from oauth.models import UserProfile
 
 
 class Festival(models.Model):
@@ -63,7 +64,8 @@ class Event(models.Model):
     location = models.CharField(max_length=64, blank=True)
     timestamp = models.DateTimeField(blank=True, null=True)
     register = models.URLField(blank=True, help_text="Registration URL")
-    phone = models.CharField(max_length=10, blank=True, verbose_name="Organizer's Contact", validators=[contact])
+    organizers = models.ManyToManyField(UserProfile, blank=True,
+                                        help_text="First organizer's detail will show in default event page.")
     max_team_size = models.PositiveSmallIntegerField(default=1, help_text='Leave 1 for single participant event')
     min_team_size = models.PositiveSmallIntegerField(default=1, help_text='Leave 1 for single participant event')
     published = models.BooleanField(default=True)
