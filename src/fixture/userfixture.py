@@ -1,5 +1,6 @@
 import factory
 import random
+from test.test_assets import get_random_date
 
 SKILL = ['machinist', 'pipefitter', 'welder', 'tool and die maker', 'boilermaker',
          'millwright', 'ironworker', 'plumber', 'electrician', 'auto mechanic',
@@ -34,7 +35,7 @@ class UserProfileFactory(factory.django.DjangoModelFactory):
     prog = random.choice(['BT', 'MT', 'MSc', 'PhD'])
     roll = factory.Sequence(lambda n: 'B16CS%d' % n)
     user = factory.SubFactory(UserFactory)
-    dob = factory.Faker('date')
+    dob = get_random_date()
     gender = random.choice(['M', 'F'])
     year = random.choice(['1', '2', '3', '4', '5'])
     phone = random.randint(6000000000, 9999999999)

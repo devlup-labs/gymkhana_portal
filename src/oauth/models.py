@@ -38,7 +38,7 @@ class UserProfileManager(models.Manager):
 
     def _get_user_for_activation(self):
         try:
-            uid = force_text(urlsafe_base64_decode(self.uidb64))
+            uid = force_text(urlsafe_base64_decode(force_bytes(self.uidb64.split("'")[-2])))
             return User.objects.get(pk=uid)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             return None

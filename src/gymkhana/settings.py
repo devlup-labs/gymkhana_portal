@@ -61,7 +61,7 @@ INSTALLED_APPS = [
 ]
 
 if DEBUG:
-    INSTALLED_APPS += ['fixture']
+    INSTALLED_APPS += ['fixture.apps.FixtureConfig']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -303,7 +303,7 @@ VERSATILEIMAGEFIELD_SETTINGS = {
     'progressive_jpeg': False
 }
 
-if not DEBUG:
+if not DEBUG:  # pragma: no cover
     REST_FRAMEWORK = {
         # Use Django's standard `django.contrib.auth` permissions.
         'DEFAULT_PERMISSION_CLASSES': (

@@ -122,5 +122,5 @@ class AnswerDeleteView(UserAuthorMixin, DeleteView):
 
 
 @login_required
-def test(request):
+def test(request):  # pragma: no use
     return render(request, 'forum/test.html')
