@@ -1,4 +1,4 @@
-from django.test import TestCase, RequestFactory
+from django.test import TestCase, RequestFactory, override_settings
 from django.urls import reverse
 from gymkhana.wsgi import application
 
@@ -8,6 +8,7 @@ class WSGITestCase(TestCase):
     def setUpTestData(cls):
         cls.request = RequestFactory()
 
+    @override_settings(MAINTENANCE_MODE=False)
     def test_wsgi_request(self):
         request = self.request.get(reverse('main:index'))
         response = application.get_response(request)

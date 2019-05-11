@@ -26,8 +26,9 @@ def get_temporary_html():
     return temp_html_file
 
 
-def get_random_date():
+def get_random_date(now=False):
     year = random.randint(1980, timezone.now().year)
     month = random.randint(1, 12)
     day = random.randint(1, 28)
-    return timezone.datetime(year=year, month=month, day=day)
+    return timezone.datetime(year=year, month=month, day=day,
+                             tzinfo=timezone.now().tzinfo) if not now else timezone.now()

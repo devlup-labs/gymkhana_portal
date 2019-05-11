@@ -13,7 +13,7 @@ class AnswerFactory(factory.django.DjangoModelFactory):
 
     @factory.post_generation
     def users(self, create, extracted, **kwargs):
-        if not create:
+        if not create:  # pragma: no use
             return
 
         if extracted:

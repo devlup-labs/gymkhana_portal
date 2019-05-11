@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'festivals.apps.FestivalsConfig',
     'fixture.apps.FixtureConfig'
 ]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

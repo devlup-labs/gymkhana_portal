@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from fixture.activityfixture import ActivityFactory
 from fixture.contactfixture import ContactFactory
@@ -16,7 +17,11 @@ class Command(BaseCommand):
     help = 'Generates dummy data for testing purposes'
 
     def handle(self, *args, **options):
-        self.create_fixtures()
+        if settings.DEBUG:
+            self.create_fixtures()
+        else:  # pragma: no cover
+            self.stdout.write("This command is only available for DEBUG=True")
+            self.stdout.write("Abort")
 
     def create_fixtures(self):
         self.create_objects(ActivityFactory)
@@ -34,7 +39,7 @@ class Command(BaseCommand):
             for i in range(object_count):
                 try:
                     klass.create()
-                except IntegrityError:
+                except IntegrityError:  # pragma: no cover
                     pass
         elif klass is not None and m2m is True:
             for i in range(object_count):
@@ -43,7 +48,7 @@ class Command(BaseCommand):
                                   )
                 try:
                     klass.create(users=multiple_users)
-                except IntegrityError:
+                except IntegrityError:  # pragma: no cover
                     pass
         else:
             raise ValueError("klass argument cannot be null")
