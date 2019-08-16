@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sites',
     'social_django',
+    'graphene_django',
     'rest_framework',
     'versatileimagefield',
     'photologue',
@@ -301,6 +302,10 @@ VERSATILEIMAGEFIELD_SETTINGS = {
     # Whether to create progressive JPEGs. Read more about progressive JPEGs
     # here: https://optimus.io/support/progressive-jpeg/
     'progressive_jpeg': False
+}
+
+GRAPHENE = {
+    'SCHEMA': 'gymkhana.schema.schema'
 }
 
 if not DEBUG:

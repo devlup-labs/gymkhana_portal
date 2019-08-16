@@ -20,6 +20,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
 
+from gymkhana.schema import PrivateGraphQLView
+
 admin.site.site_title = 'Gymkhana Administration'
 admin.site.site_header = 'Gymkhana Administration'
 admin.site.index_title = 'Control Panel'
@@ -31,6 +33,7 @@ urlpatterns = [
     ),
     url(r'^logout/$', LogoutView.as_view(next_page='login'),
         name='logout'),
+    path("graphql", PrivateGraphQLView.as_view(graphiql=True)),
     url(r'^photologue/', include('photologue.urls', namespace='photologue')),
     url(r'^admin/', admin.site.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),

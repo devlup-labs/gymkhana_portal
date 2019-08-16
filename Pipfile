@@ -17,6 +17,8 @@ social-auth-app-django = "==2.1.0"
 flake8 = "*"
 psycopg2 = "*"
 django-decouple = "==2.1"
+graphene-django = "*"
+django-filter = ">=2.1.0"
 
 [dev-packages]
 factory_boy	= "*"
