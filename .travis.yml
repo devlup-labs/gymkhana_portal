@@ -4,9 +4,13 @@ python:
 addons:
   postgresql: "9.6"
 dist: trusty
+env:
+  - DJANGO_SETTINGS_MODULE=gymkhana.settings DJANGO_SECRET_KEY="q$o5mx19x9(9_^rzqf@o@s^t%t!ghix7($f9ymy49_^ryzq9x9"
+git:
+    submodules: false
 before_install:
-  - export DJANGO_SETTINGS_MODULE=gymkhana.settings
-  - export DJANGO_SECRET_KEY='q$o5mx19x9(9_^rzqf@o@s^t%t!ghix7($f9ymy49_^ryzq9x9'
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
   - psql -c "CREATE DATABASE gymkhanadb;" -U postgres
   - psql -c "CREATE USER gymkhanauser WITH LOGIN PASSWORD 'password';" -U postgres
   - psql -c "ALTER ROLE gymkhanauser WITH CREATEDB;" -U postgres

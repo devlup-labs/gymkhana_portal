@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sites',
     'social_django',
+    'graphene_django',
     'rest_framework',
     'versatileimagefield',
     'photologue',
@@ -301,7 +302,11 @@ VERSATILEIMAGEFIELD_SETTINGS = {
     'progressive_jpeg': False
 }
 
-if not DEBUG:  # pragma: no cover
+GRAPHENE = {
+    'SCHEMA': 'gymkhana.schema.schema'
+}
+
+if not DEBUG:
     REST_FRAMEWORK = {
         # Use Django's standard `django.contrib.auth` permissions.
         'DEFAULT_PERMISSION_CLASSES': (
@@ -316,3 +321,12 @@ if not DEBUG:  # pragma: no cover
     }
 
 PHOTOLOGUE_DIR = 'gallery'
+
+SERVER_EMAIL = 'noreply@localhost.com'
+DEFAULT_FROM_EMAIL = 'noreply@localhost.com'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' if DEBUG else \
+    'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='noreply@localhost.com', cast=str)
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='', cast=str)
