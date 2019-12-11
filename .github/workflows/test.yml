@@ -2,6 +2,10 @@ name: Tests
 
 on: [push, pull_request]
 
+env:
+  DJANGO_SETTINGS_MODULE: gymkhana.settings
+  DJANGO_SECRET_KEY: "q$o5mx19x9(9_^rzqf@o@s^t%t!ghix7($f9ymy49_^ryzq9x9"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,8 +31,6 @@ jobs:
     - name: Setup environment variables
       run: |
         cp .env.example .env
-        export DJANGO_SETTINGS_MODULE=gymkhana.settings 
-        export DJANGO_SECRET_KEY="q$o5mx19x9(9_^rzqf@o@s^t%t!ghix7($f9ymy49_^ryzq9x9"
     - name: Install dependencies
       run: |
         sudo apt-get install libpq-dev 
@@ -46,13 +48,9 @@ jobs:
         source "$(pipenv --venv)"/bin/activate
         python3 manage.py makemigrations
         python3 manage.py migrate
-
-    # TODO Coverage fix build
-    
-        # coverage run --source='.' manage.py test
-    # - name: Coverage
-    #   working-directory: ./src
-    #   run: |
-    #     source "$(pipenv --venv)"/bin/activate
-    #     coverage run --source='.' manage.py test
-   
+    - name: Coverage
+      working-directory: ./src
+      run: |
+        source "$(pipenv --venv)"/bin/activate
+        pip3 install coverage
+        coverage run --source='.' manage.py test
