@@ -29,6 +29,9 @@ class FacultyAdvisor(models.Model):
     name = models.CharField(max_length=128)
     avatar = VersatileImageField(upload_to='avatar')
 
+    def __str__(self):
+        return self.name
+
 
 class Society(models.Model):
     # Validators
@@ -132,7 +135,7 @@ class Activity(models.Model):
     class Meta:
         verbose_name_plural = 'Activities'
 
-    def get_absolute_url(self):
+    def get_absolute_url(self):  # pragma: no use
         return reverse('main:activity-gallery', kwargs={'pk': self.pk})
 
     def __str__(self):
@@ -253,5 +256,9 @@ class Contact(models.Model):
     class Meta:
         ordering = ['-timestamp']
 
-    def get_absolute_url(self):
+    def __str__(self):
+        return self.name + ' - ' + self.phone
+
+    @classmethod
+    def get_absolute_url(cls):
         return reverse('main:contact')

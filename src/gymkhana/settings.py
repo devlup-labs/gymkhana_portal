@@ -59,10 +59,8 @@ INSTALLED_APPS = [
     'news.apps.NewsConfig',
     'konnekt.apps.KonnektConfig',
     'festivals.apps.FestivalsConfig',
+    'fixture.apps.FixtureConfig'
 ]
-
-if DEBUG:
-    INSTALLED_APPS += ['fixture']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
