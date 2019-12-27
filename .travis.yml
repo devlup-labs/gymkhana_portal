@@ -27,5 +27,5 @@ script:
   - python3 manage.py makemigrations
   - python3 manage.py migrate
   - coverage run --branch manage.py test
-#after_success:
-#  - coveralls
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
