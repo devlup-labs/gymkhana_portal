@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "gymkhana.fullname" . }}
+  labels:
+    {{- include "gymkhana.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "gymkhana.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "gymkhana.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "gymkhana.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: {{ include "gymkhana.name" . }}-sites-enabled-configmap
+        - name: staticfiles
+          emptyDir: {}
+      initContainers:
+        - name: "{{ .Chart.Name }}-collectstatic"
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["python", "manage.py", "collectstatic", "--noinput"]
+          volumeMounts:
+            - name: staticfiles
+              mountPath: {{ .Values.nginx.sfDir }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "gymkhana.name" . }}-env-configmap
+        - name: "{{ .Chart.Name }}-migrate"
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["python", "manage.py", "migrate"]
+          envFrom:
+            - configMapRef:
+                name: {{ include "gymkhana.name" . }}-env-configmap
+      containers:
+        - name: nginx
+          image: nginx:stable
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d/
+            - name: staticfiles
+              mountPath: {{ .Values.nginx.sfDir }}
+{{/*          readinessProbe:*/}}
+{{/*            httpGet:*/}}
+{{/*              path: /*/}}
+{{/*              port: 80*/}}
+{{/*            initialDelaySeconds: 3*/}}
+{{/*            periodSeconds: 3*/}}
+{{/*          livenessProbe:*/}}
+{{/*            httpGet:*/}}
+{{/*              path: /*/}}
+{{/*              port: 80*/}}
+{{/*            initialDelaySeconds: 3*/}}
+{{/*            periodSeconds: 3*/}}
+          resources:
+            requests:
+              cpu: 10m
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["gunicorn", "-b", ":{{ .Values.port }}", "-w", "3", "gymkhana.wsgi"]
+          envFrom:
+            - configMapRef:
+                name: {{ include "gymkhana.name" . }}-env-configmap
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+{{/*          livenessProbe:*/}}
+{{/*            httpGet:*/}}
+{{/*              path: /*/}}
+{{/*              port: http*/}}
+{{/*          readinessProbe:*/}}
+{{/*            httpGet:*/}}
+{{/*              path: /*/}}
+{{/*              port: http*/}}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

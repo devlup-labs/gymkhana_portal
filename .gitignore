@@ -132,3 +132,7 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+
+
+# Ignore DevSpace cache and log folder
+.devspace/

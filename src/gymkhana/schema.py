@@ -42,7 +42,7 @@ class Query(KonnektQuery, graphene.ObjectType):
         return []
 
 
-class PrivateGraphQLView(LoginRequiredMixin, GraphQLView):
+class PrivateGraphQLView(GraphQLView):
     pass
 
 

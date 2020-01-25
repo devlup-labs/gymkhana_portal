@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sites',
     'social_django',
+    'corsheaders',
     'graphene_django',
     'rest_framework',
     'versatileimagefield',
@@ -65,6 +66,7 @@ if DEBUG:
     INSTALLED_APPS += ['fixture']
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -304,8 +306,11 @@ VERSATILEIMAGEFIELD_SETTINGS = {
     'progressive_jpeg': False
 }
 
+CORS_ORIGIN_ALLOW_ALL = DEBUG
+
 GRAPHENE = {
-    'SCHEMA': 'gymkhana.schema.schema'
+    'SCHEMA': 'gymkhana.schema.schema',
+    'SCHEMA_INDENT': 2
 }
 
 if not DEBUG:
