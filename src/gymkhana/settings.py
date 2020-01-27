@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'sortedm2m',
     'ckeditor',
     'ckeditor_uploader',
+    'corsheaders',
     'hitcount',
     'django_cleanup',
     'oauth.apps.OauthConfig',
@@ -63,6 +64,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -301,6 +304,8 @@ VERSATILEIMAGEFIELD_SETTINGS = {
     # here: https://optimus.io/support/progressive-jpeg/
     'progressive_jpeg': False
 }
+
+CORS_ORIGIN_ALLOW_ALL = DEBUG
 
 GRAPHENE = {
     'SCHEMA': 'gymkhana.schema.schema'

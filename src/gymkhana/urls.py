@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
+from django.views.decorators.csrf import csrf_exempt
 
 from gymkhana.schema import PrivateGraphQLView
 
@@ -33,7 +34,6 @@ urlpatterns = [
     ),
     url(r'^logout/$', LogoutView.as_view(next_page='login'),
         name='logout'),
-    path("graphql", PrivateGraphQLView.as_view(graphiql=True)),
     url(r'^photologue/', include('photologue.urls', namespace='photologue')),
     url(r'^admin/', admin.site.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
@@ -45,6 +45,9 @@ urlpatterns = [
     path('', include('social_django.urls', namespace='social')),
     url(r'^', include('main.urls')),
 ]
+
+urlpatterns += [path("graphql", csrf_exempt(PrivateGraphQLView.as_view(graphiql=True)))] if settings.DEBUG else [
+    path("graphql", PrivateGraphQLView.as_view(graphiql=True))]
 
 if settings.DEBUG:  # pragma: no cover
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
