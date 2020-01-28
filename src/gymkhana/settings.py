@@ -308,7 +308,7 @@ VERSATILEIMAGEFIELD_SETTINGS = {
 CORS_ORIGIN_ALLOW_ALL = DEBUG
 
 GRAPHENE = {
-    'SCHEMA': 'gymkhana.schema.schema'
+    'SCHEMA_INDENT': 2
 }
 
 if not DEBUG:
