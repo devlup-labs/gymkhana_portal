@@ -1,7 +1,7 @@
 import graphene
 from django.contrib.auth.mixins import LoginRequiredMixin
 from graphene import relay, Connection
-from graphene_django import DjangoConnectionField
+from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.views import GraphQLView
 
 from konnekt.schema import Query as KonnektQuery
@@ -23,16 +23,19 @@ class NodeType(graphene.Enum):
     USER_PROFILE = UserProfileNode
 
 
-class Query(KonnektQuery, graphene.ObjectType):
-    viewer = graphene.Field(UserNode)
+class PublicQuery(graphene.ObjectType):
     node = relay.Node.Field()
+    societies = DjangoFilterConnectionField(SocietyNode)
+    clubs = DjangoFilterConnectionField(ClubNode)
+
+
+class PrivateQuery(KonnektQuery, PublicQuery):
+    viewer = graphene.Field(UserNode)
     search = graphene.ConnectionField(
         SearchResultConnection,
         query=graphene.String(description='Value to search for', required=True),
         node_type=NodeType(required=True)
     )
-    societies = DjangoConnectionField(SocietyNode)
-    clubs = DjangoConnectionField(ClubNode)
 
     def resolve_viewer(self, info, *args):
         return UserNode.get_node(info, id=info.context.user.id)
@@ -46,8 +49,9 @@ class Query(KonnektQuery, graphene.ObjectType):
         return []
 
 
-class PrivateGraphQLView(GraphQLView):
-    pass
+class PrivateGraphQLView(LoginRequiredMixin, GraphQLView):
+    schema = graphene.Schema(PrivateQuery)
 
 
-schema = graphene.Schema(query=Query)
+class PublicGraphQLView(GraphQLView):
+    schema = graphene.Schema(PublicQuery)
