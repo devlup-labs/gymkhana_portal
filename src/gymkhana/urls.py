@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 
 from gymkhana.schema import PrivateGraphQLView
 
@@ -28,12 +29,9 @@ admin.site.site_header = 'Gymkhana Administration'
 admin.site.index_title = 'Control Panel'
 
 urlpatterns = [
-    url(
-        '^login/$',
-        LoginView.as_view(template_name='forum/login.html'), name='login'
-    ),
-    url(r'^logout/$', LogoutView.as_view(next_page='login'),
-        name='logout'),
+    path('ping', HttpResponse),  # Probe check for Kubernetes
+    url('^login/$', LoginView.as_view(template_name='forum/login.html'), name='login'),
+    url(r'^logout/$', LogoutView.as_view(next_page='login'), name='logout'),
     url(r'^photologue/', include('photologue.urls', namespace='photologue')),
     url(r'^admin/', admin.site.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),

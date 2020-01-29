@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: gymkhana
+  repository: devluplabs/gymkhana
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -55,6 +55,11 @@ nginx:
   listenPort: 80
   hosts:
     - gymkhana.local
+
+postgresql:
+  postgresqlUsername: gymkhana
+  postgresqlPassword: 78etg8y99
+  postgresqlDatabase: gymkhana
 
 secrets:
   secretKey: "q$o5mx19x9(9_^rzqf@o@s^t%t!ghix7($f9ymy49_^ryzq9x9"

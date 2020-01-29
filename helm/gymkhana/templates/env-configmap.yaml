@@ -7,5 +7,9 @@ metadata:
 data:
   SECRET_KEY: "{{ .Values.secrets.secretKey }}"
   STATIC_PATH: "{{ .Values.nginx.sfDir }}"
-  SQLITE_DB: "True"
   ALLOWED_HOSTS: "*"
+  DB_HOST: {{ template "gymkhana.postgresql.fullname" . }}
+  DB_PORT: "{{ .Values.postgresql.service.port }}"
+  DB_USER: {{ .Values.postgresql.postgresqlUsername }}
+  DB_PASSWORD: {{ .Values.postgresql.postgresqlPassword }}
+  DB_NAME: {{ .Values.postgresql.postgresqlDatabase }}

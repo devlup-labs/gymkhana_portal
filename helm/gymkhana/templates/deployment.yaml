@@ -51,24 +51,23 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 80
+              name: http
               protocol: TCP
           volumeMounts:
             - name: nginx-conf
               mountPath: /etc/nginx/conf.d/
             - name: staticfiles
               mountPath: {{ .Values.nginx.sfDir }}
-{{/*          readinessProbe:*/}}
-{{/*            httpGet:*/}}
-{{/*              path: /*/}}
-{{/*              port: 80*/}}
-{{/*            initialDelaySeconds: 3*/}}
-{{/*            periodSeconds: 3*/}}
-{{/*          livenessProbe:*/}}
-{{/*            httpGet:*/}}
-{{/*              path: /*/}}
-{{/*              port: 80*/}}
-{{/*            initialDelaySeconds: 3*/}}
-{{/*            periodSeconds: 3*/}}
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 3
           resources:
             requests:
               cpu: 10m
@@ -83,16 +82,16 @@ spec:
                 name: {{ include "gymkhana.name" . }}-env-configmap
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ .Values.port }}
               protocol: TCP
-{{/*          livenessProbe:*/}}
-{{/*            httpGet:*/}}
-{{/*              path: /*/}}
-{{/*              port: http*/}}
-{{/*          readinessProbe:*/}}
-{{/*            httpGet:*/}}
-{{/*              path: /*/}}
-{{/*              port: http*/}}
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: {{ .Values.port }}
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: {{ .Values.port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

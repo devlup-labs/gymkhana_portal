@@ -133,6 +133,8 @@ selenium-debug.log
 *.njsproj
 *.sln
 
+# Helm chart dependencies
+**/charts/*.tgz
 
 # Ignore DevSpace cache and log folder
 .devspace/

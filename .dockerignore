@@ -3,8 +3,6 @@
 **/*.log
 **/*.egg-info
 **/__pycache__
-**/migrations/*
-!**/migrations/__init__.py
 .venv/
 
 frontend/
