@@ -136,5 +136,4 @@ selenium-debug.log
 # Helm chart dependencies
 **/charts/*.tgz
 
-# Ignore DevSpace cache and log folder
-.devspace/
+# Other
