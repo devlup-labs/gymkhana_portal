@@ -95,6 +95,11 @@ class FestivalsURLsTestCase(TestCase):
                                            slug='event-2', unique_id='event-2')
         SocialLink.objects.create(festival=cls.festival_4, social_media='FB', link='iitj.ac.in')
 
+        # Festival with published true, without event category associated with it and with custom html true
+        cls.festival_5 = Festival.objects.create(name='festival_5', slug='festival_5', published=True,
+                                                 use_custom_html=True, custom_html=cls.testHtml.name.split('/')[-1],
+                                                 photo=cls.testImage.name)
+
     @override_settings(MEDIA_ROOT=TEST_MEDIA_ROOT, TEMPLATES=TEST_TEMPLATES, MAINTENANCE_MODE=False)
     def test_festivals_urls_case_1(self):
         """Hit url with published=False"""
@@ -121,4 +126,11 @@ class FestivalsURLsTestCase(TestCase):
         """Hit url with published=True and with events and custom_html=True"""
         response = self.client.get(self.festival_4.get_absolute_url())
         self.assertTemplateUsed(response, self.festival_4.custom_html.name)
+        self.assertEqual(response.status_code, 200)
+
+    @override_settings(MEDIA_ROOT=TEST_MEDIA_ROOT, TEMPLATES=TEST_TEMPLATES, MAINTENANCE_MODE=False)
+    def test_festivals_urls_case_5(self):
+        """Hit url with published=True, without events and custom_html=True"""
+        response = self.client.get(self.festival_5.get_absolute_url())
+        self.assertTemplateUsed(response, self.festival_5.custom_html.name)
         self.assertEqual(response.status_code, 200)
