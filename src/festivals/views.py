@@ -1,4 +1,5 @@
 from django.views.generic import DetailView
+from django.shortcuts import render
 from django.conf import settings
 from .models import Festival
 from main.views import MaintenanceAndNavigationMixin
@@ -22,4 +23,4 @@ class FestivalView(MaintenanceAndNavigationMixin, DetailView):
             self.template_name = self.object.custom_html.name.split('/')[-1] \
                 if settings.CUSTOM_TEMPLATE_DIR_NAME in self.object.custom_html.name \
                 else self.object.custom_html.name
-        return self.render_to_response(context)
+        return render(request, self.template_name, context=context)
