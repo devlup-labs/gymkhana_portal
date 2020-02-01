@@ -54,4 +54,7 @@ class PrivateGraphQLView(LoginRequiredMixin, GraphQLView):
 
 
 class PublicGraphQLView(GraphQLView):
-    schema = graphene.Schema(PublicQuery)
+    pass
+
+
+schema = graphene.Schema(PublicQuery)
