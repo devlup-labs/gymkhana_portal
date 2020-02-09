@@ -1,9 +1,11 @@
 import graphene
 from django.contrib.auth.mixins import LoginRequiredMixin
 from graphene import relay, Connection
+from graphene_django import DjangoConnectionField
 from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.views import GraphQLView
 
+from festivals.schema import FestivalNode
 from konnekt.schema import Query as KonnektQuery
 from oauth.schema import UserProfileNode, UserNode
 from main.schema import SocietyNode, ClubNode
@@ -27,6 +29,7 @@ class PublicQuery(graphene.ObjectType):
     node = relay.Node.Field()
     societies = DjangoFilterConnectionField(SocietyNode)
     clubs = DjangoFilterConnectionField(ClubNode)
+    festivals = DjangoConnectionField(FestivalNode)
 
 
 class PrivateQuery(KonnektQuery, PublicQuery):
