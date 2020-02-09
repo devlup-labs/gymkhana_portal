@@ -7,7 +7,7 @@ from graphene_django import DjangoObjectType
 class SocietyNode(DjangoObjectType):
     class Meta:
         model = Society
-        fields = ('name', 'slug', 'secretary', 'joint_secretary', 'mentor', 'club_set', )
+        fields = ('name', 'slug', 'secretary', 'joint_secretary', 'description', 'mentor', 'club_set', )
         filter_fields = ('slug', )
         interfaces = (relay.Node,)
 
