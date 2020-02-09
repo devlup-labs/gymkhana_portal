@@ -7,6 +7,7 @@ from graphene_django.views import GraphQLView
 
 from festivals.schema import FestivalNode
 from konnekt.schema import Query as KonnektQuery
+from news.schema import NewsNode
 from oauth.schema import UserProfileNode, UserNode
 from main.schema import SocietyNode, ClubNode
 
@@ -30,6 +31,7 @@ class PublicQuery(graphene.ObjectType):
     societies = DjangoFilterConnectionField(SocietyNode)
     clubs = DjangoFilterConnectionField(ClubNode)
     festivals = DjangoConnectionField(FestivalNode)
+    news = DjangoConnectionField(NewsNode)
 
 
 class PrivateQuery(KonnektQuery, PublicQuery):
