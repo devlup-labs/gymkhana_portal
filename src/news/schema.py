@@ -9,4 +9,5 @@ class NewsNode(DjangoObjectType):
     class Meta:
         model = News
         fields = '__all__'
+        filter_fields = ('club', )
         interfaces = (relay.Node,)
