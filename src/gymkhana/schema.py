@@ -33,7 +33,7 @@ class PublicQuery(graphene.ObjectType):
     clubs = DjangoFilterConnectionField(ClubNode)
     festivals = DjangoConnectionField(FestivalNode)
     news = DjangoFilterConnectionField(NewsNode)
-    club_event = DjangoFilterConnectionField(ClubEventNode)
+    club_events = DjangoFilterConnectionField(ClubEventNode)
 
 
 class PrivateQuery(KonnektQuery, PublicQuery):
