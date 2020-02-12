@@ -6,6 +6,7 @@ env:
   DJANGO_SETTINGS_MODULE: gymkhana.settings
   DJANGO_SECRET_KEY: "q$o5mx19x9(9_^rzqf@o@s^t%t!ghix7($f9ymy49_^ryzq9x9"
   COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
 jobs:
   build:
@@ -55,6 +56,9 @@ jobs:
         source "$(pipenv --venv)"/bin/activate
         pip3 install coverage
         coverage run --branch manage.py test
-    - name: Coveralls
+#    - name: Coveralls
+#      working-directory: ./src
+#      run: coveralls
+    - name: Codecov
       working-directory: ./src
-      run: coveralls
+      run: bash <(curl -s https://codecov.io/bash)
