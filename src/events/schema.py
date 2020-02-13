@@ -9,5 +9,4 @@ class ClubEventNode(DjangoObjectType):
     class Meta:
         model = Event
         fields = '__all__'
-        filter_fields = ('club', )
         interfaces = (relay.Node,)

@@ -10,7 +10,7 @@ from festivals.schema import FestivalNode
 from konnekt.schema import Query as KonnektQuery
 from news.schema import NewsNode
 from oauth.schema import UserProfileNode, UserNode
-from main.schema import SocietyNode, ClubNode
+from main.schema import SocietyNode, ClubNode, ActivityNode
 
 
 class SearchResult(graphene.Union):
@@ -32,8 +32,9 @@ class PublicQuery(graphene.ObjectType):
     societies = DjangoFilterConnectionField(SocietyNode)
     clubs = DjangoFilterConnectionField(ClubNode)
     festivals = DjangoConnectionField(FestivalNode)
-    news = DjangoFilterConnectionField(NewsNode)
-    club_events = DjangoFilterConnectionField(ClubEventNode)
+    news = DjangoConnectionField(NewsNode)
+    club_events = DjangoConnectionField(ClubEventNode)
+    activities = DjangoConnectionField(ActivityNode)
 
 
 class PrivateQuery(KonnektQuery, PublicQuery):
