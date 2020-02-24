@@ -24,7 +24,7 @@ class HomeView(MaintenanceAndNavigationMixin, TemplateView):
         carousel = Gallery.objects.filter(title='HomePageCarousel').filter(is_public=True).first()
         events = Event.objects.filter(club=None)[:5]
         news = News.objects.filter(club=None)[:5]
-        festivals = Festival.objects.all()[:4]
+        festivals = Festival.objects.all()
         gallery = Gallery.objects.filter(title='Home Page Gallery').filter(is_public=True).first()
         context['carousel'] = carousel
         context['event_list'] = events

@@ -33,7 +33,7 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
         return get_object_or_404(UserProfile, roll=roll.upper(), email_confirmed=True)
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.id is not self.get_object().user.id:
+        if request.user.is_authenticated and request.user.id != self.get_object().user.id:
             raise PermissionDenied
         return super(ProfileEditView, self).dispatch(request, *args, **kwargs)
 
