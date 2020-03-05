@@ -1,7 +1,16 @@
-from graphene import relay
+from graphene import relay, ObjectType, String, List
 
 from main.models import Society, Club, Activity
 from graphene_django import DjangoObjectType
+
+
+class RenditionType(ObjectType):
+    name = String()
+    url = String()
+
+
+class ImageType(ObjectType):
+    sizes = List(RenditionType)
 
 
 class SocietyNode(DjangoObjectType):

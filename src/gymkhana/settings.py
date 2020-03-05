@@ -305,6 +305,15 @@ VERSATILEIMAGEFIELD_SETTINGS = {
     'progressive_jpeg': False
 }
 
+VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
+    'festival': [
+        ('full_size', 'url'),
+        ('thumbnail', 'thumbnail__100x100'),
+        ('medium_square_crop', 'crop__400x400'),
+        ('small_square_crop', 'crop__50x50')
+    ]
+}
+
 CORS_ORIGIN_ALLOW_ALL = DEBUG
 
 GRAPHENE = {
