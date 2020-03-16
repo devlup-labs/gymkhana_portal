@@ -16,7 +16,7 @@ class ImageType(ObjectType):
 class SocietyNode(DjangoObjectType):
     class Meta:
         model = Society
-        fields = ('name', 'slug', 'secretary', 'joint_secretary', 'description', 'mentor', 'club_set',)
+        fields = ('name', 'slug', 'secretary', 'joint_secretary', 'description', 'mentor', 'club_set', 'cover')
         filter_fields = ('slug',)
         interfaces = (relay.Node,)
 
