@@ -10,7 +10,7 @@ from festivals.schema import FestivalNode
 from konnekt.schema import Query as KonnektQuery
 from news.schema import NewsNode
 from oauth.schema import UserProfileNode, UserNode
-from main.schema import SocietyNode, ClubNode, ActivityNode
+from main.schema import SocietyNode, ClubNode, ActivityNode, CarouselGallery, GalleryPhoto
 
 
 class SearchResult(graphene.Union):
@@ -35,6 +35,8 @@ class PublicQuery(graphene.ObjectType):
     news = DjangoConnectionField(NewsNode)
     club_events = DjangoConnectionField(ClubEventNode)
     activities = DjangoConnectionField(ActivityNode)
+    carousel_gallery = DjangoFilterConnectionField(CarouselGallery)
+    gallery_photo = DjangoConnectionField(GalleryPhoto)
 
 
 class PrivateQuery(KonnektQuery, PublicQuery):

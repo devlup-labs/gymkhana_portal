@@ -1,4 +1,6 @@
+from django.db.models import FileField
 from graphene import relay, ObjectType, String, List, Field
+from photologue.models import Gallery, Photo
 
 from main.models import Society, Club, Activity
 from graphene_django import DjangoObjectType
@@ -46,3 +48,24 @@ class ActivityNode(DjangoObjectType):
         model = Activity
         fields = '__all__'
         interfaces = (relay.Node,)
+
+
+class CarouselGallery(DjangoObjectType):
+    class Meta:
+        model = Gallery
+        fields = '__all__'
+        filter_fields = ('slug',)
+        interfaces = (relay.Node,)
+
+
+class GalleryPhoto(DjangoObjectType):
+    image = Field(ImageType)
+
+    class Meta:
+        model = Photo
+        fields = '__all__'
+        interfaces = (relay.Node,)
+
+    def resolve_image(self, info):
+        from gymkhana.utils import build_image_types
+        return ImageType(sizes=build_image_types(request=info.context, image=self.image, key_set='image'))
