@@ -109,7 +109,11 @@
                 <!-- Item {{ forloop.counter }} -->
                 <div class="carousel-item view{% if forloop.counter == 1 %} active{% endif %}">
                     <div class="mask hm-black-light">
-                        <div class="full-bg-img"></div>
+                        <div class="full-bg-img">
+
+                            <img src="{{ photo.image.url }}"
+                                                           class="img-fluid">
+                        </div>
                     </div>
                     <div class="carousel-caption{% if forloop.counter == 1 %} flex-center{% endif %}">
                         <ul class="animated fadeInUp">
