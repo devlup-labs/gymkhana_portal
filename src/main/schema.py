@@ -50,7 +50,7 @@ class ActivityNode(DjangoObjectType):
         interfaces = (relay.Node,)
 
 
-class CarouselGallery(DjangoObjectType):
+class GalleryNode(DjangoObjectType):
     class Meta:
         model = Gallery
         fields = '__all__'

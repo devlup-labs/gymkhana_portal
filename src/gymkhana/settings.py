@@ -317,6 +317,8 @@ VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
     ]
 }
 
+HOME_PAGE_GALLERY_SLUG = config('HOME_PAGE_GALLERY_SLUG', cast=str, default='home-carousel-gallery')
+
 CORS_ORIGIN_ALLOW_ALL = DEBUG
 
 GRAPHENE = {
