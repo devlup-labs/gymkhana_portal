@@ -2,7 +2,7 @@ from graphene import relay, Field
 
 from graphene_django import DjangoObjectType
 
-from main.schema import ImageType
+from gallery.schema import ImageType
 from news.models import News
 
 

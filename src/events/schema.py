@@ -5,7 +5,7 @@ from graphene_django import DjangoObjectType
 from events.models import Event
 
 
-class ClubEventNode(DjangoObjectType):
+class EventNode(DjangoObjectType):
     class Meta:
         model = Event
         fields = '__all__'

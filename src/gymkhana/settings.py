@@ -323,7 +323,8 @@ CORS_ORIGIN_ALLOW_ALL = DEBUG
 
 GRAPHENE = {
     'SCHEMA': 'gymkhana.schema.schema',
-    'SCHEMA_INDENT': 2
+    'SCHEMA_INDENT': 2,
+    'RELAY_CONNECTION_MAX_LIMIT': 100
 }
 
 if not DEBUG:

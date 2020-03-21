@@ -1,7 +1,6 @@
-from versatileimagefield.utils import build_versatileimagefield_url_set, validate_versatileimagefield_sizekey_list, \
-    get_rendition_key_set
+from versatileimagefield.utils import build_versatileimagefield_url_set, get_rendition_key_set
 
-from main.schema import RenditionType
+from gallery.schema import RenditionType
 
 
 def build_image_types(request, image, key_set):

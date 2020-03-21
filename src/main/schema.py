@@ -1,22 +1,22 @@
-from django.db.models import FileField
-from graphene import relay, ObjectType, String, List, Field
+from django.utils import timezone
+from graphene import relay, Field
 from photologue.models import Gallery, Photo
 
+from events.models import Event
+from events.schema import EventNode
+from gallery.schema import ImageType
+from gymkhana.utils import build_image_types
 from main.models import Society, Club, Activity
-from graphene_django import DjangoObjectType
+from graphene_django import DjangoObjectType, DjangoConnectionField
 
-
-class RenditionType(ObjectType):
-    name = String()
-    url = String()
-
-
-class ImageType(ObjectType):
-    sizes = List(RenditionType)
+from news.models import News
+from news.schema import NewsNode
 
 
 class SocietyNode(DjangoObjectType):
     cover = Field(ImageType)
+    upcoming_events = DjangoConnectionField(EventNode, max_limit=5)
+    past_news = DjangoConnectionField(NewsNode, max_limit=5)
 
     class Meta:
         model = Society
@@ -25,8 +25,14 @@ class SocietyNode(DjangoObjectType):
         interfaces = (relay.Node,)
 
     def resolve_cover(self, info):
-        from gymkhana.utils import build_image_types
         return ImageType(sizes=build_image_types(info.context, self.cover, 'festival'))
+
+    def resolve_upcoming_events(self, info, *args, **kwargs):
+        return Event.objects.filter(club__society=self).filter(published=True).filter(date__gte=timezone.now())[
+               :kwargs.get('first', 5)]
+
+    def resolve_past_news(self, info, *args, **kwargs):
+        return News.objects.filter(club__society=self)[:kwargs.get('first', 5)]
 
 
 class ClubNode(DjangoObjectType):
@@ -39,7 +45,6 @@ class ClubNode(DjangoObjectType):
         interfaces = (relay.Node,)
 
     def resolve_cover(self, info):
-        from gymkhana.utils import build_image_types
         return ImageType(sizes=build_image_types(info.context, self.cover, 'festival'))
 
 
@@ -67,5 +72,4 @@ class GalleryPhoto(DjangoObjectType):
         interfaces = (relay.Node,)
 
     def resolve_image(self, info):
-        from gymkhana.utils import build_image_types
         return ImageType(sizes=build_image_types(request=info.context, image=self.image, key_set='image'))

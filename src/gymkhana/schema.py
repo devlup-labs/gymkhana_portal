@@ -7,7 +7,7 @@ from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.views import GraphQLView
 from photologue.models import Gallery
 
-from events.schema import ClubEventNode
+from events.schema import EventNode
 from festivals.schema import FestivalNode
 from konnekt.schema import Query as KonnektQuery
 from news.schema import NewsNode
@@ -35,7 +35,7 @@ class PublicQuery(graphene.ObjectType):
     clubs = DjangoFilterConnectionField(ClubNode)
     festivals = DjangoConnectionField(FestivalNode)
     news = DjangoConnectionField(NewsNode)
-    club_events = DjangoConnectionField(ClubEventNode)
+    club_events = DjangoConnectionField(EventNode)
     activities = DjangoConnectionField(ActivityNode)
     carousel_gallery = DjangoFilterConnectionField(GalleryNode)
     gallery_photo = DjangoConnectionField(GalleryPhoto)
