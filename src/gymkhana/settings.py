@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'sortedm2m',
     'ckeditor',
     'ckeditor_uploader',
+    'corsheaders',
     'hitcount',
     'django_cleanup',
     'oauth.apps.OauthConfig',
@@ -63,6 +64,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -302,8 +305,26 @@ VERSATILEIMAGEFIELD_SETTINGS = {
     'progressive_jpeg': False
 }
 
+VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
+    'festival': [
+        ('full_size', 'url'),
+        ('thumbnail', 'thumbnail__100x100'),
+        ('medium_square_crop', 'crop__400x400'),
+        ('small_square_crop', 'crop__50x50')
+    ],
+    'image': [
+        ('full_size', 'url')
+    ]
+}
+
+HOME_PAGE_GALLERY_SLUG = config('HOME_PAGE_GALLERY_SLUG', cast=str, default='home-carousel-gallery')
+
+CORS_ORIGIN_ALLOW_ALL = DEBUG
+
 GRAPHENE = {
-    'SCHEMA': 'gymkhana.schema.schema'
+    'SCHEMA': 'gymkhana.schema.schema',
+    'SCHEMA_INDENT': 2,
+    'RELAY_CONNECTION_MAX_LIMIT': 100
 }
 
 if not DEBUG:

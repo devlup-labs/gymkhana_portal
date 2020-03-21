@@ -1,10 +1,18 @@
 import graphene
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from graphene import relay, Connection
+from graphene_django import DjangoConnectionField
+from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.views import GraphQLView
+from photologue.models import Gallery
 
+from events.schema import EventNode
+from festivals.schema import FestivalNode
 from konnekt.schema import Query as KonnektQuery
+from news.schema import NewsNode
 from oauth.schema import UserProfileNode, UserNode
+from main.schema import SocietyNode, ClubNode, ActivityNode, GalleryNode, GalleryPhoto
 
 
 class SearchResult(graphene.Union):
@@ -21,9 +29,24 @@ class NodeType(graphene.Enum):
     USER_PROFILE = UserProfileNode
 
 
-class Query(KonnektQuery, graphene.ObjectType):
-    viewer = graphene.Field(UserNode)
+class PublicQuery(graphene.ObjectType):
     node = relay.Node.Field()
+    societies = DjangoFilterConnectionField(SocietyNode)
+    clubs = DjangoFilterConnectionField(ClubNode)
+    festivals = DjangoConnectionField(FestivalNode)
+    news = DjangoConnectionField(NewsNode)
+    club_events = DjangoConnectionField(EventNode)
+    activities = DjangoConnectionField(ActivityNode)
+    carousel_gallery = DjangoFilterConnectionField(GalleryNode)
+    gallery_photo = DjangoConnectionField(GalleryPhoto)
+    home_gallery = graphene.Field(GalleryNode)
+
+    def resolve_home_gallery(self, info, *args):
+        return Gallery.objects.filter(slug=settings.HOME_PAGE_GALLERY_SLUG).first()
+
+
+class PrivateQuery(KonnektQuery, PublicQuery):
+    viewer = graphene.Field(UserNode)
     search = graphene.ConnectionField(
         SearchResultConnection,
         query=graphene.String(description='Value to search for', required=True),
@@ -43,7 +66,11 @@ class Query(KonnektQuery, graphene.ObjectType):
 
 
 class PrivateGraphQLView(LoginRequiredMixin, GraphQLView):
+    schema = graphene.Schema(PrivateQuery)
+
+
+class PublicGraphQLView(GraphQLView):
     pass
 
 
-schema = graphene.Schema(query=Query)
+schema = graphene.Schema(PublicQuery)
