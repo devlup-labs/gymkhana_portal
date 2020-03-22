@@ -39,9 +39,13 @@ class PublicQuery(graphene.ObjectType):
     activities = DjangoConnectionField(ActivityNode)
     carousel_gallery = DjangoFilterConnectionField(GalleryNode)
     gallery_photo = DjangoConnectionField(GalleryPhoto)
-    home_gallery = graphene.Field(GalleryNode)
+    home_carousel_gallery = graphene.Field(GalleryNode)
+    gallery = graphene.Field(GalleryNode)
 
-    def resolve_home_gallery(self, info, *args):
+    def resolve_home_carousel_gallery(self, info, *args):
+        return Gallery.objects.filter(slug=settings.HOME_PAGE_CAROUSEL_GALLERY_SLUG).first()
+
+    def resolve_gallery(self, info, *args):
         return Gallery.objects.filter(slug=settings.HOME_PAGE_GALLERY_SLUG).first()
 
 
