@@ -20,7 +20,8 @@ class SocietyNode(DjangoObjectType):
 
     class Meta:
         model = Society
-        fields = ('name', 'slug', 'secretary', 'joint_secretary', 'description', 'mentor', 'club_set', 'cover')
+        fields = (
+            'name', 'slug', 'secretary', 'joint_secretary', 'description', 'mentor', 'club_set', 'cover', 'report_link')
         filter_fields = ('slug',)
         interfaces = (relay.Node,)
 
