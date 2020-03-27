@@ -1,9 +1,15 @@
 from django.contrib.auth.models import User
 from graphene import relay, Field
-from graphene_django import DjangoObjectType
-
+from graphene_django import DjangoObjectType, DjangoConnectionField
 from main.schema import ImageType
-from oauth.models import UserProfile
+from oauth.models import UserProfile, SocialLink
+
+
+class SocialLinks(DjangoObjectType):
+    class Meta:
+        model = SocialLink
+        fields = ('__all__')
+        interfaces = (relay.Node,)
 
 
 class UserNode(DjangoObjectType):
@@ -17,6 +23,7 @@ class UserProfileNode(DjangoObjectType):
     user = UserNode()
     cover = Field(ImageType)
     avatar = Field(ImageType)
+    social_links = DjangoConnectionField(SocialLinks)
 
     class Meta:
         filter_fields = []
@@ -30,6 +37,9 @@ class UserProfileNode(DjangoObjectType):
     def resolve_avatar(self, info):
         from gymkhana.utils import build_image_types
         return ImageType(sizes=build_image_types(info.context, self.avatar, 'festival'))
+
+    def resolve_social_links(self, info):
+        return SocialLink.objects.filter(user=self.user)
 
     @classmethod
     def search(cls, query, info):
