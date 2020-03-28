@@ -28,6 +28,10 @@ class UserProfileNode(DjangoObjectType):
     class Meta:
         filter_fields = []
         model = UserProfile
+        fields = (
+            'id', 'user', 'email_confirmed', 'gender', 'roll', 'dob', 'prog', 'year', 'phone', 'hometown', 'branch',
+            'skills',
+            'about')
         interfaces = (relay.Node,)
 
     def resolve_cover(self, info):
