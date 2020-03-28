@@ -21,7 +21,8 @@ class SocietyNode(DjangoObjectType):
     class Meta:
         model = Society
         fields = (
-            'name', 'slug', 'secretary', 'joint_secretary', 'description', 'mentor', 'club_set', 'cover', 'report_link')
+            'name', 'slug', 'secretary', 'joint_secretary', 'description', 'mentor', 'club_set', 'cover', 'report_link',
+            'gallery', 'custom_html')
         filter_fields = ('slug',)
         interfaces = (relay.Node,)
 
@@ -59,7 +60,7 @@ class ActivityNode(DjangoObjectType):
 class GalleryNode(DjangoObjectType):
     class Meta:
         model = Gallery
-        fields = '__all__'
+        exclude = ('society_set', 'club_set')
         filter_fields = ('slug',)
         interfaces = (relay.Node,)
 
@@ -69,7 +70,7 @@ class GalleryPhoto(DjangoObjectType):
 
     class Meta:
         model = Photo
-        fields = '__all__'
+        exclude = ('galleries',)
         interfaces = (relay.Node,)
 
     def resolve_image(self, info):
