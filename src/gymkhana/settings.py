@@ -317,8 +317,8 @@ VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
     ]
 }
 
-HOME_PAGE_CAROUSEL_GALLERY_SLUG = config('HOME_PAGE_CAROUSEL_GALLERY_SLUG', cast=str, default='home-carousel-gallery')
-HOME_PAGE_GALLERY_SLUG = config('HOME_PAGE_GALLERY_SLUG', cast=str, default='home-page-gallery')
+HOME_PAGE_CAROUSEL_GALLERY_SLUG = config('HOME_PAGE_CAROUSEL_GALLERY_SLUG', cast=str, default='home-carousel')
+HOME_PAGE_GALLERY_SLUG = config('HOME_PAGE_GALLERY_SLUG', cast=str, default='home-gallery')
 
 CORS_ORIGIN_ALLOW_ALL = DEBUG
 
