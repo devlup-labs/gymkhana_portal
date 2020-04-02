@@ -359,6 +359,6 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='noreply@localhost.com', cast=str)
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='', cast=str)
 
-JWT_AUTH = {
+GRAPHQL_JWT = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer'
 }
