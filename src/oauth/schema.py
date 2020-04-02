@@ -1,3 +1,5 @@
+import graphene
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from graphene import relay, Field
 from graphene_django import DjangoObjectType, DjangoConnectionField
@@ -24,6 +26,11 @@ class UserProfileNode(DjangoObjectType):
     cover = Field(ImageType)
     avatar = Field(ImageType)
     social_links = DjangoConnectionField(SocialLinks)
+    gender = graphene.String()
+    prog = graphene.String()
+    branch = graphene.String()
+    year = graphene.String()
+
 
     class Meta:
         filter_fields = []
@@ -44,6 +51,18 @@ class UserProfileNode(DjangoObjectType):
 
     def resolve_social_links(self, info):
         return SocialLink.objects.filter(user=self.user)
+
+    def resolve_gender(self,info):
+        return info.context.user.userprofile.get_gender_display()
+
+    def resolve_prog(self,info):
+        return info.context.user.userprofile.get_prog_display()
+
+    def resolve_branch(self,info):
+        return info.context.user.userprofile.get_branch_display()
+
+    def resolve_year(self,info):
+        return info.context.user.userprofile.get_year_display()
 
     @classmethod
     def search(cls, query, info):
