@@ -1,4 +1,5 @@
 import graphene
+import graphql_jwt
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from graphene import relay, Connection
@@ -50,6 +51,9 @@ class PrivateQuery(KonnektQuery, PublicQuery):
     )
 
     def resolve_viewer(self, info, *args):
+        user = info.context.user
+        if not user.is_authenticated:
+            raise Exception('Not logged in!')
         return UserNode.get_node(info, id=info.context.user.id)
 
     def resolve_search(self, info, query=None, node_type=None, first=None, last=None, before=None, after=None):
@@ -61,8 +65,14 @@ class PrivateQuery(KonnektQuery, PublicQuery):
         return []
 
 
-class PrivateGraphQLView(LoginRequiredMixin, GraphQLView):
-    schema = graphene.Schema(PrivateQuery)
+class Mutation(graphene.ObjectType):
+    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+    verify_token = graphql_jwt.Verify.Field()
+    refresh_token = graphql_jwt.Refresh.Field()
+
+
+class PrivateGraphQLView(GraphQLView):
+    schema = graphene.Schema(PrivateQuery, mutation=Mutation)
 
 
 class PublicGraphQLView(GraphQLView):
