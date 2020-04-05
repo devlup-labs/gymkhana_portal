@@ -1,13 +1,13 @@
 import graphene
 import graphql_jwt
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin
 from graphene import relay, Connection
 from graphene_django import DjangoConnectionField
 from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.views import GraphQLView
 from photologue.models import Gallery
 from festivals.schema import FestivalNode
+from forum.schema import TopicNode
 from konnekt.schema import Query as KonnektQuery
 from oauth.schema import UserProfileNode, UserNode
 from main.schema import SocietyNode, ClubNode, GalleryNode
@@ -15,7 +15,7 @@ from main.schema import SocietyNode, ClubNode, GalleryNode
 
 class SearchResult(graphene.Union):
     class Meta:
-        types = (UserProfileNode,)
+        types = (UserProfileNode, TopicNode,)
 
 
 class SearchResultConnection(Connection):
@@ -25,6 +25,7 @@ class SearchResultConnection(Connection):
 
 class NodeType(graphene.Enum):
     USER_PROFILE = UserProfileNode
+    TOPIC = TopicNode
 
 
 class PublicQuery(graphene.ObjectType):
@@ -49,6 +50,11 @@ class PrivateQuery(KonnektQuery, PublicQuery):
         query=graphene.String(description='Value to search for', required=True),
         node_type=NodeType(required=True)
     )
+    forum_topics = graphene.ConnectionField(
+        SearchResultConnection,
+        query=graphene.String(description='Topic to search for', required=True),
+        node_type=NodeType(required=True)
+    )
 
     def resolve_viewer(self, info, *args):
         user = info.context.user
@@ -62,6 +68,13 @@ class PrivateQuery(KonnektQuery, PublicQuery):
             if first:
                 return UserProfileNode.search(query, info)[:first]
             return UserProfileNode.search(query, info)
+        return []
+
+    def resolve_forum_topics(self, info, query=None, node_type=None, first=None, last=None, before=None, after=None):
+        if node_type == TopicNode:
+            if first:
+                return TopicNode.search(query, info)[:first]
+            return TopicNode.search(query, info)
         return []
 
 
