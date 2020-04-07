@@ -1,9 +1,13 @@
 import graphene
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from django.utils.translation import override
 from graphene import relay, Field
 from graphene_django import DjangoObjectType, DjangoConnectionField
+from graphene_django.forms.mutation import DjangoModelFormMutation, DjangoFormMutation
+from graphql_jwt.decorators import login_required
+
 from main.schema import ImageType
+from oauth.forms import UserProfileUpdateForm
 from oauth.models import UserProfile, SocialLink
 
 
@@ -31,7 +35,6 @@ class UserProfileNode(DjangoObjectType):
     branch = graphene.String()
     year = graphene.String()
 
-
     class Meta:
         filter_fields = []
         model = UserProfile
@@ -52,18 +55,32 @@ class UserProfileNode(DjangoObjectType):
     def resolve_social_links(self, info):
         return SocialLink.objects.filter(user=self.user)
 
-    def resolve_gender(self,info):
+    def resolve_gender(self, info):
         return info.context.user.userprofile.get_gender_display()
 
-    def resolve_prog(self,info):
+    def resolve_prog(self, info):
         return info.context.user.userprofile.get_prog_display()
 
-    def resolve_branch(self,info):
+    def resolve_branch(self, info):
         return info.context.user.userprofile.get_branch_display()
 
-    def resolve_year(self,info):
+    def resolve_year(self, info):
         return info.context.user.userprofile.get_year_display()
 
     @classmethod
     def search(cls, query, info):
         return cls._meta.model.objects.search(query)
+
+
+class ProfileMutation(DjangoModelFormMutation):
+    class Meta:
+        form_class = UserProfileUpdateForm
+
+    @classmethod
+    @login_required
+    def get_form_kwargs(cls, root, info, **input):
+        kwargs = {"data": input}
+        instance = cls._meta.model._default_manager.get(user=info.context.user)
+        kwargs["instance"] = instance
+        return kwargs
+
