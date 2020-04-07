@@ -9,7 +9,7 @@ from photologue.models import Gallery
 from festivals.schema import FestivalNode
 from forum.schema import TopicNode
 from konnekt.schema import Query as KonnektQuery
-from oauth.schema import UserProfileNode, UserNode
+from oauth.schema import UserProfileNode, UserNode, ProfileMutation
 from main.schema import SocietyNode, ClubNode, GalleryNode
 
 
@@ -82,6 +82,7 @@ class Mutation(graphene.ObjectType):
     token_auth = graphql_jwt.ObtainJSONWebToken.Field()
     verify_token = graphql_jwt.Verify.Field()
     refresh_token = graphql_jwt.Refresh.Field()
+    update_profile = ProfileMutation.Field()
 
 
 class PrivateGraphQLView(GraphQLView):
