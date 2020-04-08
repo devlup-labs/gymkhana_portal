@@ -7,7 +7,7 @@ from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.views import GraphQLView
 from photologue.models import Gallery
 from festivals.schema import FestivalNode
-from forum.schema import TopicNode, CreateTopicMutation
+from forum.schema import TopicNode, CreateTopicMutation, AddAnswerMutation
 from konnekt.schema import Query as KonnektQuery
 from oauth.schema import UserProfileNode, UserNode, ProfileMutation
 from main.schema import SocietyNode, ClubNode, GalleryNode
@@ -84,6 +84,7 @@ class Mutation(graphene.ObjectType):
     refresh_token = graphql_jwt.Refresh.Field()
     update_profile = ProfileMutation.Field()
     create_topic = CreateTopicMutation.Field()
+    add_answer = AddAnswerMutation.Field()
 
 
 class PrivateGraphQLView(GraphQLView):
