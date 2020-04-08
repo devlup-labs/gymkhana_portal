@@ -19,10 +19,15 @@ class SocialLinks(DjangoObjectType):
 
 
 class UserNode(DjangoObjectType):
+    id = graphene.ID(required=True)
+
     class Meta:
         fields = ('id', 'username', 'first_name', 'last_name', 'email', 'userprofile')
         model = User
         interfaces = (relay.Node,)
+
+    def resolve_id(self, info):
+        return self.id
 
 
 class UserProfileNode(DjangoObjectType):
@@ -34,6 +39,7 @@ class UserProfileNode(DjangoObjectType):
     prog = graphene.String()
     branch = graphene.String()
     year = graphene.String()
+    id = graphene.ID(required=True)
 
     class Meta:
         filter_fields = []
@@ -67,6 +73,9 @@ class UserProfileNode(DjangoObjectType):
     def resolve_year(self, info):
         return info.context.user.userprofile.get_year_display()
 
+    def resolve_id(self, info):
+        return self.id
+
     @classmethod
     def search(cls, query, info):
         return cls._meta.model.objects.search(query)
@@ -83,4 +92,3 @@ class ProfileMutation(DjangoModelFormMutation):
         instance = cls._meta.model._default_manager.get(user=info.context.user)
         kwargs["instance"] = instance
         return kwargs
-
