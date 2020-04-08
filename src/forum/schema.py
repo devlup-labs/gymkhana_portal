@@ -1,9 +1,10 @@
+import graphene
 from graphene import relay
 from graphene_django import DjangoObjectType
 from graphene_django.forms.mutation import DjangoModelFormMutation
 from graphql_jwt.decorators import login_required
 
-from forum.forms import TopicForm
+from forum.forms import TopicForm, AnswerForm
 from forum.models import Topic, Answer
 
 
@@ -16,6 +17,8 @@ class AnswerNode(DjangoObjectType):
 
 
 class TopicNode(DjangoObjectType):
+    id = graphene.ID(required=True)
+
     class Meta:
         model = Topic
         fields = '__all__'
@@ -25,6 +28,9 @@ class TopicNode(DjangoObjectType):
     @classmethod
     def search(cls, query, indfo):
         return cls._meta.model.objects.search(query)
+
+    def resolve_id(self, info):
+        return self.id
 
 
 class CreateTopicMutation(DjangoModelFormMutation):
@@ -39,3 +45,8 @@ class CreateTopicMutation(DjangoModelFormMutation):
         obj.save()
         kwargs = {cls._meta.return_field_name: obj}
         return cls(errors=[], **kwargs)
+
+
+class AddAnswerMutation(DjangoModelFormMutation):
+    class Meta:
+        form_class = AnswerForm
