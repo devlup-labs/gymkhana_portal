@@ -50,3 +50,29 @@ class CreateTopicMutation(DjangoModelFormMutation):
 class AddAnswerMutation(DjangoModelFormMutation):
     class Meta:
         form_class = AnswerForm
+
+
+class UpvoteMutaiton(graphene.Mutation):
+    class Arguments:
+        is_topic = graphene.Boolean(required=True)
+        id = graphene.ID(required=True)
+
+    updated = graphene.Boolean()
+    upvoted = graphene.Boolean()
+
+    def mutate(self, info, id, is_topic):
+        updated = False
+        upvoted = False
+        print(Topic.objects.get(id=id).upvotes)
+        user = info.context.user.userprofile
+        obj =  Topic.objects.get(id=id) if is_topic else Answer.objects.get(id=id)
+        if info.context.user.is_authenticated:
+            if user in obj.upvotes.all():
+                obj.upvotes.remove(user)
+                upvoted = False
+            else:
+                obj.upvotes.add(user)
+                upvoted = True
+            updated = True
+        print(Topic.objects.get(id=id).upvotes)
+        return UpvoteMutaiton(updated=updated, upvoted=upvoted)
