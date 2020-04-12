@@ -50,11 +50,6 @@ class PrivateQuery(KonnektQuery, PublicQuery):
         query=graphene.String(description='Value to search for', required=True),
         node_type=NodeType(required=True)
     )
-    forum_topics = graphene.ConnectionField(
-        SearchResultConnection,
-        query=graphene.String(description='Topic to search for', required=True),
-        node_type=NodeType(required=True)
-    )
 
     def resolve_viewer(self, info, *args):
         user = info.context.user
@@ -64,18 +59,8 @@ class PrivateQuery(KonnektQuery, PublicQuery):
 
     def resolve_search(self, info, query=None, node_type=None, first=None, last=None, before=None, after=None):
         # TODO: Add logic to paginate search based on first, last, before and after params
-        if node_type == UserProfileNode:
-            if first:
-                return UserProfileNode.search(query, info)[:first]
-            return UserProfileNode.search(query, info)
-        return []
-
-    def resolve_forum_topics(self, info, query=None, node_type=None, first=None, last=None, before=None, after=None):
-        if node_type == TopicNode:
-            if first:
-                return TopicNode.search(query, info)[:first]
-            return TopicNode.search(query, info)
-        return []
+        node = UserProfileNode if node_type == UserProfileNode else TopicNode
+        return node.search(query, info)
 
 
 class Mutation(graphene.ObjectType):

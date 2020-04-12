@@ -65,7 +65,7 @@ class UpvoteMutaiton(graphene.Mutation):
         upvoted = False
         print(Topic.objects.get(id=id).upvotes)
         user = info.context.user.userprofile
-        obj =  Topic.objects.get(id=id) if is_topic else Answer.objects.get(id=id)
+        obj = Topic.objects.get(id=id) if is_topic else Answer.objects.get(id=id)
         if info.context.user.is_authenticated:
             if user in obj.upvotes.all():
                 obj.upvotes.remove(user)
