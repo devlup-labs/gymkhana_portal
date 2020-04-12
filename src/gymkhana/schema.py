@@ -19,8 +19,13 @@ class SearchResult(graphene.Union):
 
 
 class SearchResultConnection(Connection):
+    total_count = graphene.Int()
+
     class Meta:
         node = SearchResult
+
+    def resolve_total_count(self, info, **kwargs):
+        return len(self.iterable)
 
 
 class NodeType(graphene.Enum):
