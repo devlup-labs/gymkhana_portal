@@ -9,11 +9,26 @@ from forum.models import Topic, Answer
 
 
 class AnswerNode(DjangoObjectType):
+    upvotes_count = graphene.Int()
+    is_upvoted = graphene.Boolean()
+    is_author = graphene.Boolean()
+
     class Meta:
         model = Answer
         fields = '__all__'
         filter_fields = ()
         interfaces = (relay.Node,)
+
+    def resolve_upvotes_count(self, info):
+        return self.upvotes.count()
+
+    def resolve_is_upvoted(self, info):
+        if info.context.user.userprofile in self.upvotes.all():
+            return True
+        return False
+
+    def resolve_is_author(self, info):
+        return info.context.user.userprofile == self.author
 
 
 class TopicNode(DjangoObjectType):
@@ -26,7 +41,7 @@ class TopicNode(DjangoObjectType):
     class Meta:
         model = Topic
         fields = '__all__'
-        filter_fields = ()
+        filter_fields = ('slug',)
         interfaces = (relay.Node,)
 
     @classmethod
