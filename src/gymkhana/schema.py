@@ -60,6 +60,7 @@ class PrivateQuery(KonnektQuery, PublicQuery):
         query=graphene.String(description='Value to search for', required=True),
         node_type=NodeType(required=True)
     )
+    topic = DjangoFilterConnectionField(TopicNode)
 
     def resolve_viewer(self, info, *args):
         user = info.context.user
