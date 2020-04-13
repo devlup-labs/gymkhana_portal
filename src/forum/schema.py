@@ -18,6 +18,10 @@ class AnswerNode(DjangoObjectType):
 
 class TopicNode(DjangoObjectType):
     id = graphene.ID(required=True)
+    upvotes_count = graphene.Int()
+    answers_count = graphene.Int()
+    is_upvoted = graphene.Boolean()
+    is_author = graphene.Boolean()
 
     class Meta:
         model = Topic
@@ -27,10 +31,25 @@ class TopicNode(DjangoObjectType):
 
     @classmethod
     def search(cls, query, indfo):
+        print(cls._meta.model.objects.search(query)[0].created_at)
         return cls._meta.model.objects.search(query)
 
     def resolve_id(self, info):
         return self.id
+
+    def resolve_upvotes_count(self, info):
+        return self.upvotes.count()
+
+    def resolve_answers_count(self, info):
+        return self.answer_set.count()
+
+    def resolve_is_upvoted(self, info):
+        if info.context.user.userprofile in self.upvotes.all():
+            return True
+        return False
+
+    def resolve_is_author(self, info):
+        return info.context.user.userprofile == self.author
 
 
 class CreateTopicMutation(DjangoModelFormMutation):
