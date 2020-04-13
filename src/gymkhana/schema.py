@@ -7,6 +7,7 @@ from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.views import GraphQLView
 from photologue.models import Gallery
 from festivals.schema import FestivalNode
+from forum.models import Topic
 from forum.schema import TopicNode, CreateTopicMutation, AddAnswerMutation, UpvoteMutaiton
 from konnekt.schema import Query as KonnektQuery
 from oauth.schema import UserProfileNode, UserNode, ProfileMutation
@@ -20,12 +21,16 @@ class SearchResult(graphene.Union):
 
 class SearchResultConnection(Connection):
     total_count = graphene.Int()
+    edge_count = graphene.Int()
 
     class Meta:
         node = SearchResult
 
     def resolve_total_count(self, info, **kwargs):
-        return len(self.iterable)
+        return len(Topic.objects.all())
+
+    def resolve_edge_count(self, info, **kwargs):
+        return self.iterable.count()
 
 
 class NodeType(graphene.Enum):
@@ -65,7 +70,9 @@ class PrivateQuery(KonnektQuery, PublicQuery):
     def resolve_search(self, info, query=None, node_type=None, first=None, last=None, before=None, after=None):
         # TODO: Add logic to paginate search based on first, last, before and after params
         node = UserProfileNode if node_type == UserProfileNode else TopicNode
-        return node.search(query, info)
+        if query:
+            return node.search(query, info)
+        return node._meta.model.objects.all()[:first]
 
 
 class Mutation(graphene.ObjectType):
