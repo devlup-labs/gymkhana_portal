@@ -9,6 +9,7 @@ from forum.models import Topic, Answer
 
 
 class AnswerNode(DjangoObjectType):
+    id = graphene.ID(required=True)
     upvotes_count = graphene.Int()
     is_upvoted = graphene.Boolean()
     is_author = graphene.Boolean()
@@ -18,6 +19,9 @@ class AnswerNode(DjangoObjectType):
         fields = '__all__'
         filter_fields = ()
         interfaces = (relay.Node,)
+
+    def resolve_id(self, info):
+        return self.id
 
     def resolve_upvotes_count(self, info):
         return self.upvotes.count()
@@ -46,7 +50,6 @@ class TopicNode(DjangoObjectType):
 
     @classmethod
     def search(cls, query, indfo):
-        print(cls._meta.model.objects.search(query)[0].created_at)
         return cls._meta.model.objects.search(query)
 
     def resolve_id(self, info):
@@ -97,7 +100,6 @@ class UpvoteMutaiton(graphene.Mutation):
     def mutate(self, info, id, is_topic):
         updated = False
         upvoted = False
-        print(Topic.objects.get(id=id).upvotes)
         user = info.context.user.userprofile
         obj = Topic.objects.get(id=id) if is_topic else Answer.objects.get(id=id)
         if info.context.user.is_authenticated:
@@ -108,5 +110,4 @@ class UpvoteMutaiton(graphene.Mutation):
                 obj.upvotes.add(user)
                 upvoted = True
             updated = True
-        print(Topic.objects.get(id=id).upvotes)
         return UpvoteMutaiton(updated=updated, upvoted=upvoted)
