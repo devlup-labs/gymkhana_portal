@@ -87,6 +87,14 @@ class CreateTopicMutation(DjangoModelFormMutation):
 class AddAnswerMutation(DjangoModelFormMutation):
     class Meta:
         form_class = AnswerForm
+        exclude_fields = ('author',)
+
+    @classmethod
+    @login_required
+    def get_form_kwargs(cls, root, info, **input):
+        input.__setitem__('author', str(info.context.user.userprofile.id))
+        kwargs = {"data": input}
+        return kwargs
 
 
 class UpvoteMutaiton(graphene.Mutation):
