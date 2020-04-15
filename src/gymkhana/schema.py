@@ -8,7 +8,7 @@ from graphene_django.views import GraphQLView
 from photologue.models import Gallery
 from festivals.schema import FestivalNode
 from forum.models import Topic
-from forum.schema import TopicNode, CreateTopicMutation, AddAnswerMutation, UpvoteMutaiton
+from forum.schema import TopicNode, CreateTopicMutation, AddAnswerMutation, UpvoteMutaiton, DeleteMutation
 from konnekt.schema import Query as KonnektQuery
 from oauth.schema import UserProfileNode, UserNode, ProfileMutation
 from main.schema import SocietyNode, ClubNode, GalleryNode
@@ -61,6 +61,7 @@ class PrivateQuery(KonnektQuery, PublicQuery):
         node_type=NodeType(required=True)
     )
     topic = DjangoFilterConnectionField(TopicNode)
+    profile = DjangoFilterConnectionField(UserProfileNode)
 
     def resolve_viewer(self, info, *args):
         user = info.context.user
@@ -84,6 +85,7 @@ class Mutation(graphene.ObjectType):
     create_topic = CreateTopicMutation.Field()
     add_answer = AddAnswerMutation.Field()
     upvote = UpvoteMutaiton.Field()
+    delete = DeleteMutation.Field()
 
 
 class PrivateGraphQLView(GraphQLView):

@@ -42,7 +42,7 @@ class UserProfileNode(DjangoObjectType):
     id = graphene.ID(required=True)
 
     class Meta:
-        filter_fields = []
+        filter_fields = ['roll']
         model = UserProfile
         fields = (
             'id', 'user', 'email_confirmed', 'gender', 'roll', 'dob', 'prog', 'year', 'phone', 'hometown', 'branch',
