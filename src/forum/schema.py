@@ -119,3 +119,19 @@ class UpvoteMutaiton(graphene.Mutation):
                 upvoted = True
             updated = True
         return UpvoteMutaiton(updated=updated, upvoted=upvoted)
+
+
+class DeleteMutation(graphene.Mutation):
+    class Arguments:
+        is_topic = graphene.Boolean(required=True)
+        id = graphene.ID(required=True)
+
+    deleted = graphene.Boolean()
+
+    def mutate(self, info, id, is_topic):
+        deleted = False
+        obj = Topic.objects.filter(id=id) if is_topic else Answer.objects.filter(id=id)
+        if obj:
+            deleted = True
+            obj.delete()
+        return DeleteMutation(deleted=deleted)
