@@ -98,6 +98,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, config('MEDIA_PATH', default='../media', cas
 
 MEDIA_URL = '/media/'
 
+VUE_ROOT = os.path.join(BASE_DIR, config('VUE_PATH', default='../vue', cast=str))
+
 CUSTOM_TEMPLATE_DIR_NAME = 'html_templates'
 
 TEMPLATES = [

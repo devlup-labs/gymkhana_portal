@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.contrib.auth.decorators import user_passes_test
 from django.urls import path
 from django.contrib import admin
 from django.conf import settings
@@ -22,6 +23,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.views.decorators.csrf import csrf_exempt
 
 from gymkhana.schema import PrivateGraphQLView, PublicGraphQLView
+from gymkhana.views import FrontendUpdateView
 
 admin.site.site_title = 'Gymkhana Administration'
 admin.site.site_header = 'Gymkhana Administration'
@@ -36,6 +38,9 @@ urlpatterns = [
         name='logout'),
     url(r'^photologue/', include('photologue.urls', namespace='photologue')),
     url(r'^admin/', admin.site.urls),
+    url(r'^admin/frontend-upload/',
+        user_passes_test(lambda u: u.is_superuser, login_url='admin:login')(FrontendUpdateView.as_view()),
+        name='admin-frontend-upload'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^account/', include('oauth.urls')),
     url(r'^forum/', include('forum.urls')),

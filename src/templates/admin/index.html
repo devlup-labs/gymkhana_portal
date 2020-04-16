@@ -1,0 +1,23 @@
+{% extends 'admin/index.html' %}
+{% block extrastyle %}
+    {{ block.super }}
+    <style>
+        a.upload-button {
+            background-color: #79AEC8; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 0.5rem;
+        }
+    </style>
+{% endblock %}
+{% block sidebar %}
+    {{ block.super }}
+    {% if request.user.is_superuser %}
+        <a class="upload-button" href="{% url 'admin-frontend-upload' %}">Frontend Update</a>
+    {% endif %}
+{% endblock %}
