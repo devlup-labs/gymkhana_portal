@@ -5,8 +5,9 @@ from django.conf import settings
 from django.contrib import admin, messages
 from django.core.exceptions import ValidationError
 from django import forms
+from django.core.management import call_command
 from django.urls import reverse_lazy
-from django.views.generic import FormView
+from django.views.generic import FormView, TemplateView
 
 
 class UploadForm(forms.Form):
@@ -17,7 +18,10 @@ class UploadForm(forms.Form):
         rmtree(join(settings.VUE_ROOT, 'dist'), ignore_errors=True)
         with tar_open(fileobj=self.cleaned_data['file'].file, mode='r:gz') as archive:
             archive.extractall(settings.VUE_ROOT)
+            # Extract index.html to templates dir
+            archive.extract(archive.getmember('dist/index.html'), settings.TEMPLATES[0]['DIRS'][0])
             archive.close()
+        call_command('collectstatic', verbosity=0, interactive=False)
 
     def clean_file(self):
         if not self.cleaned_data['file'].content_type == 'application/gzip':
@@ -46,3 +50,7 @@ class FrontendUpdateView(FormView):
         form.process()
         messages.add_message(self.request, messages.INFO, 'The frontend code deployment has started')
         return super().form_valid(form)
+
+
+class VueView(TemplateView):
+    template_name = 'dist/index.html'

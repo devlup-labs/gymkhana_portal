@@ -90,6 +90,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'gymkhana.utils.VueFilesFinder',
+]
+
 STATIC_ROOT = os.path.join(BASE_DIR, config('STATIC_PATH', default='../staticfiles', cast=str))
 
 STATIC_URL = '/static/'
@@ -99,6 +104,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, config('MEDIA_PATH', default='../media', cas
 MEDIA_URL = '/media/'
 
 VUE_ROOT = os.path.join(BASE_DIR, config('VUE_PATH', default='../vue', cast=str))
+
+VUE_DIRS = [
+    os.path.join(VUE_ROOT, 'dist')
+]
 
 CUSTOM_TEMPLATE_DIR_NAME = 'html_templates'
 
