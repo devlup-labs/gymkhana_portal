@@ -1,11 +1,15 @@
 import graphene
 import graphql_jwt
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from graphene import relay, Connection
 from graphene_django import DjangoConnectionField
 from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.views import GraphQLView
 from photologue.models import Gallery
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
+
 from festivals.schema import FestivalNode
 from forum.models import Topic
 from forum.schema import TopicNode, CreateTopicMutation, AddAnswerMutation, UpvoteMutaiton, DeleteMutation
@@ -67,7 +71,7 @@ class PrivateQuery(KonnektQuery, PublicQuery):
         user = info.context.user
         if not user.is_authenticated:
             raise Exception('Not logged in!')
-        return UserNode.get_node(info, id=info.context.user.id)
+        return UserNode.get_node(info, id=user.id)
 
     def resolve_search(self, info, query=None, node_type=None, first=None, last=None, before=None, after=None):
         # TODO: Add logic to paginate search based on first, last, before and after params
@@ -77,10 +81,7 @@ class PrivateQuery(KonnektQuery, PublicQuery):
         return node._meta.model.objects.all()[:first]
 
 
-class Mutation(graphene.ObjectType):
-    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
-    verify_token = graphql_jwt.Verify.Field()
-    refresh_token = graphql_jwt.Refresh.Field()
+class PrivateMutation(graphene.ObjectType):
     update_profile = ProfileMutation.Field()
     create_topic = CreateTopicMutation.Field()
     add_answer = AddAnswerMutation.Field()
@@ -88,12 +89,18 @@ class Mutation(graphene.ObjectType):
     delete = DeleteMutation.Field()
 
 
+class PublicMutation(graphene.ObjectType):
+    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+    verify_token = graphql_jwt.Verify.Field()
+    refresh_token = graphql_jwt.Refresh.Field()
+
+
 class PrivateGraphQLView(GraphQLView):
-    schema = graphene.Schema(PrivateQuery, mutation=Mutation)
+    schema = graphene.Schema(PrivateQuery, mutation=PrivateMutation)
 
 
 class PublicGraphQLView(GraphQLView):
     pass
 
 
-schema = graphene.Schema(PublicQuery)
+schema = graphene.Schema(PublicQuery, mutation=PublicMutation)
