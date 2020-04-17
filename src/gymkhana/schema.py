@@ -66,6 +66,7 @@ class PrivateQuery(KonnektQuery, PublicQuery):
     )
     topic = DjangoFilterConnectionField(TopicNode)
     profile = DjangoFilterConnectionField(UserProfileNode)
+    topics_by_user = DjangoConnectionField(TopicNode)
 
     def resolve_viewer(self, info, *args):
         user = info.context.user
@@ -79,6 +80,11 @@ class PrivateQuery(KonnektQuery, PublicQuery):
         if query:
             return node.search(query, info)
         return node._meta.model.objects.all()[:first]
+
+    def resolve_topics_by_user(self, info):
+        user = info.context.user.userprofile
+        topics = Topic.objects.filter(answer__author=user)
+        return topics
 
 
 class PrivateMutation(graphene.ObjectType):
