@@ -50,7 +50,8 @@ class TopicNode(DjangoObjectType):
 
     @classmethod
     def search(cls, query, indfo):
-        return cls._meta.model.objects.search(query)
+        nodes = cls._meta.model.objects.search(query) if query else cls._meta.model.objects
+        return nodes.all()
 
     def resolve_id(self, info):
         return self.id

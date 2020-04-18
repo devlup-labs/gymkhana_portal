@@ -59,9 +59,9 @@ class PublicQuery(graphene.ObjectType):
 
 class PrivateQuery(KonnektQuery, PublicQuery):
     viewer = graphene.Field(UserNode)
-    search = graphene.ConnectionField(
+    nodes = graphene.ConnectionField(
         SearchResultConnection,
-        query=graphene.String(description='Value to search for', required=True),
+        query=graphene.String(description='Value to search for'),
         node_type=NodeType(required=True)
     )
     topic = DjangoFilterConnectionField(TopicNode)
@@ -74,12 +74,10 @@ class PrivateQuery(KonnektQuery, PublicQuery):
             raise Exception('Not logged in!')
         return UserNode.get_node(info, id=user.id)
 
-    def resolve_search(self, info, query=None, node_type=None, first=None, last=None, before=None, after=None):
+    def resolve_nodes(self, info, query=None, node_type=None, first=None, last=None, before=None, after=None):
         # TODO: Add logic to paginate search based on first, last, before and after params
         node = UserProfileNode if node_type == UserProfileNode else TopicNode
-        if query:
-            return node.search(query, info)
-        return node._meta.model.objects.all()[:first]
+        return node.search(query, info)
 
     def resolve_topics_by_user(self, info):
         user = info.context.user.userprofile

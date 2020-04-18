@@ -78,7 +78,8 @@ class UserProfileNode(DjangoObjectType):
 
     @classmethod
     def search(cls, query, info):
-        return cls._meta.model.objects.search(query)
+        nodes = cls._meta.model.objects.search(query) if query else cls._meta.model.objects
+        return nodes.all()
 
 
 class ProfileMutation(DjangoModelFormMutation):
