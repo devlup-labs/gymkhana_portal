@@ -1,14 +1,12 @@
 import graphene
 import graphql_jwt
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin
 from graphene import relay, Connection
 from graphene_django import DjangoConnectionField
 from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.views import GraphQLView
+from graphql_social_auth import SocialAuthJWT
 from photologue.models import Gallery
-from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated
 
 from festivals.schema import FestivalNode
 from forum.models import Topic
@@ -94,6 +92,7 @@ class PrivateMutation(graphene.ObjectType):
 
 
 class PublicMutation(graphene.ObjectType):
+    social_auth = SocialAuthJWT.Field()
     token_auth = graphql_jwt.ObtainJSONWebToken.Field()
     verify_token = graphql_jwt.Verify.Field()
     refresh_token = graphql_jwt.Refresh.Field()
