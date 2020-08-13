@@ -1,6 +1,7 @@
 import graphene
 import graphql_jwt
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from graphene import relay, Connection
 from graphene_django import DjangoConnectionField
 from graphene_django.filter import DjangoFilterConnectionField
@@ -12,7 +13,7 @@ from festivals.schema import FestivalNode
 from forum.models import Topic
 from forum.schema import TopicNode, CreateTopicMutation, AddAnswerMutation, UpvoteMutaiton, DeleteMutation
 from konnekt.schema import Query as KonnektQuery
-from oauth.schema import UserProfileNode, UserNode, ProfileMutation
+from oauth.schema import UserProfileNode, UserNode, ProfileMutation, CreateProfileMutation
 from main.schema import SocietyNode, ClubNode, GalleryNode
 
 
@@ -85,6 +86,7 @@ class PrivateQuery(KonnektQuery, PublicQuery):
 
 class PrivateMutation(graphene.ObjectType):
     update_profile = ProfileMutation.Field()
+    create_profile = CreateProfileMutation.Field()
     create_topic = CreateTopicMutation.Field()
     add_answer = AddAnswerMutation.Field()
     upvote = UpvoteMutaiton.Field()

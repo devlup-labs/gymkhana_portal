@@ -7,7 +7,7 @@ from graphene_django.forms.mutation import DjangoModelFormMutation, DjangoFormMu
 from graphql_jwt.decorators import login_required
 
 from main.schema import ImageType
-from oauth.forms import UserProfileUpdateForm
+from oauth.forms import UserProfileUpdateForm, UserProfileForm
 from oauth.models import UserProfile, SocialLink
 
 
@@ -93,3 +93,17 @@ class ProfileMutation(DjangoModelFormMutation):
         instance = cls._meta.model._default_manager.get(user=info.context.user)
         kwargs["instance"] = instance
         return kwargs
+
+
+class CreateProfileMutation(DjangoModelFormMutation):
+    class Meta:
+        form_class = UserProfileForm
+
+    @classmethod
+    @login_required
+    def perform_mutate(cls, form, info):
+        obj = form.save(commit=False)
+        obj.user_id = info.context.user.id
+        obj.save()
+        kwargs = {cls._meta.return_field_name: obj}
+        return cls(errors=[], **kwargs)
