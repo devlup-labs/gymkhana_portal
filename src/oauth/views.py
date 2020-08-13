@@ -7,6 +7,7 @@ from graphql import backend
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from gymkhana.settings import FRONTEND_URL
 from .mixins import SocialLinkOwnerMixin
 from .models import UserProfile, SocialLink
 from .forms import UserProfileUpdateForm, SocialLinkForm, UserProfileForm
@@ -118,5 +119,5 @@ def get_activation_link(request, roll):
 class SessionView(LoginRequiredMixin, APIView):
     def get(self, request, *args, **kwargs):
         key = self.request.user.social_auth.get(provider="google-oauth2").extra_data['access_token']
-        response = HttpResponseRedirect("http://localhost:8080/login?key=" + key)
+        response = HttpResponseRedirect(FRONTEND_URL+"/login?key=" + key)
         return response
