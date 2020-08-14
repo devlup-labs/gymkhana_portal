@@ -272,12 +272,6 @@ class OauthURLsTestCase(TestCase):
         response = self.client.get(self.user_profile_1.get_absolute_url(), follow=True)
         self.assertRedirects(response, reverse('login') + "?next=" + self.user_profile_1.get_absolute_url())
 
-    def test_oauth_profile_detail_case_2(self):
-        # profile detail url & user has no user profile data --> redirect to register page
-        self.client.force_login(self.user_2)
-        response = self.client.get(self.user_profile_1.get_absolute_url(), follow=True)
-        self.assertRedirects(response, reverse('oauth:register'))
-        self.client.logout()
 
     def test_oauth_profile_detail_case_3(self):
         # profile detail url & user has user profile data --> template used oauth/profile_detail.html
@@ -293,13 +287,6 @@ class OauthURLsTestCase(TestCase):
         self.assertRedirects(response, reverse('login') + "?next=" + reverse('oauth:edit',
                                                                              kwargs={'roll': self.user_profile_1.roll}))
 
-    def test_oauth_profile_edit_case_2(self):
-        # profile edit url & user has no user profile data --> redirect to register page
-        data = {'phone': ['0987654321'], 'year': ['1'], 'hometown': ['XYZ'], 'skills': [''], 'about': ['']}
-        self.client.force_login(self.user_2)
-        response = self.client.post(reverse('oauth:edit', kwargs={'roll': self.user_profile_1.roll}), data, follow=True)
-        self.assertRedirects(response, reverse('oauth:register'))
-        self.client.logout()
 
     def test_oauth_profile_edit_case_3(self):
         # profile edit & user doesn't own it & profile not exist --> response 404
