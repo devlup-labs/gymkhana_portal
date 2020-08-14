@@ -3,11 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth import logout
 from django.shortcuts import get_object_or_404, redirect, render, HttpResponseRedirect, reverse
-from graphql import backend
-from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from gymkhana.settings import FRONTEND_URL
 from .mixins import SocialLinkOwnerMixin
 from .models import UserProfile, SocialLink
 from .forms import UserProfileUpdateForm, SocialLinkForm, UserProfileForm
@@ -119,5 +115,5 @@ def get_activation_link(request, roll):
 class SessionView(LoginRequiredMixin, APIView):
     def get(self, request, *args, **kwargs):
         key = self.request.user.social_auth.get(provider="google-oauth2").extra_data['access_token']
-        response = HttpResponseRedirect(FRONTEND_URL+"/login?key=" + key)
+        response = HttpResponseRedirect("/login?key=" + key)
         return response

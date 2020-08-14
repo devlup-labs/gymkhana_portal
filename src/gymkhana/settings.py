@@ -160,14 +160,14 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-FRONTEND_URL = "http://localhost:8080"
+
 LOGIN_REDIRECT_URL = 'oauth:session'
 
 LOGIN_URL = 'login'
 
-LOGIN_ERROR_URL = FRONTEND_URL + '/login'
+LOGIN_ERROR_URL = '/login'
 
-SOCIAL_AUTH_LOGIN_ERROR_URL = FRONTEND_URL + '/login'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login'
 SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['to']
 
 AUTHENTICATION_BACKENDS = [
