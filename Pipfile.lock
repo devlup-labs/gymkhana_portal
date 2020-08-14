@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d809490d18c7306b0f237c1d50bfb2137986262a99a1aa3fcde16a20b84f5dc3"
+            "sha256": "f44575d10ec093dea770f9a480cfb1c94b24f078213e05b3339c4f20e08a9fa7"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -163,6 +163,14 @@
             ],
             "index": "pypi",
             "version": "==0.3.1"
+        },
+        "django-graphql-social-auth": {
+            "hashes": [
+                "sha256:6c774184601555ab4166669d7728ca6804c9cbdcc1c910e08f269ae93bf4dc48",
+                "sha256:a2441043b5e5b3560d9b800cac0dbb39e3893208f5a79bebf8b56a4ca1f12307"
+            ],
+            "index": "pypi",
+            "version": "==0.1.4"
         },
         "django-hitcount": {
             "hashes": [
