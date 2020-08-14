@@ -1,14 +1,12 @@
 import graphene
 import graphql_jwt
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin
 from graphene import relay, Connection
 from graphene_django import DjangoConnectionField
 from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.views import GraphQLView
 from graphql_social_auth import SocialAuthJWT
 from photologue.models import Gallery
-
 from festivals.schema import FestivalNode
 from forum.models import Topic
 from forum.schema import TopicNode, CreateTopicMutation, AddAnswerMutation, UpvoteMutaiton, DeleteMutation
