@@ -18,7 +18,6 @@ psycopg2 = "*"
 django-decouple = "==2.1"
 graphene-django = "*"
 django-filter = ">=2.1.0"
-exceptions = "*"
 
 [dev-packages]
 flake8 = "*"
