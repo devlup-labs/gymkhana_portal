@@ -22,12 +22,16 @@ class SocietyNode(DjangoObjectType):
         model = Society
         fields = (
             'name', 'slug', 'secretary', 'joint_secretary', 'description', 'mentor', 'club_set', 'cover', 'report_link',
+            'is_active',
             'gallery', 'custom_html')
-        filter_fields = ('slug',)
+        filter_fields = ('slug', 'is_active')
         interfaces = (relay.Node,)
 
     def resolve_cover(self, info):
         return ImageType(sizes=build_image_types(info.context, self.cover, 'festival'))
+
+    def resolve_club_set(self, info, *args, **kwargs):
+        return self.club_set.filter(published=True)
 
     def resolve_upcoming_events(self, info, *args, **kwargs):
         return Event.objects.filter(club__society=self).filter(published=True).filter(date__gte=timezone.now())[
@@ -43,7 +47,7 @@ class ClubNode(DjangoObjectType):
     class Meta:
         model = Club
         fields = '__all__'
-        filter_fields = ('slug',)
+        filter_fields = ('slug', 'published')
         interfaces = (relay.Node,)
 
     def resolve_cover(self, info):

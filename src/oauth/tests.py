@@ -181,15 +181,15 @@ class OauthURLsTestCase(TestCase):
 
     # TODO: resolve travis fail
     # def test_oauth_sociallink_update_case_2(self):
-        # social link edit with user own it and exist --> will change it and redirect to profile page
-        # data = {'social_media': ['YT'], 'link': ['https://twitter.com']}
-        # kwargs = {'username': self.user_1.username, 'social_media': 'YT'}
-        # self.client.force_login(self.user_1)
-        # response = self.client.post(reverse('oauth:link-edit', kwargs=kwargs), data, follow=True)
-        # self.assertRedirects(response, self.user_1.userprofile.get_absolute_url())
-        # self.assertEqual(SocialLink.objects.get(user=self.user_1, social_media='YT').link, 'https://twitter.com')
-        # self.link_1.save()
-        # self.client.logout()
+    # social link edit with user own it and exist --> will change it and redirect to profile page
+    # data = {'social_media': ['YT'], 'link': ['https://twitter.com']}
+    # kwargs = {'username': self.user_1.username, 'social_media': 'YT'}
+    # self.client.force_login(self.user_1)
+    # response = self.client.post(reverse('oauth:link-edit', kwargs=kwargs), data, follow=True)
+    # self.assertRedirects(response, self.user_1.userprofile.get_absolute_url())
+    # self.assertEqual(SocialLink.objects.get(user=self.user_1, social_media='YT').link, 'https://twitter.com')
+    # self.link_1.save()
+    # self.client.logout()
 
     def test_oauth_sociallink_update_case_3(self):
         # social link edit & social media not exist --> will not create object and redirect to 404 page
@@ -230,14 +230,14 @@ class OauthURLsTestCase(TestCase):
 
     # TODO: resolve travis fail
     # def test_oauth_sociallink_delete_case_2(self):
-        # social link delete with user own it and exist --> will delete it and redirect to profile page
-        # kwargs = {'username': self.user_1.username, 'social_media': 'YT'}
-        # self.client.force_login(self.user_1)
-        # response = self.client.post(reverse('oauth:link-delete', kwargs=kwargs), follow=True)
-        # self.assertRedirects(response, self.user_1.userprofile.get_absolute_url())
-        # self.assertFalse(SocialLink.objects.filter(user=self.user_1, social_media='YT').exists())
-        # self.link_1.save()
-        # self.client.logout()
+    # social link delete with user own it and exist --> will delete it and redirect to profile page
+    # kwargs = {'username': self.user_1.username, 'social_media': 'YT'}
+    # self.client.force_login(self.user_1)
+    # response = self.client.post(reverse('oauth:link-delete', kwargs=kwargs), follow=True)
+    # self.assertRedirects(response, self.user_1.userprofile.get_absolute_url())
+    # self.assertFalse(SocialLink.objects.filter(user=self.user_1, social_media='YT').exists())
+    # self.link_1.save()
+    # self.client.logout()
 
     def test_oauth_sociallink_delete_case_3(self):
         # social link delete & social media not exist --> redirect to 404 page
@@ -272,13 +272,6 @@ class OauthURLsTestCase(TestCase):
         response = self.client.get(self.user_profile_1.get_absolute_url(), follow=True)
         self.assertRedirects(response, reverse('login') + "?next=" + self.user_profile_1.get_absolute_url())
 
-    def test_oauth_profile_detail_case_2(self):
-        # profile detail url & user has no user profile data --> redirect to register page
-        self.client.force_login(self.user_2)
-        response = self.client.get(self.user_profile_1.get_absolute_url(), follow=True)
-        self.assertRedirects(response, reverse('oauth:register'))
-        self.client.logout()
-
     def test_oauth_profile_detail_case_3(self):
         # profile detail url & user has user profile data --> template used oauth/profile_detail.html
         self.client.force_login(self.user_1)
@@ -292,14 +285,6 @@ class OauthURLsTestCase(TestCase):
         response = self.client.post(reverse('oauth:edit', kwargs={'roll': self.user_profile_1.roll}), data, follow=True)
         self.assertRedirects(response, reverse('login') + "?next=" + reverse('oauth:edit',
                                                                              kwargs={'roll': self.user_profile_1.roll}))
-
-    def test_oauth_profile_edit_case_2(self):
-        # profile edit url & user has no user profile data --> redirect to register page
-        data = {'phone': ['0987654321'], 'year': ['1'], 'hometown': ['XYZ'], 'skills': [''], 'about': ['']}
-        self.client.force_login(self.user_2)
-        response = self.client.post(reverse('oauth:edit', kwargs={'roll': self.user_profile_1.roll}), data, follow=True)
-        self.assertRedirects(response, reverse('oauth:register'))
-        self.client.logout()
 
     def test_oauth_profile_edit_case_3(self):
         # profile edit & user doesn't own it & profile not exist --> response 404

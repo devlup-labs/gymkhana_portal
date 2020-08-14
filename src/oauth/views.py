@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth import logout
 from django.shortcuts import get_object_or_404, redirect, render, HttpResponseRedirect, reverse
+from rest_framework.views import APIView
 from .mixins import SocialLinkOwnerMixin
 from .models import UserProfile, SocialLink
 from .forms import UserProfileUpdateForm, SocialLinkForm, UserProfileForm
@@ -109,3 +110,10 @@ class AccountActivationView(RedirectView):
 def get_activation_link(request, roll):
     userprofile = UserProfile.objects.get(roll=roll.upper())
     return render(request, 'oauth/account_activation_email.html', {'user': userprofile.user})
+
+
+class SessionView(LoginRequiredMixin, APIView):
+    def get(self, request, *args, **kwargs):
+        key = self.request.user.social_auth.get(provider="google-oauth2").extra_data['access_token']
+        response = HttpResponseRedirect("/login?key=" + key)
+        return response

@@ -73,9 +73,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'htmlmin.middleware.HtmlMinifyMiddleware',
     'htmlmin.middleware.MarkRequestMiddleware',
-    'oauth.middleware.UserProfileExistsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware'
 ]
 
@@ -171,16 +171,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = 'forum:index'
+LOGIN_REDIRECT_URL = 'oauth:session'
 
 LOGIN_URL = 'login'
 
-LOGIN_ERROR_URL = '/login/'
+LOGIN_ERROR_URL = '/login'
 
-SOCIAL_AUTH_LOGIN_ERROR_URL = '/login/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login'
+SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['to']
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    'graphql_jwt.backends.JSONWebTokenBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
@@ -336,7 +339,10 @@ CORS_ORIGIN_ALLOW_ALL = DEBUG
 GRAPHENE = {
     'SCHEMA': 'gymkhana.schema.schema',
     'SCHEMA_INDENT': 2,
-    'RELAY_CONNECTION_MAX_LIMIT': 100
+    'RELAY_CONNECTION_MAX_LIMIT': 100,
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
 }
 
 if not DEBUG:
@@ -363,3 +369,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='noreply@localhost.com', cast=str)
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='', cast=str)
+
+GRAPHQL_JWT = {
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer'
+}
