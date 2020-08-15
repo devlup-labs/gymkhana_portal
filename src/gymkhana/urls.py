@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.urls import path, re_path
+from django.contrib.auth.decorators import user_passes_tes
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
@@ -22,7 +23,7 @@ from django.contrib.auth.views import LogoutView
 from django.views.decorators.csrf import csrf_exempt
 
 from gymkhana.schema import PrivateGraphQLView, PublicGraphQLView
-from gymkhana.views import VueView
+from gymkhana.views FrontendUpdateView, VueView
 
 admin.site.site_title = 'Gymkhana Administration'
 admin.site.site_header = 'Gymkhana Administration'
@@ -34,7 +35,9 @@ urlpatterns = [
         name='logout'),
     url(r'^photologue/', include('photologue.urls', namespace='photologue')),
     url(r'^admin/', admin.site.urls),
-
+    url(r'^admin/frontend-upload/',	
+        user_passes_test(lambda u: u.is_superuser, login_url='admin:login')(FrontendUpdateView.as_view()),	
+        name='admin-frontend-upload'),
     path('', include('social_django.urls', namespace='social')),
 ]
 
