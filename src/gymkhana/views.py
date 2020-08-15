@@ -1,4 +1,5 @@
-from shutil import rmtree
+from os import listdir
+from shutil import rmtree, move
 from tarfile import open as tar_open
 from os.path import join
 from django.conf import settings
@@ -21,6 +22,11 @@ class UploadForm(forms.Form):
             # Extract index.html to templates dir
             archive.extract(archive.getmember('dist/index.html'), settings.TEMPLATES[0]['DIRS'][0])
             archive.close()
+        move(join(settings.VUE_ROOT, 'dist/static/js'), join(settings.VUE_ROOT, 'dist/js'))
+        move(join(settings.VUE_ROOT, 'dist/static/css'), join(settings.VUE_ROOT, 'dist/css'))
+        move(join(settings.VUE_ROOT, 'dist/static/fonts'), join(settings.VUE_ROOT, 'dist/fonts'))
+        for i in listdir(join(settings.VUE_ROOT, 'dist/static/img')):
+            move(join(settings.VUE_ROOT, f'dist/static/img/{i}'), join(settings.VUE_ROOT, f'dist/img/{i}'))
         call_command('collectstatic', verbosity=0, interactive=False)
 
     def clean_file(self):
