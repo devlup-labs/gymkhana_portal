@@ -43,9 +43,6 @@ urlpatterns = [
 urlpatterns += [
     path("graphql", csrf_exempt(PublicGraphQLView.as_view(graphiql=True))),
     path("pgraphql", csrf_exempt(PrivateGraphQLView.as_view(graphiql=True)))
-] if settings.DEBUG else [
-    path("graphql", PublicGraphQLView.as_view(graphiql=True)),
-    path("pgraphql", PrivateGraphQLView.as_view(graphiql=True))
 ]
 
 if settings.DEBUG:  # pragma: no cover
