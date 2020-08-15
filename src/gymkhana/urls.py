@@ -24,6 +24,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from gymkhana.schema import PrivateGraphQLView, PublicGraphQLView
 from gymkhana.views import FrontendUpdateView, VueView
+from oauth.views import SessionView
 
 admin.site.site_title = 'Gymkhana Administration'
 admin.site.site_header = 'Gymkhana Administration'
@@ -32,10 +33,11 @@ admin.site.index_title = 'Control Panel'
 urlpatterns = [
     url(r'^logout/$', LogoutView.as_view(next_page='login'),
         name='logout'),
+    url(r'^session/$', SessionView.as_view(), name='session'),
     url(r'^photologue/', include('photologue.urls', namespace='photologue')),
     url(r'^admin/', admin.site.urls),
-    url(r'^admin/frontend-upload/',	
-        user_passes_test(lambda u: u.is_superuser, login_url='admin:login')(FrontendUpdateView.as_view()),	
+    url(r'^admin/frontend-upload/',
+        user_passes_test(lambda u: u.is_superuser, login_url='admin:login')(FrontendUpdateView.as_view()),
         name='admin-frontend-upload'),
     path('', include('social_django.urls', namespace='social')),
 ]

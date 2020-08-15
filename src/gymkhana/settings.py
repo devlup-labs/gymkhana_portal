@@ -171,9 +171,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = 'oauth:session'
+LOGIN_REDIRECT_URL = 'session'
 
-LOGIN_URL = 'login'
+LOGIN_URL = '/login'
 
 LOGIN_ERROR_URL = '/login'
 
