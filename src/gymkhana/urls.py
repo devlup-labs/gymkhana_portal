@@ -23,14 +23,13 @@ from django.contrib.auth.views import LogoutView
 from django.views.decorators.csrf import csrf_exempt
 
 from gymkhana.schema import PrivateGraphQLView, PublicGraphQLView
-from gymkhana.views FrontendUpdateView, VueView
+from gymkhana.views import FrontendUpdateView, VueView
 
 admin.site.site_title = 'Gymkhana Administration'
 admin.site.site_header = 'Gymkhana Administration'
 admin.site.index_title = 'Control Panel'
 
 urlpatterns = [
-
     url(r'^logout/$', LogoutView.as_view(next_page='login'),
         name='logout'),
     url(r'^photologue/', include('photologue.urls', namespace='photologue')),
