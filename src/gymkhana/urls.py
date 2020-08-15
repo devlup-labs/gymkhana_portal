@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.urls import path, re_path
-from django.contrib.auth.decorators import user_passes_tes
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
