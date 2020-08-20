@@ -60,16 +60,16 @@ class UserProfileNode(DjangoObjectType):
         return SocialLink.objects.filter(user=self.user)
 
     def resolve_gender(self, info):
-        return info.context.user.userprofile.get_gender_display()
+        return self.user.userprofile.get_gender_display()
 
     def resolve_prog(self, info):
-        return info.context.user.userprofile.get_prog_display()
+        return self.user.userprofile.get_prog_display()
 
     def resolve_branch(self, info):
-        return info.context.user.userprofile.get_branch_display()
+        return self.user.userprofile.get_branch_display()
 
     def resolve_year(self, info):
-        return info.context.user.userprofile.get_year_display()
+        return self.user.userprofile.get_year_display()
 
     def resolve_id(self, info):
         return self.id
