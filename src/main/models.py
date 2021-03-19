@@ -74,12 +74,13 @@ class Society(models.Model):
         # Model
         print('entered assignUser')
         self.name = "To be updated"
-        self.secretary = get_object_or_404(UserProfile,roll='B00XX000')
-        self.joint_secretary = get_object_or_404(UserProfile,roll='B00XX000')
-        self.mentor = get_object_or_404(UserProfile,roll='B00XX000')
-        self.faculty_advisor = get_object_or_404(FacultyAdvisor,name='To be updated')
+        self.secretary = get_object_or_404(UserProfile, roll='B00XX000')
+        self.joint_secretary = get_object_or_404(UserProfile, roll='B00XX000')
+        self.mentor = get_object_or_404(UserProfile, roll='B00XX000')
+        self.faculty_advisor = get_object_or_404(FacultyAdvisor, name='To be updated')
         self.year = '0000'
         self.save()
+
 
 class Club(models.Model):
     # Choices
@@ -273,6 +274,7 @@ class Contact(models.Model):
     @classmethod
     def get_absolute_url(cls):
         return reverse('main:contact')
+
 
 class LegacyList(models.Model):
     # Validators
