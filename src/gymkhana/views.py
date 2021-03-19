@@ -9,21 +9,22 @@ from django import forms
 from django.core.management import call_command
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
-from django.http import HttpResponse
 from main.models import Society, LegacyList
 from django.shortcuts import render
 from datetime import datetime 
 
+
 def SocietyArchive(request):
-    currentPORs = Society.objects.filter(year = datetime.now().year)
+    currentPORs=Society.objects.filter(year = datetime.now().year)
     for currentPOR in currentPORs:
-        backupPOR = LegacyList()
+        backupPOR=LegacyList()
         backupPOR.archive(currentPOR)
         currentPOR.assignUser()
-    return render(request,'backup.html')
+    return render(request, 'backup.html')
 
 class UploadForm(forms.Form):
     file = forms.FileField()
+
 
     def process(self):
         # Delete directory if present, then extract new archive

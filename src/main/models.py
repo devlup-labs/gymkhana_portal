@@ -1,7 +1,6 @@
 import datetime
 from django.db import models
 from django.core.validators import RegexValidator
-from django.contrib.auth.models import User
 from oauth.models import UserProfile
 from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -73,22 +72,27 @@ class Society(models.Model):
 
     def assignUser(self):
         # Model
+
         print('entered assignUser')
         self.name = "To be updated"
-        self.secretary = get_object_or_404(UserProfile,roll='B00XX000')
-        self.joint_secretary = get_object_or_404(UserProfile,roll='B00XX000')
-        self.mentor = get_object_or_404(UserProfile,roll='B00XX000')
-        self.faculty_advisor = get_object_or_404(FacultyAdvisor,name='To be updated')
+        self.secretary = get_object_or_404(UserProfile, roll='B00XX000')
+        self.joint_secretary = get_object_or_404(UserProfile, roll='B00XX000')
+        self.mentor = get_object_or_404(UserProfile, roll='B00XX000')
+        self.faculty_advisor = get_object_or_404(FacultyAdvisor, name='To be updated')
         self.year = '0000'
         self.save()
 
 class Club(models.Model):
     # Choices
+
+
     TYPE_CHOICES = (
         ('C', 'Club'),
         ('T', 'Team'),
     )
     # Model
+
+
     name = models.CharField(max_length=128)
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
     ctype = models.CharField(max_length=1, choices=TYPE_CHOICES, default='C', help_text="Specify type as Club or Team.",
