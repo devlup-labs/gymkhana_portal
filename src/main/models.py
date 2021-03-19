@@ -1,11 +1,13 @@
 import datetime
 from django.db import models
 from django.core.validators import RegexValidator
+from django.contrib.auth.models import User
 from oauth.models import UserProfile
 from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
 from versatileimagefield.fields import VersatileImageField
 from photologue.models import Gallery
+from django.shortcuts import get_object_or_404
 
 YEAR_CHOICES = []
 for r in range(2008, (datetime.datetime.now().year + 2)):
@@ -69,6 +71,16 @@ class Society(models.Model):
     def __str__(self):
         return self.name + " - " + str(self.year)
 
+    def assignUser(self):
+        # Model
+        print('entered assignUser')
+        self.name = "To be updated"
+        self.secretary = get_object_or_404(UserProfile,roll='B00XX000')
+        self.joint_secretary = get_object_or_404(UserProfile,roll='B00XX000')
+        self.mentor = get_object_or_404(UserProfile,roll='B00XX000')
+        self.faculty_advisor = get_object_or_404(FacultyAdvisor,name='To be updated')
+        self.year = '0000'
+        self.save()
 
 class Club(models.Model):
     # Choices
@@ -262,3 +274,28 @@ class Contact(models.Model):
     @classmethod
     def get_absolute_url(cls):
         return reverse('main:contact')
+
+class LegacyList(models.Model):
+    # Validators
+    valid_year = RegexValidator(r'^[0-9]{4}$', message='Not a valid year!')
+    # Model
+    name = models.CharField(max_length=128)
+    secretary = models.ForeignKey(UserProfile, related_name='secy+', limit_choices_to={'user__is_staff': True},
+                                  null=True, blank=True, on_delete=models.SET_NULL)
+    joint_secretary = models.ForeignKey(UserProfile, related_name='joint_secy+',
+                                        limit_choices_to={'user__is_staff': True}, null=True, blank=True,
+                                        on_delete=models.SET_NULL)
+    mentor = models.ForeignKey(UserProfile, related_name='smentor+', limit_choices_to={'user__is_staff': True},
+                               null=True, blank=True, on_delete=models.SET_NULL, default=None)
+    faculty_advisor = models.ForeignKey(FacultyAdvisor, blank=True, null=True, default=None, on_delete=models.SET_NULL)
+    year = models.CharField(max_length=4, choices=YEAR_CHOICES, validators=[valid_year])
+    
+    def archive(self, object):
+        print('enter backUp')
+        self.year = object.year
+        self.name = object.name
+        self.secretary = object.secretary
+        self.joint_secretary = object.joint_secretary
+        self.mentor = object.mentor
+        self.faculty_advisor = object.faculty_advisor
+        self.save()

@@ -2,7 +2,7 @@
 {% block extrastyle %}
     {{ block.super }}
     <style>
-        a.upload-button {
+        .upload-button {
             background-color: #79AEC8; /* Green */
             border: none;
             color: white;
@@ -19,5 +19,6 @@
     {{ block.super }}
     {% if request.user.is_superuser %}
         <a class="upload-button" href="{% url 'admin-frontend-upload' %}">Frontend Update</a>
+        <a class="upload-button" href="{% url 'admin-backup' %}">Backup</a>
     {% endif %}
 {% endblock %}

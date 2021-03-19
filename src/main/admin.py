@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Society, Club, SocialLink, Senate, SenateMembership, Activity, Contact
+from .models import Society, Club, SocialLink, Senate, SenateMembership, Activity, Contact, LegacyList, FacultyAdvisor
+from oauth.models import UserProfile
 
 
 class MembershipInline(admin.StackedInline):
@@ -40,3 +41,6 @@ admin.site.register(Club, ClubAdmin)
 admin.site.register(Senate, SenateAdmin)
 admin.site.register(Activity, ActivityAdmin)
 admin.site.register(main_models)
+admin.site.register(LegacyList) 
+admin.site.register(UserProfile)               
+admin.site.register(FacultyAdvisor)
