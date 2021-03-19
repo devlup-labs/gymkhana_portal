@@ -11,11 +11,11 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
 from main.models import Society, LegacyList
 from django.shortcuts import render
-from datetime import datetime 
+from datetime import datetime
 
 
 def SocietyArchive(request):
-    currentPORs=Society.objects.filter(year = datetime.now().year)
+    currentPORs = Society.objects.filter(year=datetime.now().year)
     for currentPOR in currentPORs:
         backupPOR = LegacyList()
         backupPOR.archive(currentPOR)
