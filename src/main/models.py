@@ -82,16 +82,15 @@ class Society(models.Model):
         self.year = '0000'
         self.save()
 
+
 class Club(models.Model):
     # Choices
-
 
     TYPE_CHOICES = (
         ('C', 'Club'),
         ('T', 'Team'),
     )
     # Model
-
 
     name = models.CharField(max_length=128)
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
@@ -279,9 +278,12 @@ class Contact(models.Model):
     def get_absolute_url(cls):
         return reverse('main:contact')
 
+
 class LegacyList(models.Model):
+
     # Validators
     valid_year = RegexValidator(r'^[0-9]{4}$', message='Not a valid year!')
+
     # Model
     name = models.CharField(max_length=128)
     secretary = models.ForeignKey(UserProfile, related_name='secy+', limit_choices_to={'user__is_staff': True},
