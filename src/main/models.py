@@ -290,7 +290,7 @@ class LegacyList(models.Model):
                                null=True, blank=True, on_delete=models.SET_NULL, default=None)
     faculty_advisor = models.ForeignKey(FacultyAdvisor, blank=True, null=True, default=None, on_delete=models.SET_NULL)
     year = models.CharField(max_length=4, choices=YEAR_CHOICES, validators=[valid_year])
- 
+
     def archive(self, object):
         self.year = object.year
         self.name = object.name
