@@ -23,7 +23,7 @@ from django.contrib.auth.views import LogoutView
 from django.views.decorators.csrf import csrf_exempt
 
 from gymkhana.schema import PrivateGraphQLView, PublicGraphQLView
-from gymkhana.views import FrontendUpdateView, VueView
+from gymkhana.views import FrontendUpdateView, VueView, SocietyArchive
 from oauth.views import SessionView
 
 admin.site.site_title = 'Gymkhana Administration'
@@ -40,7 +40,11 @@ urlpatterns = [
     url(r'^admin/frontend-upload/',
         user_passes_test(lambda u: u.is_superuser, login_url='admin:login')(FrontendUpdateView.as_view()),
         name='admin-frontend-upload'),
+    url(r'^admin/backup/',
+        user_passes_test(lambda u: u.is_superuser, login_url='admin:login')(SocietyArchive),
+        name='admin-backup'),
     path('', include('social_django.urls', namespace='social')),
+    url(r'^', include('main.urls')),
 ]
 
 urlpatterns += [

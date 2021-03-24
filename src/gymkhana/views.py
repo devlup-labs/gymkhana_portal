@@ -9,6 +9,18 @@ from django import forms
 from django.core.management import call_command
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
+from main.models import Society, LegacyList
+from django.shortcuts import render
+from datetime import datetime
+
+
+def SocietyArchive(request):
+    currentPORs = Society.objects.filter(year=datetime.now().year)
+    for currentPOR in currentPORs:
+        backupPOR = LegacyList()
+        backupPOR.archive(currentPOR)
+        currentPOR.assignUser()
+    return render(request, 'backup.html')
 
 
 class UploadForm(forms.Form):
@@ -16,10 +28,12 @@ class UploadForm(forms.Form):
 
     def process(self):
         # Delete directory if present, then extract new archive
+
         rmtree(join(settings.VUE_ROOT, 'dist'), ignore_errors=True)
         with tar_open(fileobj=self.cleaned_data['file'].file, mode='r:gz') as archive:
             archive.extractall(settings.VUE_ROOT)
             # Extract index.html to templates dir
+
             archive.extract(archive.getmember('dist/index.html'), settings.TEMPLATES[0]['DIRS'][0])
             archive.close()
         move(join(settings.VUE_ROOT, 'dist/static/js'), join(settings.VUE_ROOT, 'dist/js'))
