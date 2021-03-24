@@ -1,4 +1,3 @@
-import graphene
 from graphene import relay, Field
 from graphene_django import DjangoObjectType
 from festivals.models import Festival, EventCategory, Event
