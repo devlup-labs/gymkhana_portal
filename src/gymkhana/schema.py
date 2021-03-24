@@ -43,7 +43,7 @@ class PublicQuery(graphene.ObjectType):
     node = relay.Node.Field()
     societies = DjangoFilterConnectionField(SocietyNode)
     clubs = DjangoFilterConnectionField(ClubNode)
-    festivals = DjangoConnectionField(FestivalNode)
+    festivals = DjangoFilterConnectionField(FestivalNode)
     home_carousel = graphene.Field(GalleryNode)
     home_gallery = graphene.Field(GalleryNode)
 
