@@ -8,7 +8,6 @@ from main.schema import ImageType
 
 class FestivalNode(DjangoObjectType):
     photo = Field(ImageType)
-    url = graphene.String()
 
     class Meta:
         model = Festival
@@ -18,9 +17,6 @@ class FestivalNode(DjangoObjectType):
 
     def resolve_photo(self, info):
         return ImageType(sizes=build_image_types(info.context, self.photo, 'festival'))
-
-    def resolve_url(self, info):
-        return self.get_absolute_url();
 
 
 class EventCategoryNode(DjangoObjectType):
