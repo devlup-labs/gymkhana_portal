@@ -60,3 +60,5 @@ class FrontendUpdateView(FormView):
 
 class VueView(TemplateView):
     template_name = 'dist/index.html'
+
+# trial
